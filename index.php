@@ -6,6 +6,7 @@
 	<meta name="description" content=""/>
 	<meta name="keywords" content=""/>
 	<meta name="author" content="Jonathan Holvey"/>
+	<meta name="google-site-verification" content="qg5eV80UdswQZ2s2lbXuPPFI0W70Z3PdSwPjz__VRn4" />
 	<link rel="shortcut icon" href="images/icon.ico"/>
 	<style type="text/css">
 		html, body {
@@ -25,6 +26,6 @@
 	</style>
 </head>
 <body>
-		<img src="images/logo.svg" alt="Heirloom Earth"/>
+	<img src="images/logo.svg" alt="Heirloom Earth"/>
 </body>
 </html>

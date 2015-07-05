@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteBase /
+
+# remove www subdomain
+RewriteCond %{HTTP_HOST} ^www\..*$ [NC]
+RewriteRule ^(.*)$ http://heirloom-earth.com/$1 [R=301,NC,QSA]
+
