@@ -1,0 +1,115 @@
+/**
+ * @license
+ * MyFonts Webfont Build ID 3053450, 2015-07-04T04:50:37-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: GoodlifeSans by HVD Fonts
+ * URL: http://www.myfonts.com/fonts/hvdfonts/goodlife/sans/
+ * 
+ * Webfont: GoodlifeSansCondensed by HVD Fonts
+ * URL: http://www.myfonts.com/fonts/hvdfonts/goodlife/sans-condensed/
+ * 
+ * Webfont: GoodlifeBrush by HVD Fonts
+ * URL: http://www.myfonts.com/fonts/hvdfonts/goodlife/brush/
+ * 
+ * Webfont: GoodlifeScript by HVD Fonts
+ * URL: http://www.myfonts.com/fonts/hvdfonts/goodlife/script/
+ * 
+ * Webfont: GoodlifeExtras by HVD Fonts
+ * URL: http://www.myfonts.com/fonts/hvdfonts/goodlife/extras/
+ * 
+ * Webfont: GoodlifeSerif-Bold by HVD Fonts
+ * URL: http://www.myfonts.com/fonts/hvdfonts/goodlife/serif-bold/
+ * 
+ * Webfont: GoodlifeSerif by HVD Fonts
+ * URL: http://www.myfonts.com/fonts/hvdfonts/goodlife/serif/
+ * 
+ * 
+ * License: http://www.myfonts.com/viewlicense?type=web&buildid=3053450
+ * Licensed pageviews: 10,000
+ * Webfonts copyright: Copyright (c) 2015 by Hannes von Doehren. All rights reserved.
+ * 
+ * © 2015 MyFonts Inc
+*/
+
+/* @import must be at top of file, otherwise CSS will not work */
+@import url("//hello.myfonts.net/count/2e978a");
+  
+@font-face {
+	font-family: "GoodlifeSans";
+	src: url("fonts/2E978A_0_0.eot");
+	src: url("fonts/2E978A_0_0.eot?#iefix") format("embedded-opentype"),
+		 url("fonts/2E978A_0_0.woff2") format("woff2"),
+		 url("fonts/2E978A_0_0.woff") format("woff"),
+		 url("fonts/2E978A_0_0.ttf") format("truetype");
+} 
+  
+@font-face {
+	font-family: "GoodlifeSansCondensed";
+	src: url("fonts/2E978A_1_0.eot");
+	src: url("fonts/2E978A_1_0.eot?#iefix") format("embedded-opentype"),
+		 url("fonts/2E978A_1_0.woff2") format("woff2"),
+		 url("fonts/2E978A_1_0.woff") format("woff"),
+		 url("fonts/2E978A_1_0.ttf") format("truetype");
+} 
+  
+/*@font-face {
+	font-family: "GoodlifeBrush";
+	src: url("fonts/2E978A_2_0.eot");
+	src: url("fonts/2E978A_2_0.eot?#iefix") format("embedded-opentype"),
+	url("fonts/2E978A_2_0.woff2") format("woff2"),
+	url("fonts/2E978A_2_0.woff") format("woff"),
+	url("fonts/2E978A_2_0.ttf") format("truetype");
+} 
+  
+@font-face {
+	font-family: "GoodlifeScript";
+	src: url("fonts/2E978A_3_0.eot");
+	src: url("fonts/2E978A_3_0.eot?#iefix") format("embedded-opentype"),
+		 url("fonts/2E978A_3_0.woff2") format("woff2"),
+		 url("fonts/2E978A_3_0.woff") format("woff"),
+		 url("fonts/2E978A_3_0.ttf") format("truetype");
+} 
+  
+@font-face {
+	font-family: "GoodlifeExtras";
+	src: url("fonts/2E978A_4_0.eot");
+	src: url("fonts/2E978A_4_0.eot?#iefix") format("embedded-opentype"),
+		 url("fonts/2E978A_4_0.woff2") format("woff2"),
+		 url("fonts/2E978A_4_0.woff") format("woff"),
+		 url("fonts/2E978A_4_0.ttf") format("truetype");
+}
+  
+@font-face {
+	font-family: "GoodlifeSerif-Bold";
+	src: url("fonts/2E978A_5_0.eot");
+	src: url("fonts/2E978A_5_0.eot?#iefix") format("embedded-opentype"),
+		 url("fonts/2E978A_5_0.woff2") format("woff2"),
+		 url("fonts/2E978A_5_0.woff") format("woff"),
+		 url("fonts/2E978A_5_0.ttf") format("truetype");
+}		 
+  
+@font-face {
+	font-family: "GoodlifeSerif";
+	src: url("fonts/2E978A_6_0.eot");
+	src: url("fonts/2E978A_6_0.eot?#iefix") format("embedded-opentype"),
+		 url("fonts/2E978A_6_0.woff2") format("woff2"),
+		 url("fonts/2E978A_6_0.woff") format("woff"),
+		 url("fonts/2E978A_6_0.ttf") format("truetype");}
+*/ 
+@font-face {
+    font-family: "Fjord";
+    src: url("fjord-webfont.eot");
+    src: url("fjord-webfont.eot?#iefix") format("embedded-opentype"),
+         url("fjord-webfont.woff2") format("woff2"),
+         url("fjord-webfont.woff") format("woff"),
+         url("fjord-webfont.ttf") format("truetype"),
+         url("fjord-webfont.svg#fjordone") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
