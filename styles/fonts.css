@@ -104,12 +104,12 @@
 */ 
 @font-face {
     font-family: "Fjord";
-    src: url("fjord-webfont.eot");
-    src: url("fjord-webfont.eot?#iefix") format("embedded-opentype"),
-         url("fjord-webfont.woff2") format("woff2"),
-         url("fjord-webfont.woff") format("woff"),
-         url("fjord-webfont.ttf") format("truetype"),
-         url("fjord-webfont.svg#fjordone") format("svg");
+    src: url("fonts/fjord-webfont.eot");
+    src: url("fonts/fjord-webfont.eot?#iefix") format("embedded-opentype"),
+         url("fonts/fjord-webfont.woff2") format("woff2"),
+         url("fonts/fjord-webfont.woff") format("woff"),
+         url("fonts/fjord-webfont.ttf") format("truetype"),
+         url("fonts/fjord-webfont.svg#fjordone") format("svg");
     font-weight: normal;
     font-style: normal;
 }
