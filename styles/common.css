@@ -99,14 +99,12 @@ hr {
 	text-align: center;
 	color: #424540;
 	line-height: 1.3em;
-}
-.post footer:first-of-type {
 	margin-top: -0.5em;
 }
 .post footer .property {
 	color: #77A669;
 	font-size: 130%;
 }
-.post footer.tags .property::before {
+.post footer .tags .property::before {
 	content: "#";
 }

@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /heirloom-earth.com/
+
+RewriteRule ^posts/(.+)$ post.php?p=$1 [NC,L]
