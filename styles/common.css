@@ -4,6 +4,7 @@ html {
 body {
 	margin: 1.25em;
 	font-size: 90%;
+	font-family: "Fjord";
 }
 h1 {
 	text-align: center;
@@ -11,15 +12,28 @@ h1 {
 	color: #424540;
 	font-size: 344%;
 	font-weight: normal;
-	margin: 0 0 0.3em 0;
+	margin: -0.2em 0 0.3em 0;
 	line-height: 1em;
 }
-p {
-	font-family: "Fjord";
+h2 {
+	font-family: "GoodlifeSansCondensed";
+	font-size: 250%;
+	font-weight: normal;
+	margin: -0.55em 0 0.4em 0;
+}
+h3, h4, h5, h6 {
+	font-size: 180%;
+	font-family: "GoodlifeSansCondensed";
+	font-weight: normal;
+	margin: -0.4em 0 0.6em 0;
+}
+p, ul, ol {
 	color: #424540;
-	text-align: justify;
 	font-size: 113%;
 	margin: 0 0 1.11em 0;
+}
+p {
+	text-align: justify;
 }
 main {
 	max-width: 43.75em;
@@ -34,9 +48,20 @@ hr {
 	background-repeat: no-repeat;
 	border: 0;
 }
+blockquote {
+	margin: 0 10% 1.25em 10%;
+	font-style: italic;
+	quotes: "“" "”" "‘" "’";
+	position: relative;
+}
+blockquote p {
+	text-align: center;
+}
+
 .header-logo {
 	display: block;
 	height: 15.6em;
+	max-width: 100%;
 	margin: 0 auto 1.25em auto;
 }
 .header-nav {
@@ -47,6 +72,7 @@ hr {
 	font-size: 150%;
 	line-height: 1em;
 	margin-top: -0.4em;
+	margin-bottom: 0.69em;
 }
 .header-nav a {
 	display: inline-block;
@@ -111,7 +137,6 @@ hr {
 	content: "#";
 }
 .page-footer {
-	font-family: "Fjord";
 	font-style: italic;
 	text-align: center;
 	margin-top: 1.25em;
@@ -120,4 +145,25 @@ hr {
 .page-footer a {
 	color: inherit;
 	text-decoration: none;
+}
+blockquote::before, blockquote::after{
+	font-size: 400%;
+	color: #BEB5AA;
+	font-family: serif;
+	font-weight: bold;
+	position: absolute;
+	font-style: normal;
+}
+blockquote::before {
+	content: open-quote;
+	top: -0.15em;
+	left: -7%;
+}
+blockquote::after {
+	content: close-quote;
+	bottom: -0.55em;
+	right: -7%;
+}
+blockquote p + p {
+	margin-top: -0.5em;
 }
