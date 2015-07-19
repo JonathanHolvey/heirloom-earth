@@ -3,11 +3,11 @@
 	include("script/common.php");
 	include("cms/modules/blog.php");
 	$blogData = new blog;
-	$blogData->getPost($_GET["p"]);
+	$blogData->getList();
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<title><?= $blogData->data["title"] ?> - Heirloom Earth</title>
+	<title><?= ucfirst($_GET["match"]) ?> - Heirloom Earth</title>
 	<meta charset="UTF-8"/>
 	<meta name="description" content=""/>
 	<meta name="keywords" content=""/>
@@ -17,7 +17,7 @@
 <body>
 	<?php
 		include("templates/header.php");
-		include("templates/blog-post.php");
+		include("templates/blog-list.php");
 		include("templates/footer.php");
 	?>
 </body>
