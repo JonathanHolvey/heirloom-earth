@@ -12,8 +12,8 @@ a {
 	color: #77A669;
 }
 a:hover {
-	border-bottom: 0.07em solid #77A669;
-	color: #77A669;
+	/*border-bottom: 0.07em solid #77A669;*/
+	color: #CB8F3F;
 }
 h1 {
 	text-align: center;
@@ -29,7 +29,7 @@ h2 {
 	font-size: 250%;
 	font-weight: normal;
 	margin: -0.4em 0 0.4em 0;
-	color: #424540;
+	color: #CB8F3F;
 	line-height: 1em
 }
 h3, h4, h5, h6 {
@@ -96,6 +96,7 @@ blockquote p {
 	margin-bottom: 0.83em;
 }
 .header-nav a:hover {
+	color: #CB8F3F;
 	border: none;
 }
 .header-nav a.active {
@@ -113,9 +114,6 @@ blockquote p {
 	background-repeat: no-repeat;
 	background-position: center;
 	cursor: default;
-}
-.header-nav a:hover {
-	color: #77A669;
 }
 .post header time {
 	color: #77A669;
