@@ -2,17 +2,18 @@
 <?php
 	include("script/common.php");
 	include("cms/modules/blog.php");
-	$blogData = new blog;
-	$blogData->getList();
+	$filter = new blogFilter;
+	if (isset($_GET["m"]))
+		$filter->matching($_GET["m"], $_GET["f"], true);
+	$blogList = new blogList($filter);
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<title><?= ucfirst($_GET["match"]) ?> - Heirloom Earth</title>
+	<title><?= isset($_GET["m"]) ? ucfirst($_GET["m"]) : "All posts" ?> - Heirloom Earth</title>
 	<meta charset="UTF-8"/>
-	<meta name="description" content=""/>
-	<meta name="keywords" content=""/>
 	<base href="<?= findBase() ?>"/>
 	<?php include("templates/resources.php") ?>
+	<script type="text/javascript">$(document).ready(function() {$("#blog-link").addClass("active"); });</script>
 </head>
 <body>
 	<?php
