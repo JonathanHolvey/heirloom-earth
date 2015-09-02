@@ -215,36 +215,10 @@ blockquote p + p {
 .list article h2 {
 	margin-top: -0.2em;
 	white-space: nowrap;
-	overflow: hidden;
+	overflow-y: visible;
+	/*overflow-x: hidden;*/
 	width: 100%;
 	text-overflow: ellipsis;
-}
-.list article:first-of-type {
-	margin-top: 2.5em;
-}
-.list article h3 a {
-	color: #424540;
-}
-.list article h3 a:hover {
-	color: #77A669;
-}
-.list article h3:last-of-type {
-	float: left;
-}
-.list article .more {
-	float: right;
-	font-size: 113%;
-}
-.list article .more::after {
-	background-image: url("../images/arrow-right.svg");
-	display: inline-block;
-	background-size: 2em 0.7em;
-	height: 0.8em;
-	width: 1.6em;
-	content: "";
-	background-repeat: no-repeat;
-	position: relative;
-	top: 0.1em;
 }
 .list article p:last-of-type {
 	margin-bottom: 0;
