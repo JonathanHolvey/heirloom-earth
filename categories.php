@@ -2,8 +2,6 @@
 <?php
 	include("script/common.php");
 	include("cms/modules/blog.php");
-	$cache = new blogCache;
-	$categories = $cache->category;
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
