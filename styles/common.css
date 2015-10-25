@@ -11,9 +11,9 @@ a {
 	text-decoration: none;
 	color: #77A669;
 }
-a:hover {
+a:hover, a:hover h2 {
 	/*border-bottom: 0.07em solid #77A669;*/
-	color: #CB8F3F;
+	color: #CB8F3F !important;
 }
 h1 {
 	text-align: center;
@@ -22,7 +22,7 @@ h1 {
 	font-size: 344%;
 	font-weight: normal;
 	margin-top: 0;
-	margin-bottom: 0.1em;
+	margin-bottom: 0.4em;
 	line-height: 1em;
 }
 h2 {
@@ -49,6 +49,10 @@ p {
 	text-align: justify;
 	color: #424540;
 	line-height: 1.3em
+}
+p + h2 {
+	margin-top: 0.65em;
+	margin-bottom: 0.3em;
 }
 main {
 	max-width: 50em;
@@ -83,13 +87,13 @@ blockquote p {
 .header-nav {
 	font-family: "GoodlifeSans";
 	text-align: center;
-	color: #424540;
 	cursor: default;
 	font-size: 150%;
 	line-height: 1em;
 	margin-bottom: 0.5em;
 }
 .header-nav a {
+	color: #424540;
 	display: inline-block;
 	margin: 0 1em;
 	cursor: pointer;
@@ -123,6 +127,7 @@ blockquote p {
 	text-align: center;
 	line-height: 1em;
 	margin-bottom: 1.5em;
+	margin-top: -0.75em;
 	display: block;
 }
 .post p img {
@@ -193,7 +198,6 @@ blockquote p + p {
 	max-width: 50em;
 	width: 100%;
 	margin: 0 auto;
-	clear: both;
 	overflow: auto;
 	margin-bottom: 1.88em;
 	position: relative;
@@ -217,9 +221,28 @@ blockquote p + p {
 	overflow: hidden;
 	width: 100%;
 	text-overflow: ellipsis;
+	color: #424540;
 }
 .list article p:last-of-type {
 	margin-bottom: 0;
+}
+.list article .meta {
+	font-family: "GoodlifeSansCondensed";
+	font-size: 150%;
+	color: #424540;
+	margin-bottom: 0.4em;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.list article .meta .property {
+	float: left;
+	margin-right: 0.2em;
+	white-space: nowrap;
+	margin-bottom: -0.2em;
+}
+.list article .meta .value {
+	color: #77A669;
 }
 
 @media all and (max-width: 38em) {
@@ -270,6 +293,9 @@ blockquote p + p {
 		width: 6.5em;
 		height: 6.5em;
 	}
+	.list article .meta {
+		display: none;
+	}
 }
 
 @media all and (max-width: 29em) {
@@ -290,7 +316,7 @@ blockquote p + p {
 		height: 10em;
 	}
 	.header-nav a {
-		margin: 0 0.05em;
+		margin: 0 0.1em;
 		font-size: 80%;
 	}
 	.header-nav a.active::after {
@@ -320,9 +346,6 @@ blockquote p + p {
 	.list article p {
 		font-size: 95%;
 		margin-top: -0.2em;
-	}
-	.list article h2 {
-		margin-top: -0.1em;
 	}
 	.list article:first-of-type {
 		margin-top: 1.5em;
