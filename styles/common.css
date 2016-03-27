@@ -4,7 +4,7 @@ html {
 body {
 	margin: 1.25em;
 	font-size: 90%;
-	font-family: "Fjord";
+	font-family: "Arial";
 	color: #424540;
 }
 a {
@@ -13,7 +13,7 @@ a {
 }
 a:hover, a:hover h2 {
 	/*border-bottom: 0.07em solid #77A669;*/
-	color: #CB8F3F !important;
+	color: #E5A44D !important;
 }
 h1 {
 	text-align: center;
@@ -31,7 +31,7 @@ h2 {
 	font-weight: normal;
 	margin-top: 0;
 	margin-bottom: 0.1em;
-	color: #CB8F3F;
+	color: #91B786;
 	line-height: 1em
 }
 h3, h4, h5, h6 {
@@ -39,15 +39,15 @@ h3, h4, h5, h6 {
 	font-family: "GoodlifeSansCondensed";
 	font-weight: normal;
 	margin: 0;
+	color: #91B786;
 }
 p, ul, ol {
-	color: #424540;
-	font-size: 113%;
+	color: #6D726A;
+	font-size: 120%;
 	margin: 0 0 1.11em 0;
 }
 p {
 	text-align: justify;
-	color: #424540;
 	line-height: 1.3em
 }
 p + h2 {
@@ -101,11 +101,7 @@ blockquote p {
 	margin-bottom: 0.83em;
 }
 .header-nav a:hover {
-	color: #CB8F3F;
 	border: none;
-}
-.header-nav a.active {
-	color: #77A669;
 }
 .header-nav a.active::after {
 	content: "";
@@ -139,6 +135,9 @@ blockquote p {
 .post p img + em {
 	display: block;
 	text-align: center;
+	margin-top: -0.4em;
+	font-size: 90%;
+	color: #BEB5AA;
 }
 .post footer {
 	font-family: "GoodlifeSansCondensed";
@@ -225,6 +224,7 @@ blockquote p + p {
 }
 .list article p:last-of-type {
 	margin-bottom: 0;
+	font-size: 97%;
 }
 .list article .meta {
 	font-family: "GoodlifeSansCondensed";
@@ -328,10 +328,6 @@ blockquote p + p {
 	.post footer {
 		font-size: 160%;
 		margin-top: -0.2em;
-	}
-	.post p img + em {
-		margin-top: -0.4em;
-		font-size: 90%;
 	}
 	.list article {
 		min-height: 5.5em;

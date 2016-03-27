@@ -101,7 +101,7 @@
 		 url("fonts/2E978A_6_0.woff2") format("woff2"),
 		 url("fonts/2E978A_6_0.woff") format("woff"),
 		 url("fonts/2E978A_6_0.ttf") format("truetype");}
-*/ 
+		 
 @font-face {
     font-family: "Fjord";
     src: url("fonts/fjord-webfont.eot");
@@ -113,3 +113,4 @@
     font-weight: normal;
     font-style: normal;
 }
+*/ 
