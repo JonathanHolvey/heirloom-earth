@@ -10,6 +10,7 @@
 	<?php include("templates/resources.php") ?>
 </head>
 <body>
+	<?php include("templates/tracking.php") ?>
 	<?php include("templates/header.php") ?>
 	<?php include("templates/footer.php") ?>
 </body>

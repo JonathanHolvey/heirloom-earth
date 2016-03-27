@@ -16,6 +16,7 @@
 </head>
 <body>
 	<?php
+		include("templates/tracking.php");
 		include("templates/header.php");
 		include("templates/blog-post.php");
 		include("templates/footer.php");
