@@ -1,5 +1,7 @@
 <header class="page-header">
-	<img class="header-logo" src="images/logo.svg" alt="Heirloom Earth"/>
+	<a href="/">
+		<img class="header-logo" src="./images/logo.svg" alt="Heirloom Earth"/>
+	</a>
 	<nav class="header-nav">
 		<a id="blog-link" href="posts">Blog</a>
 		<a id="categories-link" href="categories">Categories</a>
