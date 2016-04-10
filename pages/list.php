@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <?php
-	include("script/common.php");
-	include("cms/modules/blog.php");
+	include("../script/common.php");
+	include("../cms/modules/blog.php");
 	$filter = new blogFilter;
 	if (isset($_GET["m"]))
 		$filter->matching($_GET["m"], $_GET["f"], true);
@@ -12,15 +12,15 @@
 	<title><?= isset($_GET["m"]) ? ucfirst($_GET["m"]) : "All posts" ?> - Heirloom Earth</title>
 	<meta charset="UTF-8"/>
 	<base href="<?= findBase() ?>"/>
-	<?php include("templates/resources.php") ?>
+	<?php include("../templates/resources.php") ?>
 	<script type="text/javascript">$(document).ready(function() {$("#blog-link").addClass("active"); });</script>
 </head>
 <body>
 	<?php
-		include("templates/tracking.php");
-		include("templates/header.php");
-		include("templates/blog-list.php");
-		include("templates/footer.php");
+		include("../templates/tracking.php");
+		include("../templates/header.php");
+		include("../templates/blog-list.php");
+		include("../templates/footer.php");
 	?>
 </body>
 </html>

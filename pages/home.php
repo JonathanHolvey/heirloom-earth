@@ -6,11 +6,11 @@
 	<meta name="description" content=""/>
 	<meta name="keywords" content=""/>
 	<meta name="google-site-verification" content="qg5eV80UdswQZ2s2lbXuPPFI0W70Z3PdSwPjz__VRn4"/>
-	<?php include("templates/resources.php") ?>
+	<?php include("../templates/resources.php") ?>
 </head>
 <body>
-	<?php include("templates/tracking.php") ?>
-	<?php include("templates/header.php") ?>
-	<?php include("templates/footer.php") ?>
+	<?php include("../templates/tracking.php") ?>
+	<?php include("../templates/header.php") ?>
+	<?php include("../templates/footer.php") ?>
 </body>
 </html>
