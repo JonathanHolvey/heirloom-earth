@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
-<pre><?php
+<?php
 	include("../cms/modules/blog.php");
 	$filter = new blogFilter();
 	$filter->grouping(1, 0);
 	$blogList = new blogList($filter);
 	$blogPost = $blogList->list[0];
-?></pre>
+?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<title>Heirloom Earth</title>
