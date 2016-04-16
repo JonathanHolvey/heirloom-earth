@@ -1,4 +1,11 @@
 <!DOCTYPE HTML>
+<pre><?php
+	include("../cms/modules/blog.php");
+	$filter = new blogFilter();
+	$filter->grouping(1, 0);
+	$blogList = new blogList($filter);
+	$blogPost = $blogList->list[0];
+?></pre>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<title>Heirloom Earth</title>
@@ -11,6 +18,7 @@
 <body>
 	<?php include("../templates/tracking.php") ?>
 	<?php include("../templates/header.php") ?>
+	<?php include("../templates/blog-post.php") ?>
 	<?php include("../templates/footer.php") ?>
 </body>
 </html>
