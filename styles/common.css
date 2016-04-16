@@ -7,11 +7,14 @@ body {
 	font-family: "Arial";
 	color: #424540;
 }
-a {
+a,
+button {
 	text-decoration: none;
 	color: #77A669;
 }
-a:hover, a:hover h2 {
+a:hover,
+a:hover h2,
+button:hover {
 	/*border-bottom: 0.07em solid #77A669;*/
 	color: #E5A44D !important;
 }
@@ -243,6 +246,59 @@ blockquote p + p {
 }
 .list article .meta .value {
 	color: #77A669;
+}
+form {
+	width: 60%;
+	margin: 0 auto;
+	margin-bottom: 0.4em;
+}
+form .field {
+	background: blue;
+	margin-bottom: 0.6em;
+	position: relative;
+}
+form .field label {
+	position: absolute;
+	text-align: right;
+	font-family: "GoodlifeSansCondensed";
+	font-size: 180%;
+	width: 2.5em;
+	right: 100%;
+	padding-right: 0.5em;
+}
+form .field input,
+form .field textarea {
+	border: 0;
+	background: #E9E6E2;
+	padding: 0.4em;
+	font-size: 110%;
+	width: 100%;
+	max-width: 100%;
+	min-width: 100%;
+	display: block;
+	margin-left: -0.4em;
+	color: #848980;
+}
+form .field textarea {
+	padding-top: 0.5em;
+}
+button {
+	font-family: "GoodlifeSansCondensed";
+	border: 0;
+	background: 0;
+	font-size: 180%;
+	line-height: 1em;
+}
+form button {
+	margin: 0 auto;
+	display: block;
+	padding: 0.2em 1.5em;
+}
+form hr {
+	margin-top: 1.25em;
+}
+form hr + button {
+	margin-top: -0.4em;
 }
 
 @media all and (max-width: 38em) {
