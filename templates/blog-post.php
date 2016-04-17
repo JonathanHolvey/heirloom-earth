@@ -2,7 +2,7 @@
 	<header>
 		<h1 itemprop="name headline"><?= $blogPost->title ?></h1>
 		<div style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><?= $blogPost->author ?></span></div>
-		<time itemprop="datePublished" datetime="<?= $blogPost->created ?>"><?= date("l j M Y", strtotime($blogPost->created)) ?></time>
+		<time itemprop="datePublished" datetime="<?= $blogPost->created ?>"><?= date("l j F Y", strtotime($blogPost->created)) ?></time>
 	</header>
 	<div itemprop="articleBody">
 		<?= $blogPost->body ?>
