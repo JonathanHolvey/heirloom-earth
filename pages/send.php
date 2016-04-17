@@ -9,5 +9,5 @@
 	
 	mail($to, $subject, $message, $headers);
 
-	header("location: /");
+	header("location: sent");
 ?>
