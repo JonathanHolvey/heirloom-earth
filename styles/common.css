@@ -410,4 +410,12 @@ form hr + button {
 	.page-footer {
 		font-size: 90%;
 	}
+	form .field {
+		position: relative;
+		left: 1.5em;
+	}
+	form .field label {
+		font-size: 150%;
+		top: 0.15em;
+	}
 }
