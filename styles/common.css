@@ -20,7 +20,7 @@ button:hover {
 }
 h1 {
 	text-align: center;
-	font-family: "GoodlifeSansCondensed";
+	font-family: "GoodlifeSansCondensed" sans-serif;
 	color: #424540;
 	font-size: 344%;
 	font-weight: normal;
@@ -29,7 +29,7 @@ h1 {
 	line-height: 1em;
 }
 h2 {
-	font-family: "GoodlifeSansCondensed";
+	font-family: "GoodlifeSansCondensed" sans-serif;
 	font-size: 250%;
 	font-weight: normal;
 	margin-top: 0;
@@ -39,7 +39,7 @@ h2 {
 }
 h3, h4, h5, h6 {
 	font-size: 180%;
-	font-family: "GoodlifeSansCondensed";
+	font-family: "GoodlifeSansCondensed" sans-serif;
 	font-weight: normal;
 	margin: 0;
 	color: #91B786;
@@ -84,14 +84,16 @@ blockquote p {
 	text-align: center;
 }
 
+header {
+	text-align: center;
+}
 .header-logo {
-	display: block;
 	height: 15.6em;
 	max-width: 100%;
 	margin: 0 auto 1.25em auto;
 }
 .header-nav {
-	font-family: "GoodlifeSans";
+	font-family: "GoodlifeSans" sans-serif;
 	text-align: center;
 	cursor: default;
 	font-size: 150%;
@@ -124,7 +126,7 @@ blockquote p {
 }
 .post header time {
 	color: #77A669;
-	font-family: "GoodlifeSans";
+	font-family: "GoodlifeSans" sans-serif;
 	font-size: 138%;
 	text-align: center;
 	line-height: 1em;
@@ -146,7 +148,7 @@ blockquote p {
 	color: #BEB5AA;
 }
 .post footer {
-	font-family: "GoodlifeSansCondensed";
+	font-family: "GoodlifeSansCondensed" sans-serif;
 	font-size: 200%;
 	text-align: center;
 	color: #424540;
@@ -233,7 +235,7 @@ blockquote p + p {
 	font-size: 97%;
 }
 .list article .meta {
-	font-family: "GoodlifeSansCondensed";
+	font-family: "GoodlifeSansCondensed" sans-serif;
 	font-size: 150%;
 	color: #424540;
 	margin-bottom: 0.4em;
@@ -263,7 +265,7 @@ form .field {
 form .field label {
 	position: absolute;
 	text-align: right;
-	font-family: "GoodlifeSansCondensed";
+	font-family: "GoodlifeSansCondensed" sans-serif;
 	font-size: 180%;
 	width: 2.5em;
 	right: 100%;
@@ -286,7 +288,7 @@ form .field textarea {
 	padding-top: 0.5em;
 }
 button {
-	font-family: "GoodlifeSansCondensed";
+	font-family: "GoodlifeSansCondensed" sans-serif;
 	border: 0;
 	background: 0;
 	font-size: 180%;
