@@ -1,0 +1,74 @@
+@import "reset";
+@import "fonts";
+
+$black: #000;
+$white: #fff;
+
+$dark: #424540;
+$green: #77a669;
+$light: lighten($dark, 90);
+$shadow: rgba($dark, 0.3);
+
+html,
+body {
+	height: 100%;
+}
+body {
+	font-family: "Cooper Hewitt", Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.2;
+	letter-spacing: 0.02em;
+	color: $dark;
+	min-width: 19em;
+}
+
+.container {
+	width: 100%;
+	min-height: 100%;
+	max-width: 80em;
+	margin: 0 auto;
+	box-sizing: border-box;
+	box-shadow: 0 0 0.7rem 0 $shadow;
+}
+a {
+	text-decoration: none;
+}
+section {
+	padding: 0 1rem;
+}
+header {
+	position: relative;
+	height: 20em;
+	background: linear-gradient(rgba($black, 0.3), rgba($black, 0)),
+				url("../img/hero-bali.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	.logo {
+		position: absolute;
+		height: 4.5rem;
+		top: 3rem;
+		left: 50%;
+		transform: translate(-50%);
+		opacity: 0.9;
+	}
+	nav {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		padding: 1em 0;
+		background: rgba($black, 0.25);
+		text-transform: uppercase;
+		text-align: center;
+		font-size: 70%;
+		a {
+			display: inline-block;
+			color: $white;
+			padding: 0.3em 1em 0.2em;
+			margin: 0 -0.15em;
+			&.active {
+				border: 1px solid $white;
+			}
+		}
+	}
+}
