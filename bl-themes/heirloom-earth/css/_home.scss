@@ -1,0 +1,17 @@
+// Single-page styles
+.avatar {
+	width: 50%;
+	max-width: 12em;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 6em;
+}
+.about .button br {
+	display: none;
+}
+.post-preview {
+	background: $light;
+	article:not(:last-child) {
+		margin-bottom: 1em;
+	}
+}
