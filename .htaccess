@@ -5,6 +5,7 @@ RewriteBase /
 RewriteCond %{HTTP_HOST} ^www\..*$ [NC]
 RewriteRule ^(.*)$ http://heirloom-earth.com/$1 [R=301,NC,QSA]
 
+RewriteCond %{HTTP_HOST} ^heirloom-earth [NC]
 RewriteRule ^(.*)/$ $1 [R=301]
 
 RewriteRule ^$ pages/home.php [NC,L]
