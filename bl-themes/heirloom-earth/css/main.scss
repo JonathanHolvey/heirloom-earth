@@ -10,6 +10,11 @@ $green: #77a669;
 $light: lighten($dark, 65);
 $shadow: rgba($dark, 0.3);
 
+// Break points
+$small: all and (min-width: 30em);
+$medium: all and (min-width: 40em);
+$large: all and (min-width: 50em);
+
 // Font styles
 %title {
 	font-size: 150%;

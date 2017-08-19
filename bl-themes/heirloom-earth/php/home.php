@@ -8,10 +8,12 @@
 	<main>
 	<?php include(PATH_THEME_PHP . "_header.php") ?>
 		<section class="about">
-			<h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</h1>
-			<img class="avatar" src="<?= HTML_PATH_THEME_IMG ?>avatar.jpg" alt=""/>
-			<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-			<a class="button light" href="">Find me on<br/> Facebook</a>
+			<div>
+				<h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</h1>
+				<img class="avatar" src="<?= HTML_PATH_THEME_IMG ?>avatar.jpg" alt=""/>
+				<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+				<a class="button light" href="">Find me on<br/> Facebook</a>
+			</div>
 		</section>
 		<section class="post-preview">
 			<article>

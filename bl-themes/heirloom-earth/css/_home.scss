@@ -1,4 +1,7 @@
 // Single-page styles
+.about {
+	overflow: auto;
+}
 .avatar {
 	width: 50%;
 	max-width: 12em;
@@ -13,5 +16,31 @@
 	background: $light;
 	article:not(:last-child) {
 		margin-bottom: 1em;
+	}
+}
+
+@media $small {
+	.avatar {
+		float: right;
+		border-radius: 0;
+		margin-left: 1em;
+		margin-bottom: 0;
+	}
+	.about .button br {
+		display: block;
+	}
+}
+@media $medium {
+	.about h1 {
+		float: left;
+		width: calc(100% - 8.7em);
+	}
+	.about .button br {
+		display: none;
+	}
+}
+@media $large {
+	.about p {
+		float: right;
 	}
 }
