@@ -20,9 +20,10 @@ main {
 	box-shadow: 0 0 0.7rem 0 $shadow;
 }
 section > * {
-	max-width: 52em;
+	max-width: 43em;
 	margin-left: auto;
 	margin-right: auto;
+	padding: 1rem;
 }
 header {
 	position: relative;
@@ -34,8 +35,8 @@ header {
 	background-position: 50% 50%;
 	.logo {
 		position: absolute;
-		height: 4.5rem;
-		top: 3rem;
+		height: 4.5em;
+		top: 3em;
 		left: 50%;
 		transform: translate(-50%);
 		opacity: 0.9;
@@ -118,5 +119,25 @@ footer {
 	}
 	.twitter {
 		@include icon-twitter($light);
+	}
+}
+
+@media $medium {
+	body {
+		font-size: 110%;
+	}
+	section {
+		padding: 1rem;
+	}
+}
+@media $large {
+	body {
+		font-size: 130%;
+	}
+	h1 {
+		font-size: 180%;
+	}
+	section {
+		padding: 2rem;
 	}
 }

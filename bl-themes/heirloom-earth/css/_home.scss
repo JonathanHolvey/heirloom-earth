@@ -42,5 +42,29 @@
 @media $large {
 	.about p {
 		float: right;
+		clear: right;
+		width: calc(100% - 12.5em);
+		margin-top: 1em;
+	}
+	.about h1 {
+		width: calc(100% - 6.3em);
+		// margin-top: 3em;
+		min-height: 5.6em;
+		position: relative;
+		div {
+			position: absolute;
+			bottom: 0;
+		}
+	}
+	.about .button {
+		float: right;
+		clear: left;
+		margin: 1.5em 1em;
+		br {
+			display: block;
+		}
+	}
+	.avatar {
+		max-width: 10em;
 	}
 }
