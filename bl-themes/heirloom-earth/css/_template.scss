@@ -69,35 +69,34 @@ footer {
 	}
 	.footer-bar {
 		background: $dark;
-		padding: 1em;
-		padding-bottom: 1em;
+		padding: 1rem;
 		text-align: right;
 		position: relative;
 		.site-info,
 		a {
 			color: $light;
 		}
-		.site-info {
-			font-size: 60%;
-			text-align: center;
-			margin-top: 1.2em;
-			margin-bottom: -1em;
-			p {
-				margin-bottom: 0.2em;
-			}
-			p:last-child {
-				opacity: 0.5;
-			}
-		}
 		& > a {
 			display: inline-block;
 			margin-left: 0.5em;
 		}
-		.social-links {
-			position: absolute;
-			left: 1em;
-			top: 0.8em;
-			text-align: left;
+	}
+	.social-links {
+		position: absolute;
+		left: 1em;
+		top: 0.8em;
+		text-align: left;
+	}
+	.site-info {
+		font-size: 60%;
+		text-align: center;
+		margin-top: 0.7rem;
+		margin-bottom: -0.5rem;
+		p {
+			margin-bottom: 0.2em;
+		}
+		p:last-child {
+			opacity: 0.5;
 		}
 	}
 }
@@ -134,6 +133,26 @@ footer {
 	section {
 		padding: 1rem;
 	}
+	footer {
+		.logo-icon {
+			width: 3em;
+			margin-top: -2em;
+			margin-bottom: 1.5em;
+		}
+		.footer-bar {
+			padding-top: 1.5em;
+			padding-bottom: 1.2em;
+		}
+		.site-info {
+			margin-top: -1.5rem;
+			p {
+				margin-bottom: 0.4em;
+			}
+		}
+		.social-links {
+			top: 1.5em;
+		}
+	}
 }
 @media $large {
 	body {
@@ -144,5 +163,19 @@ footer {
 	}
 	section {
 		padding: 2rem;
+	}
+	footer {
+		.logo-icon {
+			margin-top: -2.5em;
+			margin-bottom: 2em;
+			width: 4em;
+		}
+		.footer-bar {
+			padding-left: 1.5em;
+			padding-right: 1.5em;
+		}
+		.social-links {
+			left: 1.5em;
+		}
 	}
 }

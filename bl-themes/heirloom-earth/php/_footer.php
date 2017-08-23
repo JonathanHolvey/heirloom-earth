@@ -10,7 +10,7 @@
 		</div>
 		<div class="site-info">
 			<p>Copyright Rikki-Lea James 2017 - All rights reserved</p>
-			<p>Website by <a href="http://rocketchili.com">Rocket Chilli</a>, powered by <a href="http://bludit.com">Bludit CMS</a></p>
+			<p>Website by <a href="http://rocketchilli.com">Rocket Chilli</a>, powered by <a href="http://bludit.com">Bludit CMS</a></p>
 		</div>
 	</div>
 </footer>
