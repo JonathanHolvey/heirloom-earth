@@ -122,6 +122,11 @@ footer {
 	}
 }
 
+@media $small {
+	header nav {
+		font-size: 80%;
+	}
+}
 @media $medium {
 	body {
 		font-size: 110%;

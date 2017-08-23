@@ -4,7 +4,7 @@
 }
 .avatar {
 	width: 50%;
-	max-width: 12em;
+	max-width: 10em;
 	margin-left: auto;
 	margin-right: auto;
 	border-radius: 6em;
@@ -23,31 +23,31 @@
 	.avatar {
 		float: right;
 		border-radius: 0;
-		margin-left: 1em;
+		margin-left: 1rem;
 		margin-bottom: 0;
 	}
-	.about .button br {
-		display: block;
+	.about h1 {
+		float: left;
+	}
+	.about h1,
+	.about p {
+		width: calc(100% - 11rem);
 	}
 }
 @media $medium {
 	.about h1 {
-		float: left;
-		width: calc(100% - 8.7em);
-	}
-	.about .button br {
-		display: none;
+		width: auto;
 	}
 }
 @media $large {
 	.about p {
 		float: right;
 		clear: right;
-		width: calc(100% - 12.5em);
-		margin-top: 1em;
+		width: calc(100% - 16.1rem);
+		margin-top: 0.5em;
 	}
 	.about h1 {
-		width: calc(100% - 6.3em);
+		width: calc(100% - 14.5rem);
 		// margin-top: 3em;
 		min-height: 5.6em;
 		position: relative;
@@ -59,12 +59,12 @@
 	.about .button {
 		float: right;
 		clear: left;
-		margin: 1.5em 1em;
+		margin: 1em;
 		br {
 			display: block;
 		}
 	}
 	.avatar {
-		max-width: 10em;
+		margin-left: 0.5rem;
 	}
 }
