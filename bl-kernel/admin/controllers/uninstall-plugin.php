@@ -4,9 +4,9 @@
 // Check role
 // ============================================================================
 
-if($Login->role()!=='admin') {
-	Alert::set($Language->g('you-do-not-have-sufficient-permissions'));
-	Redirect::page('admin', 'dashboard');
+if ($Login->role()!=='admin') {
+	Alert::set($Language->g('You do not have sufficient permissions'));
+	Redirect::page('dashboard');
 }
 
 // ============================================================================
@@ -14,7 +14,7 @@ if($Login->role()!=='admin') {
 // ============================================================================
 
 // ============================================================================
-// Main after POST
+// Main before POST
 // ============================================================================
 
 // ============================================================================
@@ -25,8 +25,5 @@ if($Login->role()!=='admin') {
 // Main after POST
 // ============================================================================
 $pluginClassName = $layout['parameters'];
-
-$Plugin = new $pluginClassName;
-$Plugin->uninstall();
-
-Redirect::page('admin', 'plugins');
+deactivatePlugin($pluginClassName);
+Redirect::page('plugins');

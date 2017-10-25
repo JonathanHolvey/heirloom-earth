@@ -2,11 +2,11 @@
 <html>
 <head>
 	<title><?= $Site->title() ?></title>
-	<?php include(PATH_THEME_PHP . "_head.php") ?>
+	<?php include(THEME_DIR_PHP . "_head.php") ?>
 </head>
 <body>
 	<main>
-	<?php include(PATH_THEME_PHP . "_header.php") ?>
+	<?php include(THEME_DIR_PHP . "_header.php") ?>
 		<section class="about">
 			<div>
 				<h1><div>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.<div></h1>
@@ -45,7 +45,7 @@
 			<div class="block">
 			<div class="block">
 		</section>
-		<?php include(PATH_THEME_PHP . "_footer.php") ?>
+		<?php include(THEME_DIR_PHP . "_footer.php") ?>
 	</main>
 </body>
 </html>

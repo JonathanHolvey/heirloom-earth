@@ -63,6 +63,14 @@ HTML::formOpen(array('class'=>'uk-form-horizontal'));
 	));
 
 	HTML::formInputText(array(
+		'name'=>'codepen',
+		'label'=>'Codepen',
+		'value'=>$Site->codepen(),
+		'class'=>'uk-width-1-2 uk-form-medium',
+		'tip'=>''
+	));
+
+	HTML::formInputText(array(
 		'name'=>'googlePlus',
 		'label'=>'Google+',
 		'value'=>$Site->googlePlus(),
@@ -89,6 +97,7 @@ HTML::formOpen(array('class'=>'uk-form-horizontal'));
 	echo '<div class="uk-form-row">
 		<div class="uk-form-controls">
 		<button type="submit" class="uk-button uk-button-primary">'.$L->g('Save').'</button>
+		<a class="uk-button" href="'.HTML_PATH_ADMIN_ROOT.'settings-general">'.$L->g('Cancel').'</a>
 		</div>
 	</div>';
 

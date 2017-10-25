@@ -1,7 +1,7 @@
 {
 	"plugin-data":
 	{
-		"name": "Liste de mots clés",
-		"description": "Affiche la lise de tous les mots clés."
+		"name": "Liste des mots-clés",
+		"description": "Affiche tous les mots-clés sur la barre latérale."
 	}
 }

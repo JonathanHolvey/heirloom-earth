@@ -2,109 +2,65 @@
 
 class pluginSitemap extends Plugin {
 
+	// Method called on the settings of the plugin on the admin area
+	public function form()
+	{
+		global $Language;
+
+		$html  = '<div>';
+		$html .= '<label>'.$Language->get('Sitemap URL').'</label>';
+		$html .= '<a href="'.Theme::sitemapUrl().'">'.Theme::sitemapUrl().'</a>';
+		$html .= '</div>';
+
+		return $html;
+	}
+
 	private function createXML()
 	{
 		global $Site;
 		global $dbPages;
-		global $dbPosts;
-		global $Url;
 
-		$doc = new DOMDocument('1.0', 'UTF-8');
+		$xml = '<?xml version="1.0" encoding="UTF-8" ?>';
+		$xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
-		// Friendly XML code
+		$xml .= '<url>';
+		$xml .= '<loc>'.$Site->url().'</loc>';
+		$xml .= '</url>';
+
+		// Get DB
+		$pageNumber = 1;
+		$amountOfItems = -1;
+		$onlyPublished = true;
+		$db = $dbPages->getList($pageNumber, $amountOfItems, $onlyPublished);
+
+		$keys = array_keys($db);
+		foreach($keys as $pageKey) {
+			// Create the page object from the page key
+			$page = buildPage($pageKey);
+
+			$xml .= '<url>';
+			$xml .= '<loc>'.$page->permalink().'</loc>';
+			$xml .= '<lastmod>'.$page->dateRaw(SITEMAP_DATE_FORMAT).'</lastmod>';
+			$xml .= '<changefreq>daily</changefreq>';
+			$xml .= '</url>';
+		}
+
+		$xml .= '</urlset>';
+
+		// New DOM document
+		$doc = new DOMDocument();
 		$doc->formatOutput = true;
-
-		// Create urlset element
-		$urlset = $doc->createElement('urlset');
-		$attribute = $doc->createAttribute('xmlns');
-		$attribute->value = 'http://www.sitemaps.org/schemas/sitemap/0.9';
-		$urlset->appendChild($attribute);
-
-		// --- Base URL ---
-
-		// Create url, loc and lastmod elements
-		$url 		= $doc->createElement('url');
-		$loc 		= $doc->createElement('loc', $Site->url());
-		$lastmod	= $doc->createElement('lastmod', Date::current(SITEMAP_DATE_FORMAT));
-
-		// Append loc and lastmod -> url
-		$url->appendChild($loc);
-		$url->appendChild($lastmod);
-
-		// Append url -> urlset
-		$urlset->appendChild($url);
-
-		// --- Pages and Posts ---
-		$all = array();
-		$url = trim($Site->url(),'/');
-
-		// --- Pages ---
-		$filter = trim($Url->filters('page'),'/');
-		$pages = $dbPages->getDB();
-		unset($pages['error']);
-		foreach($pages as $key=>$db)
-		{
-			if($db['status']=='published')
-			{
-				$permalink = empty($filter) ? $url.'/'.$key : $url.'/'.$filter.'/'.$key;
-				$date = Date::format($db['date'], DB_DATE_FORMAT, SITEMAP_DATE_FORMAT);
-				array_push($all, array('permalink'=>$permalink, 'date'=>$date));
-			}
-		}
-
-		// --- Posts ---
-		$filter = rtrim($Url->filters('post'),'/');
-		$posts = $dbPosts->getDB();
-		foreach($posts as $key=>$db)
-		{
-			if($db['status']=='published')
-			{
-				$permalink = empty($filter) ? $url.'/'.$key : $url.'/'.$filter.'/'.$key;
-				$date = Date::format($db['date'], DB_DATE_FORMAT, SITEMAP_DATE_FORMAT);
-				array_push($all, array('permalink'=>$permalink, 'date'=>$date));
-			}
-		}
-
-		// Generate the XML for posts and pages
-		foreach($all as $db)
-		{
-			// Create url, loc and lastmod elements
-			$url 		= $doc->createElement('url');
-			$loc 		= $doc->createElement('loc', $db['permalink']);
-			$lastmod	= $doc->createElement('lastmod', $db['date']);
-
-			// Append loc and lastmod -> url
-			$url->appendChild($loc);
-			$url->appendChild($lastmod);
-
-			// Append url -> urlset
-			$urlset->appendChild($url);
-		}
-
-		// Append urlset -> XML
-		$doc->appendChild($urlset);
-
-		$doc->save(PATH_PLUGINS_DATABASES.$this->directoryName.DS.'sitemap.xml');
+		$doc->loadXML($xml);
+		$doc->save($this->workspace().'sitemap.xml');
 	}
 
-	public function install($position = 0)
+	public function install($position=0)
 	{
 		parent::install($position);
-
-		$this->createXML();
-	}
-
-	public function afterPostCreate()
-	{
 		$this->createXML();
 	}
 
 	public function afterPageCreate()
-	{
-		$this->createXML();
-	}
-
-	public function afterPostModify()
 	{
 		$this->createXML();
 	}
@@ -114,39 +70,32 @@ class pluginSitemap extends Plugin {
 		$this->createXML();
 	}
 
-	public function afterPostDelete()
-	{
-		$this->createXML();
-	}
-
 	public function afterPageDelete()
 	{
 		$this->createXML();
 	}
 
-	public function beforeRulesLoad()
+	public function beforeAll()
 	{
-		global $Url;
-
-		if( $Url->uri() === HTML_PATH_ROOT.'sitemap.xml' )
-		{
+		$webhook = 'sitemap.xml';
+		if( $this->webhook($webhook) ) {
 			// Send XML header
 			header('Content-type: text/xml');
-
-			// New DOM document
 			$doc = new DOMDocument();
 
-			// Load XML
+			// Workaround for a bug https://bugs.php.net/bug.php?id=62577
 			libxml_disable_entity_loader(false);
-			$doc->load(PATH_PLUGINS_DATABASES.$this->directoryName.DS.'sitemap.xml');
+
+			// Load XML
+			$doc->load($this->workspace().'sitemap.xml');
+
 			libxml_disable_entity_loader(true);
 
 			// Print the XML
 			echo $doc->saveXML();
 
-			// Stop Bludit running
-			exit;
+			// Terminate the run successfully
+			exit(0);
 		}
 	}
-
 }

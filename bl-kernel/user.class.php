@@ -36,6 +36,11 @@ class User
 		return $this->getField('lastName');
 	}
 
+	public function tokenAuth()
+	{
+		return $this->getField('tokenAuth');
+	}
+
 	public function role()
 	{
 		return $this->getField('role');
@@ -76,6 +81,11 @@ class User
 	public function facebook()
 	{
 		return $this->getField('facebook');
+	}
+
+	public function codepen()
+	{
+		return $this->getField('codepen');
 	}
 
 	public function googlePlus()

@@ -45,12 +45,12 @@ class Text {
 		'А'=>'A', 'Б'=>'B', 'В'=>'V', 'Г'=>'G', 'Д'=>'D', 'Е'=>'E', 'Ж'=>'Zh', 'З'=>'Z',
 		'И'=>'I', 'Й'=>'J', 'К'=>'K', 'Л'=>'L', 'М'=>'M', 'Н'=>'N', 'О'=>'O', 'П'=>'P',
 		'Р'=>'R', 'С'=>'S', 'Т'=>'T', 'У'=>'U', 'Ф'=>'F', 'Х'=>'H', 'Ц'=>'C', 'Ч'=>'Ch',
-		'Ш'=>'Sh', 'Щ'=>'Sh', 'Ъ'=>'',	'Ь'=>'J','Ю'=>'Yu','Я'=>'Ya',		
+		'Ш'=>'Sh', 'Щ'=>'Sh', 'Ъ'=>'',	'Ь'=>'J','Ю'=>'Yu','Я'=>'Ya',
 		'а'=>'a', 'б'=>'b', 'в'=>'v', 'г'=>'g', 'д'=>'d', 'е'=>'e', 'ж'=>'zh','з'=>'z',
 		'и'=>'i', 'й'=>'j', 'к'=>'k', 'л'=>'l', 'м'=>'m', 'н'=>'n', 'о'=>'o','п'=>'p',
 		'р'=>'r', 'с'=>'s', 'т'=>'t', 'у'=>'u', 'ф'=>'f', 'х'=>'h', 'ц'=>'c', 'ч'=>'ch',
 		'ш'=>'sh', 'щ'=>'sh', 'ъ'=>'', 'ь'=>'j', 'ю'=>'yu', 'я'=>'ya',
-		
+
 		// Ukrainian
 		'Є'=>'Ye', 'І'=>'I', 'Ї'=>'Yi', 'Ґ'=>'G',
 		'є'=>'ye', 'і'=>'i', 'ї'=>'yi', 'ґ'=>'g',
@@ -68,34 +68,7 @@ class Text {
 		'Ā'=>'A', 'Č'=>'C', 'Ē'=>'E', 'Ģ'=>'G', 'Ī'=>'i', 'Ķ'=>'k', 'Ļ'=>'L', 'Ņ'=>'N',
 		'Š'=>'S', 'Ū'=>'u', 'Ž'=>'Z',
 		'ā'=>'a', 'č'=>'c', 'ē'=>'e', 'ģ'=>'g', 'ī'=>'i', 'ķ'=>'k', 'ļ'=>'l', 'ņ'=>'n',
-		'š'=>'s', 'ū'=>'u', 'ž'=>'z',
-		// Vietnamese
-		'Ả'=>'A', 'Ạ'=>'A',
-		'Ă'=>'A', 'Ằ'=>'A', 'Ắ'=>'A', 'Ẳ'=>'A', 'Ẵ'=>'A', 'Ặ'=>'A',
-		'Ầ'=>'A', 'Ấ'=>'A', 'Ẩ'=>'A', 'Ẫ' => 'A', 'Ậ'=>'A',
-		'Ẻ'=>'E', 'Ẽ'=>'E', 'Ẹ'=>'E',
-		'Ề'=>'E', 'Ế'=>'E', 'Ể'=>'E', 'Ễ'=>'E', 'Ệ'=>'E',
-		'Ỉ'=>'I', 'Ĩ'=>'I', 'Ị'=>'I',
-		'Ỏ'=>'O', 'Ọ'=>'O',
-		'Ơ'=>'O', 'Ờ'=>'O', 'Ớ'=>'O', 'Ở'=>'O', 'Ỡ'=>'O', 'Ợ'=>'O',
-		'Ồ'=>'O', 'Ố'=>'O', 'Ổ'=>'O', 'Ỗ'=>'O', 'Ộ'=>'O',
-		'Ư'=>'U', 'Ừ'=>'U', 'Ứ'=>'U', 'Ử'=>'U', 'Ữ'=>'U', 'Ự'=>'U',
-		'Ủ'=>'U', 'Ũ'=>'U',
-		'Ỳ'=>'Y', 'Ỷ'=>'Y', 'Ỹ'=>'Y', 'Ỵ' => 'Y',
-		'Đ'=>'D',
-		'ả'=>'a', 'ạ'=>'a',
-		'ă'=>'a', 'ằ'=>'a', 'ắ'=>'a', 'ẳ'=>'a', 'ặ'=>'a', 'ẵ'=>'a',
-		'ầ'=>'a', 'ấ'=>'a', 'ẩ'=>'a', 'ẫ' => 'a', 'ậ'=>'a',
-		'ẻ'=>'e', 'ẽ'=>'e', 'ẹ'=>'e',
-		'ề'=>'e', 'ế'=>'e', 'ể'=>'e', 'ễ'=>'e', 'ệ'=>'e',
-		'ỉ'=>'i', 'ĩ'=>'i', 'ị'=>'i',
-		'ỏ'=>'o', 'ọ'=>'o',
-		'ơ'=>'o', 'ờ'=>'o', 'ớ'=>'o', 'ở'=>'o', 'ỡ'=>'o', 'ợ'=>'o',
-		'ồ'=>'o', 'ố'=>'o', 'ổ'=>'o', 'ỗ'=>'o', 'ộ'=>'o',
-		'ư'=>'u', 'ừ'=>'u', 'ứ'=>'u', 'ử'=>'u', 'ữ'=>'u', 'ự'=>'u',
-		'ủ'=>'u', 'ũ'=>'u',
-		'ỳ'=>'y', 'ỷ'=>'y', 'ỹ'=>'y', 'ỵ' => 'y',
-		'đ'=>'d',
+		'š'=>'s', 'ū'=>'u', 'ž'=>'z'
 	);
 
 	public static function addSlashes($string, $begin=true, $end=true)
@@ -161,7 +134,7 @@ class Text {
 		$string = str_replace(array_keys(self::$specialChars), self::$specialChars, $string);
 
 		if(function_exists('iconv')) {
-			$string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
+			$string = iconv(CHARSET, 'ASCII//TRANSLIT', $string);
 		}
 
 		$string = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $string);
@@ -179,32 +152,37 @@ class Text {
 	}
 
 	// String to lowercase
-	public static function lowercase($string, $encoding='UTF-8')
+	public static function lowercase($string)
 	{
-		return mb_strtolower($string, $encoding);
+		return mb_strtolower($string, CHARSET);
 	}
 
 	// Make a string's first character uppercase
-	public static function firstCharUp($string, $encoding='UTF-8')
+	public static function firstCharUp($string)
 	{
 		// Thanks http://stackoverflow.com/questions/2517947/ucfirst-function-for-multibyte-character-encodings
-		$strlen 	= mb_strlen($string, $encoding);
-		$firstChar 	= mb_substr($string, 0, 1, $encoding);
-		$then 		= mb_substr($string, 1, $strlen - 1, $encoding);
+		$strlen 	= mb_strlen($string, CHARSET);
+		$firstChar 	= mb_substr($string, 0, 1, CHARSET);
+		$then 		= mb_substr($string, 1, $strlen - 1, CHARSET);
 
-		return mb_strtoupper($firstChar, $encoding).$then;
+		return mb_strtoupper($firstChar, CHARSET).$then;
 	}
 
 	// Find position of first occurrence of substring in a string otherwise returns FALSE.
 	public static function stringPosition($string, $substring)
 	{
-		return mb_strpos($string, $substring, 0, 'UTF-8');
+		return mb_strpos($string, $substring, 0, CHARSET);
+	}
+
+	public static function stringContains($string, $substring)
+	{
+		return (self::stringPosition($string, $substring) !== false);
 	}
 
 	// Returns the portion of string specified by the start and length parameters.
 	public static function cut($string, $start, $length)
 	{
-		$cut = mb_substr($string, $start, $length, 'UTF-8');
+		$cut = mb_substr($string, $start, $length, CHARSET);
 
 		if(empty($cut)) {
 			return '';
@@ -213,10 +191,15 @@ class Text {
 		return $cut;
 	}
 
+	public static function removeHTMLTags($string)
+	{
+		return strip_tags($string);
+	}
+
 	// Return string length
 	public static function length($string)
 	{
-		return mb_strlen($string, 'UTF-8');
+		return mb_strlen($string, CHARSET);
 	}
 
 	public static function isEmpty($string)
@@ -237,7 +220,10 @@ class Text {
 
 	public static function imgRel2Abs($string, $base)
 	{
-		return preg_replace('/(src)="([^:"]*)(?:")/', "$1=\"$base$2\"", $string);
+		$pattern = '/<img([^>]*)(src)=\"(?!https:)(?!http:)(?!\/\/)(.*?)\"(.*?)>/';
+		$replace = "<img\${1} src=\"".$base."\${3}\" \${4}>";
+
+		return preg_replace($pattern, $replace, $string);
 	}
 
 	public static function pre2htmlentities($string)
@@ -247,4 +233,29 @@ class Text {
 			$string);
 	}
 
+	// Truncates the string under the limit specified by the limit parameter.
+	public static function truncate($string, $limit, $end = '...')
+	{
+		// Check if over $limit
+		if(mb_strlen($string) > $limit) {
+
+			// Check if string is only one word
+			if(preg_match('/\s/', $string)) {
+
+				// Append the string specified by the end parameter to the end of the string as it is over the limit.
+				$truncate = trim(mb_substr($string, 0, mb_strpos($string, ' ', $limit, CHARSET), CHARSET));
+			} else {
+				$truncate = trim(mb_substr($string, 0, $limit, CHARSET));
+			}
+			$truncate = $truncate.$end;
+		} else {
+			$truncate = $string;
+		}
+
+		if(empty($truncate)) {
+			return '';
+		}
+
+		return $truncate;
+	}
 }

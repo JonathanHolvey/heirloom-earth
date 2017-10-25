@@ -2,192 +2,185 @@
 
 class Theme {
 
-	public static function favicon($file='favicon.png', $path=HTML_PATH_THEME_IMG, $typeIcon=true, $echo=true)
+	public static function title()
 	{
-		$type = 'image/png';
-		if($typeIcon) {
-			$type = 'image/x-icon';
-		}
-
-		$tmp = '<link rel="shortcut icon" href="'.$path.$file.'" type="'.$type.'">'.PHP_EOL;
-
-		if($echo) {
-			echo $tmp;
-		}
-
-		return $tmp;
+		global $Site;
+		return $Site->title();
 	}
 
-	public static function css($files, $path=DOMAIN_THEME_CSS, $echo=true)
+	public static function description()
 	{
-		if(!is_array($files)) {
-			$files = array($files);
-		}
-
-		$tmp = '';
-		foreach($files as $file) {
-			$tmp .= '<link rel="stylesheet" type="text/css" href="'.$path.$file.'">'.PHP_EOL;
-		}
-
-		if($echo) {
-			echo $tmp;
-		}
-
-		return $tmp;
+		global $Site;
+		return $Site->description();
 	}
 
-	public static function javascript($files, $path=HTML_PATH_THEME_JS, $echo=true)
+	public static function slogan()
 	{
-		if(!is_array($files)) {
-			$files = array($files);
-		}
-
-		$tmp = '';
-		foreach($files as $file) {
-			$tmp .= '<script src="'.$path.$file.'"></script>'.PHP_EOL;
-		}
-
-		if($echo) {
-			echo $tmp;
-		}
-
-		return $tmp;
+		global $Site;
+		return $Site->slogan();
 	}
 
-	public static function title($title=false, $echo=true)
+	public static function footer()
+	{
+		global $Site;
+		return $Site->footer();
+	}
+
+	public static function rssUrl()
+	{
+		if (pluginEnabled('RSS')) {
+			return DOMAIN_BASE.'rss.xml';
+		}
+		return false;
+	}
+
+	public static function sitemapUrl()
+	{
+		if (pluginEnabled('Sitemap')) {
+			return DOMAIN_BASE.'sitemap.xml';
+		}
+		return false;
+	}
+
+	public static function siteUrl()
+	{
+		global $Site;
+		return $Site->url();
+	}
+
+	public static function adminUrl()
+	{
+		return DOMAIN_ADMIN;
+	}
+
+	// Return the metatag <title> with a predefine structure
+	public static function headTitle()
 	{
 		global $Url;
-		global $Post, $Page;
 		global $Site;
 		global $dbTags;
+		global $dbCategories;
+		global $WHERE_AM_I;
+		global $page;
 
-		$tmp = $title;
+		$title = $Site->title();
 
-		if(empty($title))
-		{
-			if( $Url->whereAmI()=='post' ) {
-				$tmp = $Post->title().' - '.$Site->title();
-			}
-			elseif( $Url->whereAmI()=='page' ) {
-				$tmp = $Page->title().' - '.$Site->title();
-			}
-			elseif( $Url->whereAmI()=='tag' ) {
-				$tag = $dbTags->getTag($Url->slug());
-				$tmp = $tag.' - '.$Site->title();
-			}
-			else {
-				$tmp = $Site->title();
-			}
+		if (Text::isNotEmpty($Site->slogan())) {
+			$title = $Site->slogan().' | '.$Site->title();
 		}
 
-		$tmp = '<title>'.$tmp.'</title>'.PHP_EOL;
-
-		if($echo) {
-			echo $tmp;
+		if ($WHERE_AM_I=='page') {
+			$title = $page->title().' | '.$Site->title();
+		}
+		elseif ($WHERE_AM_I=='tag') {
+			$tagKey = $Url->slug();
+			$tagName = $dbTags->getName($tagKey);
+			$title = $tagName.' | '.$Site->title();
+		}
+		elseif ($WHERE_AM_I=='category') {
+			$categoryKey = $Url->slug();
+			$categoryName = $dbCategories->getName($categoryKey);
+			$title = $categoryName.' | '.$Site->title();
 		}
 
-		return $tmp;
+		return '<title>'.$title.'</title>'.PHP_EOL;
 	}
 
-	public static function description($description=false, $echo=true)
+	// Return the metatag <decription> with a predefine structure
+	public static function headDescription()
 	{
-		global $Url;
-		global $Post, $Page;
 		global $Site;
+		global $WHERE_AM_I;
+		global $page;
 
-		$tmp = $description;
+		$description = $Site->description();
 
-		if(empty($description))
-		{
-			if( $Url->whereAmI()=='post' ) {
-				$tmp = $Post->description();
-			}
-			elseif( $Url->whereAmI()=='page' ) {
-				$tmp = $Page->description();
-			}
-			else {
-				$tmp = $Site->description();
-			}
+		if( $WHERE_AM_I=='page' ) {
+			$description = $page->description();
 		}
 
-		$tmp = '<meta name="description" content="'.$tmp.'">'.PHP_EOL;
-
-		if($echo) {
-			echo $tmp;
-		}
-
-		return $tmp;
+		return '<meta name="description" content="'.$description.'">'.PHP_EOL;
 	}
 
-	public static function keywords($keywords, $echo=true)
+	public static function charset($charset)
 	{
-		if(is_array($keywords)) {
-			$keywords = implode(',', $keywords);
-		}
-
-		$tmp = '<meta name="keywords" content="'.$keywords.'">'.PHP_EOL;
-
-		if($echo) {
-			echo $tmp;
-		}
-
-		return $tmp;
+		return '<meta charset="'.$charset.'">'.PHP_EOL;
 	}
 
-	public static function viewport($content='width=device-width, initial-scale=1.0', $echo=true)
+	public static function viewport($content)
 	{
-		$tmp = '<meta name="viewport" content="'.$content.'">'.PHP_EOL;
-
-		if($echo) {
-			echo $tmp;
-		}
-
-		return $tmp;
+		return '<meta name="viewport" content="'.$content.'">'.PHP_EOL;
 	}
 
-	public static function charset($charset, $echo=true)
+	public static function css($files)
 	{
-		$tmp = '<meta charset="'.$charset.'">'.PHP_EOL;
-
-		if($echo) {
-			echo $tmp;
+		if( !is_array($files) ) {
+			$files = array($files);
 		}
 
-		return $tmp;
+		$links = '';
+		foreach($files as $file) {
+			$links .= '<link rel="stylesheet" type="text/css" href="'.DOMAIN_THEME.$file.'">'.PHP_EOL;
+		}
+
+		return $links;
+	}
+
+	public static function javascript($files)
+	{
+		if( !is_array($files) ) {
+			$files = array($files);
+		}
+
+		$scripts = '';
+		foreach($files as $file) {
+			$scripts .= '<script src="'.DOMAIN_THEME.$file.'"></script>'.PHP_EOL;
+		}
+
+		return $scripts;
+	}
+
+	public static function js($files)
+	{
+		return self::javascript($files);
 	}
 
 	public static function plugins($type)
 	{
 		global $plugins;
-
-		foreach($plugins[$type] as $plugin)
-		{
+		foreach ($plugins[$type] as $plugin) {
 			echo call_user_func(array($plugin, $type));
 		}
 	}
 
-	public static function jquery($echo=true)
+	public static function favicon($file='favicon.png', $typeIcon='image/png')
 	{
-		$tmp = '<script src="'.HTML_PATH_ADMIN_THEME_JS.'jquery.min.js'.'"></script>'.PHP_EOL;
-
-		if($echo) {
-			echo $tmp;
-		}
-
-		return $tmp;
+		return '<link rel="shortcut icon" href="'.DOMAIN_THEME.$file.'" type="'.$typeIcon.'">'.PHP_EOL;
 	}
 
-	public static function fontAwesome($echo=true, $online=false)
+	public static function fontAwesome($cdn=false)
 	{
-		$tmp = '<link rel="stylesheet" href="'.HTML_PATH_ADMIN_THEME_CSS.'font-awesome.min.css'.'">'.PHP_EOL;
-
-		if($echo) {
-			echo $tmp;
+		if ($cdn) {
+			return '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">'.PHP_EOL;
 		}
-
-		return $tmp;
+		return '<link rel="stylesheet" href="'.DOMAIN_CORE_CSS.'font-awesome/css/font-awesome.min.css'.'">'.PHP_EOL;
 	}
 
+	public static function jquery($cdn=false)
+	{
+		if ($cdn) {
+			return '<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>';
+		}
+		return '<script src="'.DOMAIN_CORE_JS.'jquery.min.js'.'"></script>'.PHP_EOL;
+	}
+
+	public static function keywords($keywords)
+	{
+		if (is_array($keywords)) {
+			$keywords = implode(',', $keywords);
+		}
+		return '<meta name="keywords" content="'.$keywords.'">'.PHP_EOL;
+	}
 }
 
 ?>

@@ -5,16 +5,18 @@
 <?php include(THEME_DIR_PHP.'head.php') ?>
 </head>
 <body>
+	<?php Theme::plugins('siteBodyBegin') ?>
+
 	<div id="wrapper">
 
 		<!-- Header -->
 		<header id="header">
-			<h1><a href="<?php echo $Site->url() ?>"><?php echo $Site->title() ?></a></h1>
+			<h1><a href="<?php echo Theme::siteUrl() ?>"><?php echo Theme::title() ?></a></h1>
 			<nav class="links">
 				<ul>
 				<?php
-					foreach($parents as $page) {
-						echo '<li><a href="'.$page->permalink().'">'.$page->title().'</a></li>';
+					foreach ($staticPages as $staticPage) {
+						echo '<li><a href="'.$staticPage->permalink().'">'.$staticPage->title().'</a></li>';
 					}
 				?>
 				</ul>
@@ -33,12 +35,19 @@
 			<section>
 				<ul class="links">
 				<?php
-					foreach($parents as $page) {
+					echo '<li>';
+					echo '<a href="'.$Site->url().'">';
+					echo '<h3>'.$Language->get('Home page').'</h3>';
+					echo '<p>'.$Site->description().'</p>';
+					echo '</a>';
+					echo '</li>';
+
+					foreach ($staticPages as $staticPage) {
 						echo '<li>';
-						echo '<a href="'.$page->permalink().'">
-							<h3>'.$page->title().'</h3>
-							<p>'.$page->description().'</p>
-						</a>';
+						echo '<a href="'.$staticPage->permalink().'">';
+						echo '<h3>'.$staticPage->title().'</h3>';
+						echo '<p>'.$staticPage->description().'</p>';
+						echo '</a>';
 						echo '</li>';
 					}
 				?>
@@ -48,7 +57,7 @@
 			<!-- Actions -->
 			<section>
 				<ul class="actions vertical">
-					<li><a href="<?php echo $Site->url().'admin/' ?>" class="button big fit"><?php $L->p('Login') ?></a></li>
+					<li><a href="<?php echo Theme::adminUrl() ?>" class="button big fit"><?php $L->p('Login') ?></a></li>
 				</ul>
 			</section>
 
@@ -57,43 +66,32 @@
 		<!-- Main -->
 		<div id="main">
 		<?php
-			if($Url->whereAmI()=='post') {
-				include(THEME_DIR_PHP.'post.php');
-			}
-			elseif($Url->whereAmI()=='page') {
+			if ($WHERE_AM_I=='page') {
 				include(THEME_DIR_PHP.'page.php');
-			}
-			else {
+			} else {
 				include(THEME_DIR_PHP.'home.php');
 			}
-
 		?>
 		</div>
 
 		<!-- Sidebar -->
 		<section id="sidebar">
-		<?php
-			include(THEME_DIR_PHP.'sidebar.php');
-		?>
+		<?php include(THEME_DIR_PHP.'sidebar.php') ?>
 		</section>
 
 	</div>
 
 	<!-- Scripts -->
 	<?php
-		// Local jQuery
-		Theme::jquery();
+		echo Theme::jquery();
+		echo Theme::js('assets/js/skel.min.js');
+		echo Theme::js('assets/js/util.js');
+		echo '<!--[if lt IE 8]>';
+		echo Theme::js('assets/js/ie/respond.min.js');
+		echo '<![endif]-->';
+		echo Theme::js('assets/js/main.js');
 	?>
 
-	<script src="<?php echo HTML_PATH_THEME ?>assets/js/skel.min.js"></script>
-	<script src="<?php echo HTML_PATH_THEME ?>assets/js/util.js"></script>
-	<!--[if lte IE 8]><script src="<?php echo HTML_PATH_THEME ?>assets/js/ie/respond.min.js"></script><![endif]-->
-	<script src="<?php echo HTML_PATH_THEME ?>assets/js/main.js"></script>
-
-	<?php
-		// Plugins, site body end
-		Theme::plugins('siteBodyEnd');
-	?>
-
+	<?php Theme::plugins('siteBodyEnd') ?>
 </body>
 </html>

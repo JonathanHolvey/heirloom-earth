@@ -1,272 +1,697 @@
 <?php defined('BLUDIT') or die('Bludit CMS.');
 
-// POST FUNCTIONS
-// ----------------------------------------------------------------------------
-
-function reIndexTagsPosts()
-{
-	global $dbPosts;
-	global $dbTags;
-
-	// Remove unpublished.
-	$dbPosts->removeUnpublished();
-
-	// Regenerate the tags index for posts.
-	$dbTags->reindexPosts( $dbPosts->db );
-
-	// Restore the database, before remove the unpublished.
-	$dbPosts->restoreDB();
-
-	return true;
-}
-
-function reIndexCategoriesPosts()
-{
-	global $dbPosts;
-	global $dbCategories;
-
-	// Remove unpublished.
-	$dbPosts->removeUnpublished();
-
-	// Regenerate the tags index for posts.
-	$dbCategories->reindexPosts( $dbPosts->db );
-
-	// Restore the database, before remove the unpublished.
-	$dbPosts->restoreDB();
-
-	return true;
-}
-
-function buildPost($key)
-{
-	global $dbPosts;
+// (object) Returns a Page object, the class is page.class.php, FALSE if something fail to load the page
+function buildPage($key) {
+	global $dbPages;
 	global $dbUsers;
+	global $dbCategories;
 	global $Parsedown;
 	global $Site;
 
-	// Post object, content from FILE.
-	$Post = new Post($key);
-	if( !$Post->isValid() ) {
-		Log::set(__METHOD__.LOG_SEP.'Error occurred when trying build the post from file with key: '.$key);
+	if (empty($key)) {
 		return false;
 	}
 
-	// Post database, content from DATABASE JSON.
-	$db = $dbPosts->getPostDB($key);
-	if( !$db ) {
-		Log::set(__METHOD__.LOG_SEP.'Error occurred when trying build the post from database with key: '.$key);
-		return false;
-	}
-
-	// Foreach field from DATABASE.
-	foreach($db as $field=>$value) {
-		$Post->setField($field, $value);
-	}
-
-	// Content in raw format
-	$contentRaw = $Post->content();
-	$Post->setField('contentRaw', $contentRaw, true);
-
-	// Parse the content
-	$content = Text::pre2htmlentities($contentRaw); // Parse pre code with htmlentities
-	$content = $Parsedown->text($content); // Parse Markdown.
-	$content = Text::imgRel2Abs($content, HTML_PATH_UPLOADS); // Parse img src relative to absolute.
-	$Post->setField('content', $content, true);
-
-	// Pagebrake
-	$explode = explode(PAGE_BREAK, $content);
-	$Post->setField('breakContent', $explode[0], true);
-	$Post->setField('readMore', !empty($explode[1]), true);
-
-	// Date format
-	$postDate = $Post->date();
-	$Post->setField('dateRaw', $postDate, true);
-
-	$postDateFormated = $Post->dateRaw( $Site->dateFormat() );
-	$Post->setField('date', $postDateFormated, true);
-
-	// User object
-	$username = $Post->username();
-	$Post->setField('user', $dbUsers->getUser($username));
-
-	return $Post;
-}
-
-function buildPostsForPage($pageNumber=0, $amount=POSTS_PER_PAGE_ADMIN, $removeUnpublished=true, $key=false, $type='tag')
-{
-	global $dbPosts;
-	global $dbTags;
-	global $Url;
-
-	$posts = array();
-
-	if( $type=='tag' && $key ) {
-		// Get the keys list from tags database, this database is optimized for this case.
-		$list = $dbTags->getList($pageNumber, $amount, $key);
-	}
-	else {
-		// Get the keys list from posts database.
-		$list = $dbPosts->getList($pageNumber, $amount, $removeUnpublished);
-	}
-
-	// There are not posts for the page number then set the page notfound
-	if(empty($list) && $pageNumber>0) {
-		$Url->setNotFound(true);
-	}
-
-	// Foreach post key, build the post.
-	foreach($list as $postKey=>$values)
-	{
-		$Post = buildPost($postKey);
-		if($Post!==false) {
-			array_push($posts, $Post);
-		}
-	}
-
-	return $posts;
-}
-
-// PAGE FUNCTIONS
-// ----------------------------------------------------------------------------
-
-function sortPages($a, $b)
-{
-	if ($a['position'] == $b['position']) {
-	    return 0;
-	}
-
-	return ($a['position'] < $b['position']) ? -1 : 1;
-}
-
-function reIndexCategoriesPages()
-{
-	global $dbPages;
-	global $dbCategories;
-
-	// Regenerate the tags index for posts.
-	$dbCategories->reindexPages( $dbPages->db );;
-
-	return true;
-}
-
-function buildPage($key)
-{
-	global $dbPages;
-	global $dbUsers;
-	global $Parsedown;
-	global $Site;
-
-	// Page object, content from FILE.
-	$Page = new Page($key);
-	if( !$Page->isValid() ) {
+	// Page object, content from index.txt file
+	$page = new Page($key);
+	if (!$page->isValid()) {
 		Log::set(__METHOD__.LOG_SEP.'Error occurred when trying build the page from file with key: '.$key);
 		return false;
 	}
 
-	// Page database, content from DATABASE JSON.
+	// Get the database from dbPages
 	$db = $dbPages->getPageDB($key);
-	if( !$db ) {
+	if (!$db) {
 		Log::set(__METHOD__.LOG_SEP.'Error occurred when trying build the page from database with key: '.$key);
 		return false;
 	}
 
-	// Foreach field from DATABASE.
-	foreach($db as $field=>$value) {
-		$Page->setField($field, $value);
+	// Foreach field from database set on the object
+	foreach ($db as $field=>$value) {
+		$page->setField($field, $value);
 	}
 
-	// Content in raw format
-	$contentRaw = $Page->content();
-	$Page->setField('contentRaw', $Page->content(), true);
-
-	// Parse markdown content.
+	// Parse Markdown
+	$contentRaw = $page->contentRaw();
 	$content = Text::pre2htmlentities($contentRaw); // Parse pre code with htmlentities
-	$content = $Parsedown->text($content); // Parse Markdown.
-	$content = Text::imgRel2Abs($content, HTML_PATH_UPLOADS); // Parse img src relative to absolute.
-	$Page->setField('content', $content, true);
+	$content = $Parsedown->text($content); // Parse Markdown
+	$content = Text::imgRel2Abs($content, DOMAIN_UPLOADS); // Parse img src relative to absolute (with domain)
+	$page->setField('content', $content, true);
 
 	// Pagebrake
 	$explode = explode(PAGE_BREAK, $content);
-	$Page->setField('breakContent', $explode[0], true);
-	$Page->setField('readMore', !empty($explode[1]), true);
+	$page->setField('contentBreak', $explode[0], true);
+	$page->setField('readMore', !empty($explode[1]), true);
 
 	// Date format
-	$pageDate = $Page->date();
-	$Page->setField('dateRaw', $pageDate, true);
+	$pageDate = $page->date();
+	$page->setField('dateRaw', $pageDate, true);
 
-	$pageDateFormated = $Page->dateRaw( $Site->dateFormat() );
-	$Page->setField('date', $pageDateFormated, true);
+	$pageDateFormated = $page->dateRaw( $Site->dateFormat() );
+	$page->setField('date', $pageDateFormated, true);
 
-	// User object
-	$username = $Page->username();
-	$Page->setField('user', $dbUsers->getUser($username));
+	// Generate and set the User object
+	$username = $page->username();
+	$page->setField('user', $dbUsers->getUser($username));
 
-	return $Page;
+	// Category
+	$categoryKey = $page->categoryKey();
+	$page->setField('categoryMap', $dbCategories->getMap($categoryKey));
+
+	return $page;
 }
 
-function buildAllPages()
-{
-	global $pagesParents;
-	global $pagesParentsPublished;
-	global $pagesPublished;
+function reindexCategories() {
+	global $dbCategories;
+	return $dbCategories->reindex();
+}
+
+function reindexTags() {
+	global $dbTags;
+	return $dbTags->reindex();
+}
+
+function buildErrorPage() {
 	global $dbPages;
-	global $parents;
+	global $Language;
+	global $dbUsers;
 
-	// Get the page list
-	$list = $dbPages->getDB();
+	$page = new Page(false);
+	$page->setField('title', $Language->get('page-not-found'));
+	$page->setField('content', $Language->get('page-not-found-content'));
+	$page->setField('user', $dbUsers->getUser('admin'));
 
-	// Clean pages array.
-	$pages = array();
+	return $page;
+}
 
-	// Remove the error page
-	unset($list['error']);
+function buildThePage() {
+	global $Url;
+	global $page, $Page;
+	global $content, $pages;
 
-	// Sorte pages
-	uasort($list, 'sortPages');
+	$page = $Page = buildPage( $Url->slug() );
 
-	foreach($list as $key=>$db)
-	{
-		$Page = buildPage($key);
+	// The page doesn't exist
+	if($page===false) {
+		$Url->setNotFound();
+		return false;
+	}
+	// The page is not published
+	elseif( $page->scheduled() || $page->draft() ) {
+		$Url->setNotFound();
+		return false;
+	}
 
-		if($Page!==false)
-		{
-			// Filter pages, with and without parent
+	$content[0] = $pages[0] = $page;
+	return true;
+}
 
-			// If the page doesn't have a father, it's a parent page :P
-			if( $Page->parentKey()===false ) {
-				// Add the parent key in the dbPages
-				$dbPages->addParentKey($Page->key());
+function buildPagesForHome() {
+	return buildPagesFor('home');
+}
 
-				// Add the page as a parent page in the array
-				$pagesParents[NO_PARENT_CHAR][$Page->key()] = $Page;
+function buildPagesByCategory() {
+	global $Url;
 
-				// If the page is published
-				if($Page->published()) {
-					$pagesParentsPublished[NO_PARENT_CHAR][$Page->key()] = $Page;
+	$categoryKey = $Url->slug();
+	return buildPagesFor('category', $categoryKey, false);
+}
+
+function buildPagesByTag() {
+	global $Url;
+
+	$tagKey = $Url->slug();
+	return buildPagesFor('tag', false, $tagKey);
+}
+
+function buildPagesFor($for, $categoryKey=false, $tagKey=false) {
+	global $dbPages;
+	global $dbCategories;
+	global $dbTags;
+	global $Site;
+	global $Url;
+	global $content, $pages;
+
+	// Get the page number from URL
+	$pageNumber = $Url->pageNumber();
+
+	if ($for=='home') {
+		$onlyPublished = true;
+		$amountOfItems = $Site->itemsPerPage();
+		$list = $dbPages->getList($pageNumber, $amountOfItems, $onlyPublished);
+	}
+	elseif ($for=='category') {
+		$amountOfItems = $Site->itemsPerPage();
+		$list = $dbCategories->getList($categoryKey, $pageNumber, $amountOfItems);
+	}
+	elseif ($for=='tag') {
+		$amountOfItems = $Site->itemsPerPage();
+		$list = $dbTags->getList($tagKey, $pageNumber, $amountOfItems);
+	}
+
+	// There are not items, invalid tag, invalid category, out of range, etc...
+	if ($list===false) {
+		$Url->setNotFound();
+		return false;
+	}
+
+	$pages = array(); // global variable
+	foreach($list as $pageKey=>$fields) {
+		$page = buildPage($pageKey);
+		if($page!==false) {
+			array_push($pages, $page);
+		}
+	}
+	$content = $pages;
+	return $pages;
+}
+
+// Generate the global variable $pagesByParent, defined on 69.pages.php
+// (boolean) $allPages, TRUE include all status, FALSE only include published status
+function buildPagesByParent($publishedPages=true, $staticPages=true) {
+	global $dbPages;
+	global $pagesByParent;
+	global $pagesByParentByKey;
+
+	$onlyKeys = true;
+	$keys = array();
+	if ($publishedPages) {
+		$keys = array_merge($keys, $dbPages->getPublishedDB($onlyKeys));
+	}
+	if ($staticPages) {
+		$keys = array_merge($keys, $dbPages->getStaticDB($onlyKeys));
+	}
+
+	foreach ($keys as $pageKey) {
+		$page = buildPage($pageKey);
+		if ($page!==false) {
+			$parentKey = $page->parentKey();
+			// FALSE if the page is parent
+			if ($parentKey===false) {
+				array_push($pagesByParent[PARENT], $page);
+				$pagesByParentByKey[PARENT][$page->key()] = $page;
+			} else {
+				if (!isset($pagesByParent[$parentKey])) {
+					$pagesByParent[$parentKey] = array();
 				}
+				array_push($pagesByParent[$parentKey], $page);
+				$pagesByParentByKey[$parentKey][$page->key()] = $page;
 			}
-			else {
-				$pagesParents[$Page->parentKey()][$Page->key()] = $Page;
+		}
+	}
+}
 
-				// If the page is published
-				if($Page->published()) {
-					$pagesParentsPublished[$Page->parentKey()][$Page->key()] = $Page;
-				}
-			}
+function buildStaticPages() {
+	global $dbPages;
 
-			// All pages in one array
-			$pages[$Page->key()] = $Page;
+	$tmp = array();
+	$staticPages = $dbPages->getStaticDB($onlyKeys=true);
+	foreach ($staticPages as $pageKey) {
+		$staticPage = buildPage($pageKey);
+		array_push($tmp, $staticPage);
+	}
+	return $tmp;
+}
 
-			// If the page is published
-			if($Page->published()) {
-				$pagesPublished[$Page->parentKey()][$Page->key()] = $Page;
+// Returns an Array with all pages existing on the system
+// (boolean) $allPages, TRUE returns all pages with any status, FALSE all published pages
+/*
+	array(
+		pageKey1 => Page object,
+		pageKey2 => Page object,
+		...
+		pageKeyN => Page object,
+	)
+*/
+function buildAllpages($publishedPages=true, $staticPages=true, $draftPages=true, $scheduledPages=true) {
+	global $dbPages;
+
+	// Get DB
+	$onlyKeys = true;
+	$keys = array();
+	if ($publishedPages) {
+		$keys = array_merge($keys, $dbPages->getPublishedDB($onlyKeys));
+	}
+	if ($staticPages) {
+		$keys = array_merge($keys, $dbPages->getStaticDB($onlyKeys));
+	}
+	if ($draftPages) {
+		$keys = array_merge($keys, $dbPages->getDraftDB($onlyKeys));
+	}
+	if ($scheduledPages) {
+		$keys = array_merge($keys, $dbPages->getScheduledDB($onlyKeys));
+	}
+
+	$tmp = array();
+	foreach ($keys as $pageKey) {
+		$page = buildPage($pageKey);
+		if ($page!==false) {
+			$tmp[$page->key()] = $page;
+		}
+	}
+	return $tmp;
+}
+
+// Returns TRUE if the plugin is enabled, FALSE otherwise
+function pluginEnabled($pluginName) {
+	global $plugins;
+
+	$pluginClass = 'plugin'.Text::firstCharUp($pluginName);
+	if( isset($plugins['all'][$pluginClass]) ) {
+		return $plugins['all'][$pluginClass]->installed();
+	}
+
+	return false;
+}
+
+function activatePlugin($pluginClassName) {
+	global $plugins;
+	global $Syslog;
+	global $Language;
+
+	// Check if the plugin exists
+	if (isset($plugins['all'][$pluginClassName])) {
+		$plugin = $plugins['all'][$pluginClassName];
+		$blackList = array('pluginTimeMachine', 'pluginRemoteContent');
+		if (in_array($pluginClassName, $blackList) && !defined('BLUDIT_PRO')) {
+			return false;
+		}
+
+		if ($plugin->install()) {
+			// Add to syslog
+			$Syslog->add(array(
+				'dictionaryKey'=>'plugin-activated',
+				'notes'=>$plugin->name()
+			));
+
+			// Create an alert
+			Alert::set($Language->g('plugin-activated'));
+			return true;
+		}
+	}
+	return false;
+}
+
+function deactivatePlugin($pluginClassName) {
+	global $plugins;
+	global $Syslog;
+	global $Language;
+
+	// Check if the plugin exists
+	if (isset($plugins['all'][$pluginClassName])) {
+		$plugin = $plugins['all'][$pluginClassName];
+
+		if ($plugin->uninstall()) {
+			// Add to syslog
+			$Syslog->add(array(
+				'dictionaryKey'=>'plugin-deactivated',
+				'notes'=>$plugin->name()
+			));
+
+			// Create an alert
+			Alert::set($Language->g('plugin-deactivated'));
+			return true;
+		}
+	}
+	return false;
+}
+
+function printDebug($array) {
+	echo '<pre>';
+	var_dump($array);
+	echo '</pre>';
+}
+
+function createPage($args) {
+	global $dbPages;
+	global $Syslog;
+	global $Language;
+
+	// The user is always the one loggued
+	$args['username'] = Session::get('username');
+	if ( empty($args['username']) ) {
+		Log::set('Function createPage()'.LOG_SEP.'Empty username.');
+		return false;
+	}
+
+	// External Cover Image
+	if ( !empty($args['externalCoverImage']) ) {
+		$args['coverImage'] = $args['externalCoverImage'];
+		unset($args['externalCoverImage']);
+	}
+
+	$key = $dbPages->add($args);
+	if ($key) {
+		// Call the plugins after page created
+		Theme::plugins('afterPageCreate');
+
+		// Re-index categories
+		reindexCategories();
+
+		// Re-index tags
+		reindextags();
+
+		// Add to syslog
+		$Syslog->add(array(
+			'dictionaryKey'=>'new-content-created',
+			'notes'=>$args['title']
+		));
+
+		Alert::set( $Language->g('new-content-created') );
+
+		return $key;
+	}
+
+	Log::set('Function createNewPage()'.LOG_SEP.'Error occurred when trying to create the page');
+	Log::set('Function createNewPage()'.LOG_SEP.'Cleaning database...');
+	$dbPages->delete($key);
+	Log::set('Function createNewPage()'.LOG_SEP.'Cleaning finished...');
+
+	return false;
+}
+
+function editPage($args) {
+	global $dbPages;
+	global $Syslog;
+
+	// Check the key is not empty
+	if (empty($args['key'])) {
+		Log::set('Function editPage()'.LOG_SEP.'Empty key.');
+		return false;
+	}
+
+	// Check if the page key exist
+	if (!$dbPages->exists($args['key'])) {
+		Log::set('Function editPage()'.LOG_SEP.'Page key does not exist, '.$args['key']);
+		return false;
+	}
+
+	// External Cover Image
+	if ( !empty($args['externalCoverImage']) ) {
+		$args['coverImage'] = $args['externalCoverImage'];
+		unset($args['externalCoverImage']);
+	}
+
+	// Title and content need to be here because from inside the dbPages is not visible
+	if (empty($args['title']) || empty($args['content'])) {
+		$page = buildPage($args['key']);
+		if (empty($args['title'])) {
+			$args['title'] = $page->title();
+		}
+		if (empty($args['content'])) {
+			$args['content'] = $page->contentRaw();
+		}
+	}
+
+	$key = $dbPages->edit($args);
+	if ($key) {
+		// Call the plugins after page modified
+		Theme::plugins('afterPageModify');
+
+		// Re-index categories
+		reindexCategories();
+
+		// Re-index tags
+		reindextags();
+
+		// Add to syslog
+		$Syslog->add(array(
+			'dictionaryKey'=>'content-edited',
+			'notes'=>$args['title']
+		));
+
+		return $key;
+	}
+
+	Log::set('Function editPage()'.LOG_SEP.'ERROR: Something happen when try to edit the page.');
+	return false;
+}
+
+function deletePage($key) {
+	global $dbPages;
+	global $Syslog;
+
+	if( $dbPages->delete($key) ) {
+		// Call the plugins after page deleted
+		Theme::plugins('afterPageDelete');
+
+		// Re-index categories
+		reindexCategories();
+
+		// Re-index tags
+		reindextags();
+
+		// Add to syslog
+		$Syslog->add(array(
+			'dictionaryKey'=>'content-deleted',
+			'notes'=>$key
+		));
+
+		return true;
+	}
+
+	return false;
+}
+
+function disableUser($username) {
+	global $dbUsers;
+	global $Login;
+	global $Syslog;
+
+	// The editors can't disable users
+	if($Login->role()!=='admin') {
+		return false;
+	}
+
+	if( $dbUsers->disableUser($username) ) {
+		// Add to syslog
+		$Syslog->add(array(
+			'dictionaryKey'=>'user-disabled',
+			'notes'=>$username
+		));
+
+		return true;
+	}
+
+	return false;
+}
+
+function editUser($args) {
+	global $dbUsers;
+	global $Syslog;
+
+	if( $dbUsers->set($args) ) {
+		// Add to syslog
+		$Syslog->add(array(
+			'dictionaryKey'=>'user-edited',
+			'notes'=>$args['username']
+		));
+
+		return true;
+	}
+
+	return false;
+}
+
+function deleteUser($args, $deleteContent=false) {
+	global $dbUsers;
+	global $Login;
+	global $Syslog;
+
+	// The user admin cannot be deleted
+	if($args['username']=='admin') {
+		return false;
+	}
+
+	// The editors can't delete users
+	if($Login->role()!=='admin') {
+		return false;
+	}
+
+	if($deleteContent) {
+		//$dbPosts->deletePostsByUser($args['username']);
+	}
+	else {
+		//$dbPosts->linkPostsToUser($args['username'], 'admin');
+	}
+
+	if( $dbUsers->delete($args['username']) ) {
+		// Add to syslog
+		$Syslog->add(array(
+			'dictionaryKey'=>'user-deleted',
+			'notes'=>$args['username']
+		));
+
+		return true;
+	}
+
+	return false;
+}
+
+function createUser($args) {
+	global $dbUsers;
+	global $Language;
+	global $Syslog;
+
+	// Check empty username
+	if( Text::isEmpty($args['new_username']) ) {
+		Alert::set($Language->g('username-field-is-empty'), ALERT_STATUS_FAIL);
+		return false;
+	}
+
+	// Check already exist username
+	if( $dbUsers->exists($args['new_username']) ) {
+		Alert::set($Language->g('username-already-exists'), ALERT_STATUS_FAIL);
+		return false;
+	}
+
+	// Password length
+	if( Text::length($args['new_password']) < PASSWORD_LENGTH ) {
+		Alert::set($Language->g('Password must be at least '.PASSWORD_LENGTH.' characters long'), ALERT_STATUS_FAIL);
+		return false;
+	}
+
+	// Check new password and confirm password are equal
+	if( $args['new_password'] != $args['confirm_password'] ) {
+		Alert::set($Language->g('The password and confirmation password do not match'), ALERT_STATUS_FAIL);
+		return false;
+	}
+
+	// Filter form fields
+	$tmp = array();
+	$tmp['username'] = $args['new_username'];
+	$tmp['password'] = $args['new_password'];
+	$tmp['role']	 = $args['role'];
+	$tmp['email']	 = $args['email'];
+
+	// Add the user to the database
+	if( $dbUsers->add($tmp) ) {
+		// Add to syslog
+		$Syslog->add(array(
+			'dictionaryKey'=>'new-user-created',
+			'notes'=>$tmp['username']
+		));
+
+		return true;
+	}
+
+	return false;
+}
+
+function editSettings($args) {
+	global $Site;
+	global $Syslog;
+	global $Language;
+	global $dbPages;
+
+	if (isset($args['language'])) {
+		if ($args['language']!=$Site->language()) {
+			$tmp = new dbJSON(PATH_LANGUAGES.$args['language'].'.json', false);
+			if (isset($tmp->db['language-data']['locale'])) {
+				$args['locale'] = $tmp->db['language-data']['locale'];
+			} else {
+				$args['locale'] = $args['language'];
 			}
 		}
 	}
 
-	if( isset($pagesParentsPublished[NO_PARENT_CHAR]) ) {
-		$parents = $pagesParentsPublished[NO_PARENT_CHAR];
+	if (isset($args['uriPage'])) {
+		$args['uriPage'] = Text::addSlashes($args['uriPage']);
+	}
+	if (isset($args['uriTag'])) {
+		$args['uriTag'] = Text::addSlashes($args['uriTag']);
+	}
+	if (isset($args['uriCategory'])) {
+		$args['uriCategory'] = Text::addSlashes($args['uriCategory']);
 	}
 
-	return $pages;
+	if (isset($args['uriBlog'])) {
+		$args['uriBlog'] = Text::addSlashes($args['uriBlog']);
+	}
+
+	if ($Site->set($args)) {
+		// Check current order-by if changed it reorder the content
+		if ($Site->orderBy()!=ORDER_BY) {
+			if ($Site->orderBy()=='date') {
+				$dbPages->sortByDate();
+			} else {
+				$dbPages->sortByPosition();
+			}
+			$dbPages->save();
+		}
+
+		// Add syslog
+		$Syslog->add(array(
+			'dictionaryKey'=>'changes-on-settings',
+			'notes'=>''
+		));
+
+		// Create alert
+		Alert::set($Language->g('The changes have been saved'));
+		return true;
+	}
+
+	return false;
+}
+
+function editCategory($oldCategoryKey, $newCategory) {
+	global $Language;
+	global $dbPages;
+	global $dbCategories;
+	global $Syslog;
+
+	if( Text::isEmpty($oldCategoryKey) || Text::isEmpty($newCategory) ) {
+		Alert::set($Language->g('Empty fields'));
+		return false;
+	}
+
+	if( $dbCategories->edit($oldCategoryKey, $newCategory) == false ) {
+		Alert::set($Language->g('Already exist a category'));
+		return false;
+	}
+
+	$dbPages->changeCategory($oldCategoryKey, $newCategory);
+
+	$Syslog->add(array(
+		'dictionaryKey'=>'category-edited',
+		'notes'=>$newCategory
+	));
+
+	Alert::set($Language->g('The changes have been saved'));
+	return true;
+}
+
+function deleteCategory($categoryKey) {
+	global $Language;
+	global $dbCategories;
+	global $Syslog;
+
+	// Remove the category by key
+	$dbCategories->remove($categoryKey);
+
+	$Syslog->add(array(
+		'dictionaryKey'=>'category-deleted',
+		'notes'=>$categoryKey
+	));
+
+	Alert::set($Language->g('The changes have been saved'));
+	return true;
+}
+
+function activateTheme($themeDirectory) {
+	global $Site;
+	global $Syslog;
+
+	if (Sanitize::pathFile(PATH_THEMES.$themeDirectory)) {
+		$Site->set(array('theme'=>$themeDirname));
+
+		$Syslog->add(array(
+			'dictionaryKey'=>'new-theme-configured',
+			'notes'=>$themeDirname
+		));
+
+		Alert::set( $Language->g('The changes have been saved') );
+		return true;
+	}
+	return false;
 }

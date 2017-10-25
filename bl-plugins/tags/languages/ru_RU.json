@@ -1,11 +1,7 @@
 {
 	"plugin-data":
 	{
-		"name": "Список тегов",
-		"description": "Показывает все теги."
-	},
-	"tag-sort-order": "Сортировать по",
-	"tag-sort-alphabetical": "алфавиту",
-	"tag-sort-count": "количеству",
-	"tag-sort-date": "дате"
+		"name": "Список тэгов",
+		"description": "Отображает список тэгов на боковой панели."
+	}
 }

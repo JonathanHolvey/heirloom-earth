@@ -1,44 +1,54 @@
 <?php defined('BLUDIT') or die('Bludit CMS.');
 
-// Current page number.
+// Current page number
 $currentPage = $Url->pageNumber();
 Paginator::set('currentPage', $currentPage);
 
-// Number of pages.
 if($Url->whereAmI()=='admin') {
-	$postPerPage = POSTS_PER_PAGE_ADMIN;
-	$numberOfPosts = $dbPosts->numberPost(true); // published and drafts
+	$itemsPerPage = ITEMS_PER_PAGE_ADMIN;
+	$amountOfItems = $dbPages->count(true);
 }
 elseif($Url->whereAmI()=='tag') {
-	$postPerPage = $Site->postsPerPage();
+	$itemsPerPage = $Site->itemsPerPage();
 	$tagKey = $Url->slug();
-	$numberOfPosts = $dbTags->countPostsByTag($tagKey);
+	$amountOfItems = $dbTags->countPagesByTag($tagKey);
+}
+elseif($Url->whereAmI()=='category') {
+	$itemsPerPage = $Site->itemsPerPage();
+	$categoryKey = $Url->slug();
+	$amountOfItems = $dbCategories->countPagesByCategory($categoryKey);
 }
 else {
-	$postPerPage = $Site->postsPerPage();
-	$numberOfPosts = $dbPosts->numberPost(false); // published
+	$itemsPerPage = $Site->itemsPerPage();
+	$amountOfItems = $dbPages->count(true);
 }
 
-// Post per page.
-Paginator::set('postPerPage', $postPerPage);
+// Items per page
+Paginator::set('itemsPerPage', $itemsPerPage);
 
-// Number of posts
-Paginator::set('numberOfPosts', $numberOfPosts);
+// Amount of items
+Paginator::set('amountOfItems', $amountOfItems);
 
-$numberOfPages = (int) max(ceil($numberOfPosts / $postPerPage) -1, 0);
-Paginator::set('numberOfPages', $numberOfPages);
+// Amount of pages
+$amountOfPages = (int) max(ceil($amountOfItems / $itemsPerPage), 1);
+Paginator::set('amountOfPages', $amountOfPages);
 
-$showOlder = $numberOfPages > $currentPage;
-Paginator::set('showOlder', $showOlder);
+// TRUE if exists a next page to show
+$showNext = $amountOfPages > $currentPage;
+Paginator::set('showNext', $showNext);
 
-$showNewer = $currentPage > 0;
-Paginator::set('showNewer', $showNewer);
+// TRUE if exists a previous page to show
+$showPrev = $currentPage > Paginator::firstPage();
+Paginator::set('showPrev', $showPrev);
 
-$show = $showNewer && $showOlder;
-Paginator::set('show', true);
+// TRUE if exists a next and previous page to show
+$showNextPrev = $showNext && $showPrev;
+Paginator::set('showNextPrev', $showNextPrev);
 
+// Integer with the next page
 $nextPage = max(0, $currentPage+1);
 Paginator::set('nextPage', $nextPage);
 
-$prevPage = min($numberOfPages, $currentPage-1);
+// Integer with the previous page
+$prevPage = min($amountOfPages, $currentPage-1);
 Paginator::set('prevPage', $prevPage);

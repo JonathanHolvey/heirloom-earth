@@ -10,29 +10,26 @@ class Url
 	private $notFound;
 	private $parameters;
 	private $activeFilter;
+	private $httpCode;
+	private $httpMessage;
 
 	function __construct()
 	{
 		// Decodes any %## encoding in the given string. Plus symbols ('+') are decoded to a space character.
 		$decode = urldecode($_SERVER['REQUEST_URI']);
 
-		// remove parameters GET, do not use parse_url because has problem with utf-8.
+		// Remove parameters GET, I don't use parse_url because has problem with utf-8
 		$explode = explode('?', $decode);
 		$this->uri = $explode[0];
-
 		$this->parameters = $_GET;
-
 		$this->uriStrlen = Text::length($this->uri);
-
 		$this->whereAmI = 'home';
-
 		$this->notFound = false;
-
 		$this->slug = '';
-
 		$this->filters = array();
-
 		$this->activeFilter = '';
+		$this->httpCode = 200;
+		$this->httpMessage = 'OK';
 	}
 
 	// Filters change for different languages
@@ -40,61 +37,70 @@ class Url
 	// Ex (English): Array('post'=>'/post/', 'tag'=>'/tag/', ....)
 	public function checkFilters($filters)
 	{
-		// Get the admin filter
+		// Put the "admin" filter first
 		$adminFilter['admin'] = $filters['admin'];
 		unset($filters['admin']);
-
-		// Sort filters by length
 		uasort($filters, array($this, 'sortByLength'));
+		$this->filters = $adminFilter + $filters;
 
-		// Push the admin filter first
-		$filters = $adminFilter + $filters;
-		$this->filters = $filters;
+		foreach ($this->filters as $filterName=>$filterURI) {
+			// $filterName = 'category'
+			// $filterURI = '/category/'
+			// $filterURIwoSlash = '/category'
+			$filterURIwoSlash = rtrim($filterURI, '/');
 
-		foreach($filters as $filterName=>$filterURI)
-		{
-			// $slug will be FALSE if the filter is not included in the URI.
-			$slug = $this->getSlugAfterFilter($filterURI);
+			// $filterFull = '/base_url/category/'
+			$filterFull = ltrim($filterURI, '/');
+			$filterFull = HTML_PATH_ROOT.$filterFull;
+			$filterFullLenght = mb_strlen($filterFull, CHARSET);
 
-			if($slug!==false)
-			{
-				$this->slug 	= $slug;
-				$this->whereAmI = $filterName;
+			// $filterFullwoSlash = '/base_url/category'
+			$filterFullwoSlash = ltrim($filterURIwoSlash, '/');
+			$filterFullwoSlash = HTML_PATH_ROOT.$filterURIwoSlash;
+
+			$subString = mb_substr($this->uri, 0, $filterFullLenght, CHARSET);
+
+			// Check coincidence without the last slash at the end, this case is notfound
+			if (($subString==$filterURIwoSlash) && ($filterName!='admin')) {
+				$this->setNotFound();
+				return false;
+			}
+
+			// Check coincidence with complete filterURI
+			if ($subString==$filterFull) {
+				$this->slug = mb_substr($this->uri, $filterFullLenght);
+				$this->setWhereAmI($filterName);
 				$this->activeFilter = $filterURI;
 
-				// If the slug is empty
-				if(Text::isEmpty($slug))
-				{
-					if($filterURI==='/')
-					{
-						$this->whereAmI = 'home';
-						break;
-					}
-
-					if($filterURI===$filters['blog'])
-					{
-						$this->whereAmI = 'blog';
-						break;
-					}
-
-					if($filterURI===$adminFilter['admin'])
-					{
-						$this->whereAmI = 'admin';
-						$this->slug = 'dashboard';
-						break;
-					}
-
-					$this->setNotFound(true);
+				if (empty($this->slug) && ($filterName=='blog')) {
+					$this->setWhereAmI('blog');
+				} elseif (!empty($this->slug) && ($filterName=='blog')) {
+					$this->setNotFound();
+					return false;
+				} elseif (empty($this->slug) && ($filterURI=='/')) {
+					$this->setWhereAmI('home');
+				} elseif (!empty($this->slug) && ($filterURI=='/')) {
+					$this->setWhereAmI('page');
+				} elseif ($filterName=='admin') {
+					$this->slug = ltrim($this->slug, '/');
 				}
 
-				break;
+				return true;
 			}
 		}
+
+		$this->setNotFound();
+		return false;
 	}
 
 	public function slug()
 	{
 		return $this->slug;
+	}
+
+	public function setSlug($slug)
+	{
+		$this->slug = $slug;
 	}
 
 	public function activeFilter()
@@ -124,7 +130,7 @@ class Url
 		return $filter;
 	}
 
-	// Return: home, tag, post
+	// Returns where is the user, home, pages, categories, tags..
 	public function whereAmI()
 	{
 		return $this->whereAmI;
@@ -132,6 +138,7 @@ class Url
 
 	public function setWhereAmI($where)
 	{
+		$GLOBALS['WHERE_AM_I'] = $where;
 		$this->whereAmI = $where;
 	}
 
@@ -143,60 +150,37 @@ class Url
 	public function pageNumber()
 	{
 		if(isset($this->parameters['page'])) {
-			return $this->parameters['page'];
+			return (int)$this->parameters['page'];
 		}
-		return 0;
+		return 1;
 	}
 
-	public function setNotFound($error = true)
+	public function setNotFound()
 	{
-		$this->notFound = $error;
+		$this->setWhereAmI('page');
+		$this->notFound = true;
+		$this->httpCode = 404;
+		$this->httpMessage = 'Not Found';
 	}
 
-	// Returns the slug after the $filter, the slug could be an empty string
-	// If the filter is not included in the uri, returns FALSE
-	// ex: http://domain.com/cms/$filter/slug123 => slug123
-	// ex: http://domain.com/cms/$filter/name/lastname => name/lastname
-	// ex: http://domain.com/cms/$filter/ => empty string
-	// ex: http://domain.com/cms/$filter => empty string
-	private function getSlugAfterFilter($filter)
+	public function httpCode()
 	{
-		// Remove both slash from the filter
-		$filter = trim($filter, '/');
+		return $this->httpCode;
+	}
 
-		// Add to the filter the root directory
-		$filter = HTML_PATH_ROOT.$filter;
+	public function setHttpCode($code = 200)
+	{
+		$this->httpCode = $code;
+	}
 
-		// Check if the filter is in the uri.
-		$position = Text::stringPosition($this->uri, $filter);
+	public function httpMessage()
+	{
+		return $this->httpMessage;
+	}
 
-		// If the position is FALSE, the filter isn't in the URI.
-		if($position===false) {
-			return false;
-		}
-
-		// Start position to cut
-		$start = $position + Text::length($filter);
-
-		// End position to cut
-		$end = $this->uriStrlen;
-
-		// Get the slug from the URI
-		$slug = Text::cut($this->uri, $start, $end);
-
-		if(Text::isEmpty($slug)) {
-			return '';
-		}
-
-		if($slug[0]=='/') {
-			return ltrim($slug, '/');
-		}
-
-		if($filter==HTML_PATH_ROOT) {
-			return $slug;
-		}
-
-		return false;
+	public function setHttpMessage($msg = 'OK')
+	{
+		$this->httpMessage = $msg;
 	}
 
 	private function sortByLength($a, $b)

@@ -14,22 +14,18 @@ $plugins = array(
 
 	'pageBegin'=>array(),
 	'pageEnd'=>array(),
-	'postBegin'=>array(),
-	'postEnd'=>array(),
 
+	'beforeAdminLoad'=>array(),
+	'afterAdminLoad'=>array(),
 	'adminHead'=>array(),
 	'adminBodyBegin'=>array(),
 	'adminBodyEnd'=>array(),
 	'adminSidebar'=>array(),
-	'beforeAdminLoad'=>array(),
-	'afterAdminLoad'=>array(),
 
 	'beforeRulesLoad'=>array(),
-	'afterFormSave'=>array(),
+	'beforeAll'=>array(),
+	'afterAll'=>array(),
 
-	'afterPostCreate'=>array(),
-	'afterPostModify'=>array(),
-	'afterPostDelete'=>array(),
 	'afterPageCreate'=>array(),
 	'afterPageModify'=>array(),
 	'afterPageDelete'=>array(),
@@ -58,14 +54,13 @@ function buildPlugins()
 	// List plugins directories
 	$list = Filesystem::listDirectories(PATH_PLUGINS);
 
-	// Get declared clasess before load plugins clasess, this list doesn't have the plugins clasess.
+	// Get declared clasess BEFORE load plugins clasess
 	$currentDeclaredClasess = get_declared_classes();
 
 	// Load each plugin clasess
-	foreach($list as $pluginPath) {
-
+	foreach ($list as $pluginPath) {
 		// Check if the directory has the plugin.php
-		if(file_exists($pluginPath.DS.'plugin.php')) {
+		if (file_exists($pluginPath.DS.'plugin.php')) {
 			include($pluginPath.DS.'plugin.php');
 		}
 	}
@@ -73,42 +68,45 @@ function buildPlugins()
 	// Get plugins clasess loaded
 	$pluginsDeclaredClasess = array_diff(get_declared_classes(), $currentDeclaredClasess);
 
-	foreach($pluginsDeclaredClasess as $pluginClass)
-	{
+	foreach ($pluginsDeclaredClasess as $pluginClass) {
 		$Plugin = new $pluginClass;
 
-		// Check if the plugin is translated.
-		$languageFilename = PATH_PLUGINS.$Plugin->directoryName().DS.'languages'.DS.$Site->locale().'.json';
+		// Check if the plugin is translated
+		$languageFilename = PATH_PLUGINS.$Plugin->directoryName().DS.'languages'.DS.$Site->language().'.json';
 		if( !Sanitize::pathFile($languageFilename) ) {
-			$languageFilename = PATH_PLUGINS.$Plugin->directoryName().DS.'languages'.DS.'en_US.json';
+			$languageFilename = PATH_PLUGINS.$Plugin->directoryName().DS.'languages'.DS.DEFAULT_LANGUAGE_FILE;
 		}
 
 		$database = file_get_contents($languageFilename);
 		$database = json_decode($database, true);
 
-		// Set name and description from the language file.
+		// Set name and description from the language file
 		$Plugin->setMetadata('name',$database['plugin-data']['name']);
 		$Plugin->setMetadata('description',$database['plugin-data']['description']);
 
-		// Remove name and description, and add new words if there are.
+		// Remove name and description from the language file loaded and add new words if there are
+		// This function overwrite the key=>value
 		unset($database['plugin-data']);
-		if(!empty($database)) {
+		if (!empty($database)) {
 			$Language->add($database);
 		}
 
-		// Push Plugin to array all plugins installed and not installed.
+		// $plugins['all'] Array with all plugins, installed and not installed
 		$plugins['all'][$pluginClass] = $Plugin;
 
-		// If the plugin is installed, order by hooks.
-		if($Plugin->installed()) {
-
-			foreach($pluginsEvents as $event=>$value) {
-
-				if(method_exists($Plugin, $event)) {
+		// If the plugin is installed insert on the hooks
+		if ($Plugin->installed()) {
+			foreach ($pluginsEvents as $event=>$value) {
+				if (method_exists($Plugin, $event)) {
 					array_push($plugins[$event], $Plugin);
 				}
 			}
 		}
+
+		uasort($plugins['siteSidebar'], function ($a, $b) {
+            		return $a->position()>$b->position();
+        		}
+    		);
 	}
 }
 

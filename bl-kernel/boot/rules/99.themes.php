@@ -18,9 +18,9 @@ function buildThemes()
 	foreach($themesPaths as $themePath)
 	{
 		// Check if the theme is translated.
-		$languageFilename = $themePath.DS.'languages'.DS.$Site->locale().'.json';
+		$languageFilename = $themePath.DS.'languages'.DS.$Site->language().'.json';
 		if( !Sanitize::pathFile($languageFilename) ) {
-			$languageFilename = $themePath.DS.'languages'.DS.'en_US.json';
+			$languageFilename = $themePath.DS.'languages'.DS.DEFAULT_LANGUAGE_FILE;
 		}
 
 		if( Sanitize::pathFile($languageFilename) )
@@ -45,11 +45,14 @@ function buildThemes()
 				$metadata = json_decode($metadataString, true);
 
 				$database['compatible'] = false;
-
 				if( !empty($metadata['compatible']) ) {
-					$explode = explode(',', $metadata['compatible']);
-					if(in_array(BLUDIT_VERSION, $explode)) {
-						$database['compatible'] = true;
+					$bluditRoot = explode('.', BLUDIT_VERSION);
+					$compatible = explode(',', $metadata['compatible']);
+					foreach( $compatible as $version ) {
+						$root = explode('.', $version);
+						if( $root[0]==$bluditRoot[0] && $root[1]==$bluditRoot[1] ) {
+							$database['compatible'] = true;
+						}
 					}
 				}
 
@@ -67,9 +70,9 @@ function buildThemes()
 // ============================================================================
 
 // Load the language file
-$languageFilename = PATH_THEME.'languages'.DS.$Site->locale().'.json';
+$languageFilename = THEME_DIR.'languages'.DS.$Site->language().'.json';
 if( !Sanitize::pathFile($languageFilename) ) {
-	$languageFilename = PATH_THEME.'languages'.DS.'en_US.json';
+	$languageFilename = THEME_DIR.'languages'.DS.DEFAULT_LANGUAGE_FILE;
 }
 
 if( Sanitize::pathFile($languageFilename) )

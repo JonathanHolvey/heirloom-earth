@@ -4,8 +4,7 @@ class Redirect {
 
 	public static function url($url)
 	{
-		if(!headers_sent())
-		{
+		if(!headers_sent()) {
 			header("Location:".$url, TRUE, 302);
 			exit;
 		}
@@ -13,9 +12,9 @@ class Redirect {
 		exit('<meta http-equiv="refresh" content="0; url='.$url.'"/>');
 	}
 
-	public static function page($base, $page)
+	public static function page($page)
 	{
-		self::url(HTML_PATH_ROOT.$base.'/'.$page);
+		self::url(HTML_PATH_ROOT.ADMIN_URI_FILTER.'/'.$page);
 	}
 
 	public static function home()

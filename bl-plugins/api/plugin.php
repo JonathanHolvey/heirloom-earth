@@ -2,31 +2,34 @@
 
 class pluginAPI extends Plugin {
 
+	private $method;
+
 	public function init()
 	{
-		global $Security;
-
-		// This key is used for request such as get the list of all posts and pages
-		$token = md5($Security->key1().time().DOMAIN);
+		// Generate the API Token
+		$token = md5( uniqid().time().DOMAIN );
 
 		$this->dbFields = array(
-			'ping'=>0,		// 0 = false, 1 = true
-			'token'=>$token,	// Private key
-			'showAllAmount'=>15,	// Amount of posts and pages for return
-			'authentication'=>1	// Authentication required
+			'token'=>$token,	// API Token
+			'amountOfItems'=>15	// Amount of items to return
 		);
 	}
 
 	public function form()
 	{
-		$html = '';
+		global $Language;
 
-		$html .= '<div>';
-		$html .= '<p><b>Token:</b> '.$this->getDbField('token').'</p>';
-		$html .= '<div class="tip">This key is private, do not share it with anyone.</div>';
+		$html  = '<div>';
+		$html .= '<label>'.$Language->get('API Token').'</label>';
+		$html .= '<input name="token" type="text" value="'.$this->getValue('token').'">';
+		$html .= '<span class="tip">'.$Language->get('This token is for read only and is regenerated every time you install the plugin').'</span>';
 		$html .= '</div>';
 
-		$html .= '<div>Check the documentation about the API <a href="https://docs.bludit.com/en/api/introduction">Bludit Docs API</a></div>';
+		$html .= '<div>';
+		$html .= '<label>'.$Language->get('Amount of pages').'</label>';
+		$html .= '<input id="jsamountOfItems" name="amountOfItems" type="text" value="'.$this->getValue('amountOfItems').'">';
+		$html .= '<span class="tip">'.$Language->get('This is the maximum of pages to return when you call to').'</span>';
+		$html .= '</div>';
 
 		return $html;
 	}
@@ -35,23 +38,114 @@ class pluginAPI extends Plugin {
 // API HOOKS
 // ----------------------------------------------------------------------------
 
-	public function beforeRulesLoad()
+	public function beforeAll()
 	{
 		global $Url;
-		global $dbPosts;
 		global $dbPages;
+		global $dbUsers;
+		global $Login;
 
-		// Check if the URI start with /api/
-		$startString = HTML_PATH_ROOT.'api/';
-		$URI = $Url->uri();
-		$length = mb_strlen($startString, CHARSET);
-		if( mb_substr($URI, 0, $length)!=$startString ) {
+		// CHECK URL
+		// ------------------------------------------------------------
+		$URI = $this->webhook('api', $returnsAfterURI=true, $fixed=false);
+		if ($URI===false) {
 			return false;
 		}
 
-		// Remove the first part of the URI
-		$URI = mb_substr($URI, $length);
+		// METHOD
+		// ------------------------------------------------------------
+		$method = $this->getMethod();
 
+		// METHOD INPUTS
+		// ------------------------------------------------------------
+		$inputs = $this->getMethodInputs();
+
+		if ( empty($inputs) ) {
+			$this->response(404, 'Not Found', array('message'=>'Missing method inputs.'));
+		}
+
+		// ENDPOINT PARAMETERS
+		// ------------------------------------------------------------
+		$parameters = $this->getEndpointParameters($URI);
+
+		if ( empty($parameters) ) {
+			$this->response(404, 'Not Found', array('message'=>'Missing endpoint parameters.'));
+		}
+
+		// API TOKEN
+		// ------------------------------------------------------------
+		// Token from the plugin, the user can change it on the settings of the plugin
+		$tokenAPI = $this->getValue('token');
+
+		// Check empty token
+		if (empty($inputs['token'])) {
+			$this->response(404, 'Not Found', array('message'=>'Missing API token.'));
+		}
+
+		// Check if the token is valid
+		if ($inputs['token']!==$tokenAPI) {
+			$this->response(401, 'Unauthorized', array('message'=>'Invalid API token.'));
+		}
+
+		// AUTHENTICATION TOKEN
+		// ------------------------------------------------------------
+		$writePermissions = false;
+		if ( !empty($inputs['authentication']) ) {
+
+			// Get the user with the authentication token, FALSE if doesn't exit
+			$username = $dbUsers->getByAuthToken($inputs['authentication']);
+			if ($username!==false) {
+
+				// Get the object user to check the role
+				$user = $dbUsers->getUser($username);
+				if (($user->role()=='admin') && ($user->enabled())) {
+
+					// Loggin the user to create the session
+					$Login->setLogin($username, 'admin');
+					// Enable write permissions
+					$writePermissions = true;
+				}
+			}
+		}
+
+		// ENDPOINTS
+		// ------------------------------------------------------------
+
+		// (GET) /api/pages
+		if ( ($method==='GET') && ($parameters[0]==='pages') && empty($parameters[1]) ) {
+			$data = $this->getPages();
+		}
+		// (GET) /api/pages/<key>
+		elseif ( ($method==='GET') && ($parameters[0]==='pages') && !empty($parameters[1]) ) {
+			$pageKey = $parameters[1];
+			$data = $this->getPage($pageKey);
+		}
+		// (PUT) /api/pages/<key>
+		elseif ( ($method==='PUT') && ($parameters[0]==='pages') && !empty($parameters[1]) && $writePermissions ) {
+			$pageKey = $parameters[1];
+			$data = $this->editPage($pageKey, $inputs);
+		}
+		// (DELETE) /api/pages/<key>
+		elseif ( ($method==='DELETE') && ($parameters[0]==='pages') && !empty($parameters[1]) && $writePermissions ) {
+			$pageKey = $parameters[1];
+			$data = $this->deletePage($pageKey);
+		}
+		// (POST) /api/pages
+		elseif ( ($method==='POST') && ($parameters[0]==='pages') && empty($parameters[1]) && $writePermissions ) {
+			$data = $this->createPage($inputs);
+		}
+		else {
+			$this->response(401, 'Unauthorized', array('message'=>'Access denied or invalid endpoint.'));
+		}
+
+		$this->response(200, 'OK', $data);
+	}
+
+// PRIVATE METHODS
+// ----------------------------------------------------------------------------
+
+	private function getMethod()
+	{
 		// METHODS
 		// ------------------------------------------------------------
 		// GET
@@ -59,184 +153,104 @@ class pluginAPI extends Plugin {
 		// PUT
 		// DELETE
 
-		$method = $_SERVER['REQUEST_METHOD'];
+		$this->method = $_SERVER['REQUEST_METHOD'];
+		return $this->method;
+	}
 
-		// INPUTS
-		// ------------------------------------------------------------
-		// token 	| authentication token
-
-		$inputs = json_decode(file_get_contents('php://input'),true);
-
-		if( empty($inputs) ) {
-			// Default variables for $input
-			$inputs = array(
-				'token'=>''
-			);
+	private function getMethodInputs()
+	{
+		switch($this->method) {
+			case "POST":
+				$inputs = $_POST;
+				break;
+			case "GET":
+			case "DELETE":
+				$inputs = $_GET;
+				break;
+			case "PUT":
+				$inputs = '';
+				break;
+			default:
+				$inputs = json_encode(array());
+				break;
 		}
-		else {
-			// Sanitize inputs
-			foreach( $inputs as $key=>$value ) {
-				if(empty($value)) {
-					$this->response(array(
-						'status'=>'1',
-						'message'=>'Invalid input.'
-					));
-				} else {
-					$inputs[$key] = Sanitize::html($value);
-				}
+
+		// Try to get raw/json data
+		if (empty($inputs)) {
+			$inputs = file_get_contents('php://input');
+		}
+
+		return $this->cleanInputs($inputs);
+	}
+
+	// Returns an array with key=>value
+	// If the content is JSON is parsed to array
+	private function cleanInputs($inputs)
+	{
+		$tmp = array();
+		if (is_array($inputs)) {
+			foreach ($inputs as $key=>$value) {
+				$tmp[$key] = Sanitize::html($value);
+			}
+		} elseif (is_string($inputs)) {
+			$tmp = json_decode($inputs, true);
+			if (json_last_error()!==JSON_ERROR_NONE) {
+				$tmp = array();
 			}
 		}
 
-		// PARAMETERS
+		return $tmp;
+	}
+
+	private function getEndpointParameters($URI)
+	{
+		// ENDPOINT Parameters
 		// ------------------------------------------------------------
-		// /api/posts 		| GET  | returns all posts
-		// /api/posts/{key}	| GET  | returns the post with the {key}
 		// /api/pages 		| GET  | returns all pages
 		// /api/pages/{key}	| GET  | returns the page with the {key}
-		// /api/cli/regenerate 	| POST | check for new posts and pages
+		// /api/pages 		| POST | create a new page
 
+		$URI = ltrim($URI, '/');
 		$parameters = explode('/', $URI);
 
 		// Sanitize parameters
-		foreach( $parameters as $key=>$value ) {
-			if(empty($value)) {
-				$this->response(array(
-					'status'=>'1',
-					'message'=>'Invalid parameter.'
-				));
-			} else {
-				$parameters[$key] = Sanitize::html($value);
-			}
+		foreach ($parameters as $key=>$value) {
+			$parameters[$key] = Sanitize::html($value);
 		}
 
-		// Check authentication
-		if( $this->getDbField('authentication')==1 ) {
-			if( $inputs['token']!=$this->getDbField('token') ) {
-				$this->response(array(
-					'status'=>'1',
-					'message'=>'Invalid token.'
-				));
-			}
-		}
-
-		// /api/posts
-		if( ($method==='GET') && ($parameters[0]==='posts') && empty($parameters[1]) ) {
-			$data = $this->getAllPosts();
-			$this->response($data);
-		}
-		// /api/pages
-		elseif( ($method==='GET') && ($parameters[0]==='pages') && empty($parameters[1]) ) {
-			$data = $this->getAllPages();
-			$this->response($data);
-		}
-		// /api/posts/{key}
-		elseif( ($method==='GET') && ($parameters[0]==='posts') && !empty($parameters[1]) ) {
-			$data = $this->getPost($parameters[1]);
-			$this->response($data);
-		}
-		// /api/pages/{key}
-		elseif( ($method==='GET') && ($parameters[0]==='pages') && !empty($parameters[1]) ) {
-			$data = $this->getPage($parameters[1]);
-			$this->response($data);
-		}
-		// /api/cli/regenerate
-		elseif( ($method==='POST') && ($parameters[0]==='cli') && ($parameters[1]==='regenerate') ) {
-
-			// Regenerate posts
-			if( $dbPosts->cliMode() ) {
-				reIndexTagsPosts();
-			}
-
-			// Regenerate pages
-			$dbPages->cliMode();
-
-			$this->response(array(
-				'status'=>'0',
-				'message'=>'Pages and post regenerated.'
-			));
-		}
+		return $parameters;
 	}
 
-// FUNCTIONS
-// ----------------------------------------------------------------------------
-
-	private function response($data=array())
+	private function response($code=200, $message='OK', $data=array())
 	{
-		$json = json_encode($data);
-
+		header('HTTP/1.1 '.$code.' '.$message);
+		header('Access-Control-Allow-Origin: *');
 		header('Content-Type: application/json');
+		$json = json_encode($data);
 		exit($json);
 	}
 
-	private function ping()
+	private function getPages()
 	{
-		if($this->getDbField('ping')) {
+		global $dbPages;
 
-			// Get the authentication key
-			$token = $this->getDbField('token');
-
-			$url = 'https://api.bludit.com/ping?token='.$token.'&url='.DOMAIN_BASE;
-
-			// Check if curl is installed
-			if( function_exists('curl_version') ) {
-
-                                $ch = curl_init();
-                                curl_setopt($ch, CURLOPT_URL, $url);
-                                curl_setopt($ch, CURLOPT_HEADER, false);
-                                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-				$out = curl_exec($ch);
-
-				if($out === false) {
-					Log::set('Plugin API : '.'Curl error: '.curl_error($ch));
-				}
-
-				curl_close($ch);
-			}
-			else {
-				$options = array(
-					"ssl"=>array(
-						"verify_peer"=>false,
-						"verify_peer_name"=>false
-					)
-				);
-
-				$stream = stream_context_create($options);
-				$out = file_get_contents($url, false, $stream);
-			}
-		}
-	}
-
-	private function getPost($key)
-	{
-		// Generate the object Post
-		$Post = buildPost($key);
-
-		if(!$Post) {
-			return array(
-				'status'=>'1',
-				'message'=>'Post not found.'
-			);
-		}
-
-		$data['status'] = '0';
-		$data['message'] = '';
-		$data['data'] = $Post->json( $returnsArray=true );
-
-		return $data;
-	}
-
-	private function getAllPosts()
-	{
-		$posts = buildPostsForPage(0, $this->getDbField('showAllAmount'), true, false);
+		$onlyPublished = true;
+		$amountOfItems = $this->getValue('amountOfItems');
+		$pageNumber = 1;
+		$list = $dbPages->getList($pageNumber, $amountOfItems, $onlyPublished);
 
 		$tmp = array(
 			'status'=>'0',
-			'message'=>'',
+			'message'=>'List of pages, amount of items: '.$amountOfItems,
 			'data'=>array()
 		);
 
-		foreach($posts as $Post) {
-			array_push($tmp['data'], $Post->json( $returnsArray=true ));
+		// Get keys of pages
+		$keys = array_keys($list);
+		foreach ($keys as $pageKey) {
+			// Create the page object from the page key
+			$page = buildPage($pageKey);
+			array_push($tmp['data'], $page->json( $returnsArray=true ));
 		}
 
 		return $tmp;
@@ -247,37 +261,71 @@ class pluginAPI extends Plugin {
 		// Generate the object Page
 		$Page = buildPage($key);
 
-		if(!$Page) {
+		if (!$Page) {
 			return array(
 				'status'=>'1',
 				'message'=>'Page not found.'
 			);
 		}
 
-		$data['status'] = '0';
-		$data['message'] = '';
-		$data['data'] = $Page->json( $returnsArray=true );
-
-		return $data;
+		return array(
+			'status'=>'0',
+			'message'=>'Page filtered by key: '.$key,
+			'data'=>$Page->json( $returnsArray=true )
+		);
 	}
 
-	private function getAllPages()
+	private function createPage($args)
 	{
-		$pages = buildAllPages();
+		// This function is defined on functions.php
+		$key = createPage($args);
 
-		$tmp = array(
-			'status'=>'0',
-			'message'=>'',
-			'data'=>array()
-		);
-
-		foreach($pages as $Page) {
-			if($Page->published()) {
-				array_push($tmp['data'], $Page->json( $returnsArray=true ));
-			}
+		if ($key===false) {
+			return array(
+				'status'=>'1',
+				'message'=>'Error trying to create the new page.'
+			);
 		}
 
-		return $tmp;
+		return array(
+			'status'=>'0',
+			'message'=>'Page created.',
+			'data'=>array('key'=>$key)
+		);
+	}
+
+	private function editPage($key, $args)
+	{
+		$args['key'] = $key;
+		$newKey = editPage($args);
+
+		if ($newKey===false) {
+			return array(
+				'status'=>'1',
+				'message'=>'Error trying to edit the page.'
+			);
+		}
+
+		return array(
+			'status'=>'0',
+			'message'=>'Page edited.',
+			'data'=>array('key'=>$newKey)
+		);
+	}
+
+	private function deletePage($key)
+	{
+		if (deletePage($key)) {
+			return array(
+				'status'=>'0',
+				'message'=>'Page deleted.'
+			);
+		}
+
+		return array(
+			'status'=>'1',
+			'message'=>'Error trying to delete the page.'
+		);
 	}
 
 }

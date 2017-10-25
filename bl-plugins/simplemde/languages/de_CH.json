@@ -2,10 +2,11 @@
 	"plugin-data":
 	{
 		"name": "SimpleMDE",
-		"description": "Ein einfacher und schöner JavaScript-Editor für die Verwendung von Markdown von @WesCossick. Von Diego Najar für Bludit angpasst."
+		"description": "Einfacher Editor auf der Grundlage der Auszeichnungssprache Markdown."
 	},
 	"toolbar": "Werkzeugleiste",
 	"tab-size": "Abstände der Tabstopps",
-	"autosave": "Autosave",
-	"content-here-supports-markdown-and-html-code": "Hier kann die Inhalt eingefügt werden. Der Editor unterstützt Markdown und HTML-Code."
+	"autosave": "Automatische Speicherung",
+	"spell-checker": "Rechtschreibprüfung",
+	"content-here-supports-markdown-and-html-code": "Hier kann der Inhalt eingefügt werden. Der Editor unterstützt Markdown und HTML-Code."
 }

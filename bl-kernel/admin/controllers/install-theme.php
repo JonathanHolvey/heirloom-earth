@@ -4,9 +4,9 @@
 // Check role
 // ============================================================================
 
-if($Login->role()!=='admin') {
-	Alert::set($Language->g('you-do-not-have-sufficient-permissions'));
-	Redirect::page('admin', 'dashboard');
+if ($Login->role()!=='admin') {
+	Alert::set($Language->g('You do not have sufficient permissions'));
+	Redirect::page('dashboard');
 }
 
 // ============================================================================
@@ -26,14 +26,19 @@ if($Login->role()!=='admin') {
 // ============================================================================
 $themeDirname = $layout['parameters'];
 
-if( Sanitize::pathFile(PATH_THEMES.$themeDirname) )
-{
+if( Sanitize::pathFile(PATH_THEMES.$themeDirname) ) {
+	// Set the theme
 	$Site->set(array('theme'=>$themeDirname));
-	Alert::set($Language->g('The changes have been saved'));
-}
-else
-{
-	Log::set(__METHOD__.LOG_SEP.'Error occurred when trying to install the theme: '.$themeDirname);
+
+	// Add to syslog
+	$Syslog->add(array(
+		'dictionaryKey'=>'new-theme-configured',
+		'notes'=>$themeDirname
+	));
+
+	// Create an alert
+	Alert::set( $Language->g('The changes have been saved') );
 }
 
-Redirect::page('admin', 'themes');
+// Redirect
+Redirect::page('themes');

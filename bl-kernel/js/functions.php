@@ -7,7 +7,7 @@ echo 'var HTML_PATH_ADMIN_ROOT = "'.HTML_PATH_ADMIN_ROOT.'";'.PHP_EOL;
 echo 'var HTML_PATH_ADMIN_THEME = "'.HTML_PATH_ADMIN_THEME.'";'.PHP_EOL;
 echo 'var HTML_PATH_UPLOADS = "'.HTML_PATH_UPLOADS.'";'.PHP_EOL;
 echo 'var HTML_PATH_UPLOADS_THUMBNAILS = "'.HTML_PATH_UPLOADS_THUMBNAILS.'";'.PHP_EOL;
-echo 'var NO_PARENT_CHAR = "'.NO_PARENT_CHAR.'";'.PHP_EOL;
+echo 'var PARENT = "'.PARENT.'";'.PHP_EOL;
 
 echo 'var tokenCSRF = "'.$Security->getTokenCSRF().'";'.PHP_EOL;
 
@@ -19,41 +19,21 @@ echo '</script>';
 
 var ajaxRequest;
 
-function checkSlugPage(text, parent, oldKey, writeResponse)
-{
-    parent = typeof parent !== 'undefined' ? parent : NO_PARENT_CHAR;
-    oldKey = typeof oldKey !== 'undefined' ? oldKey : "";
-
-    checkSlug("page", text, parent, oldKey, writeResponse);
-}
-
-function checkSlugPost(text, oldKey, writeResponse)
-{
-    checkSlug("post", text, null, oldKey, writeResponse);
-}
-
-function checkSlug(type, text, parentPage, key, writeResponse)
-{
+function generateSlug(text, parentKey, currentKey, writeResponse) {
     if(ajaxRequest) {
         ajaxRequest.abort();
     }
 
-    if(type=="page")
-    {
-        ajaxRequest = $.ajax({
-            type: "POST",
-            data:{ tokenCSRF: tokenCSRF, type: "page", text: text, parent: parentPage, key: key},
-            url: "<?php echo HTML_PATH_ADMIN_ROOT.'ajax/slug' ?>"
-        });
-    }
-    else
-    {
-        ajaxRequest = $.ajax({
-            type: "POST",
-            data:{ tokenCSRF: tokenCSRF, type: "post", text: text, key: key },
-            url: "<?php echo HTML_PATH_ADMIN_ROOT.'ajax/slug' ?>"
-        });
-    }
+    ajaxRequest = $.ajax({
+        type: "POST",
+        data: {
+            tokenCSRF: tokenCSRF,
+            text: text,
+            parentKey: parentKey,
+            currentKey: currentKey
+        },
+        url: "<?php echo HTML_PATH_ADMIN_ROOT.'ajax/slug' ?>"
+    });
 
     // Callback handler that will be called on success
     ajaxRequest.done(function (response, textStatus, jqXHR){

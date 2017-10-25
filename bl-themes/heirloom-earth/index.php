@@ -1,4 +1,4 @@
 <?php
 	if ($Url->whereAmI() == "home")
-		include_once(PATH_THEME_PHP . "home.php");
+		include_once(THEME_DIR_PHP . "/home.php");
 ?>

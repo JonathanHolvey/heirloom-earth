@@ -34,7 +34,7 @@ HTML::formOpen(array('class'=>'uk-form-horizontal'));
 		'label'=>$L->g('Locale'),
 		'value'=>$Site->locale(),
 		'class'=>'uk-width-1-2 uk-form-medium',
-		'tip'=>$L->g('you-can-use-this-field-to-define-a-set-of')
+		'tip'=>$L->g('with-the-locales-you-can-set-the-regional-user-interface')
 	));
 
 	HTML::legend(array('value'=>$L->g('Date and time formats')));
@@ -50,6 +50,7 @@ HTML::formOpen(array('class'=>'uk-form-horizontal'));
 	echo '<div class="uk-form-row">
 		<div class="uk-form-controls">
 		<button type="submit" class="uk-button uk-button-primary">'.$L->g('Save').'</button>
+		<a class="uk-button" href="'.HTML_PATH_ADMIN_ROOT.'settings-regional">'.$L->g('Cancel').'</a>
 		</div>
 	</div>';
 
@@ -62,8 +63,8 @@ HTML::formClose();
 $(document).ready(function() {
 
 	$("#jslanguage").change(function () {
-		var locale = $("#jslanguage option:selected").val();
-		$("#jslocale").attr("value",locale);
+		$("#jslocale").attr("value", "<?php $L->p('You can change this field when save the current changes') ?>");
+		$("#jslocale").attr("disabled", true);
 	});
 
 });

@@ -8,7 +8,7 @@
 	<title><?php echo $layout['title'] ?></title>
 
 	<!-- Favicon -->
-	<link rel="shortcut icon" type="image/x-icon" href="<?php echo HTML_PATH_ADMIN_THEME.'img/favicon.png' ?>">
+	<link rel="shortcut icon" type="image/x-icon" href="<?php echo HTML_PATH_ADMIN_THEME.'img/favicon.png?version='.BLUDIT_VERSION ?>">
 
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="<?php echo HTML_PATH_ADMIN_THEME.'css/uikit/uikit.almost-flat.min.css?version='.BLUDIT_VERSION ?>">
@@ -18,9 +18,10 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo HTML_PATH_ADMIN_THEME.'css/uikit/progress.almost-flat.min.css?version='.BLUDIT_VERSION ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo HTML_PATH_ADMIN_THEME.'css/default.css?version='.BLUDIT_VERSION ?>">
 	<link rel="stylesheet" type="text/css" href="<?php echo HTML_PATH_ADMIN_THEME.'css/jquery.datetimepicker.css?version='.BLUDIT_VERSION ?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo HTML_PATH_CORE_CSS.'font-awesome/css/font-awesome.min.css?version='.BLUDIT_VERSION ?>">
 
 	<!-- Javascript -->
-	<script charset="utf-8" src="<?php echo HTML_PATH_ADMIN_THEME.'js/jquery.min.js?version='.BLUDIT_VERSION ?>"></script>
+	<script charset="utf-8" src="<?php echo HTML_PATH_CORE_JS.'jquery.min.js?version='.BLUDIT_VERSION ?>"></script>
 	<script charset="utf-8" src="<?php echo HTML_PATH_ADMIN_THEME.'js/uikit/uikit.min.js?version='.BLUDIT_VERSION ?>"></script>
 	<script charset="utf-8" src="<?php echo HTML_PATH_ADMIN_THEME.'js/uikit/upload.min.js?version='.BLUDIT_VERSION ?>"></script>
 	<script charset="utf-8" src="<?php echo HTML_PATH_ADMIN_THEME.'js/jquery.datetimepicker.js?version='.BLUDIT_VERSION ?>"></script>
@@ -57,16 +58,14 @@ $(document).ready(function() {
 <div class="uk-offcanvas-bar">
 	<ul class="uk-nav uk-nav-offcanvas">
 	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'dashboard' ?>"><?php $L->p('Dashboard') ?></a></li>
-	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'new-post' ?>"><?php $L->p('New post') ?></a></li>
-	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'new-page' ?>"><?php $L->p('New page') ?></a></li>
-	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'manage-posts' ?>"><?php $L->p('Manage posts') ?></a></li>
-	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'manage-pages' ?>"><?php $L->p('Manage pages') ?></a></li>
+	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'new-content' ?>"><?php $L->p('New content') ?></a></li>
+	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'content' ?>"><?php $L->p('Manage content') ?></a></li>
 	<?php if($Login->role() == 'admin') { ?>
+	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'categories' ?>"><?php $L->p('Manage categories') ?></a></li>
 	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'users' ?>"><?php $L->p('Manage users') ?></a></li>
-	<!-- <li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'categories' ?>"><?php $L->p('Manage categories') ?></a></li> -->
 	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'settings-general' ?>"><?php $L->p('General settings') ?></a></li>
 	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'settings-advanced' ?>"><?php $L->p('Advanced settings') ?></a></li>
-	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'settings-regional' ?>"><?php $L->p('Language and timezone') ?></a></li>
+	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'settings-regional' ?>"><?php $L->p('Language') ?></a></li>
 	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'plugins' ?>"><?php $L->p('Plugins') ?></a></li>
 	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'themes' ?>"><?php $L->p('Themes') ?></a></li>
 	<li><a href="<?php echo HTML_PATH_ADMIN_ROOT.'about' ?>"><?php $L->p('About') ?></a></li>
@@ -77,7 +76,8 @@ $(document).ready(function() {
 
 <div class="bl-navbar-bg">
 <nav id="bl-navbar">
-	<a href="" class="bl-brand">BLUDIT</a>
+	<img id="bludit-logo" class="logo" src="<?php echo HTML_PATH_ADMIN_THEME ?>img/logo.svg" />
+	<span class="bl-brand">BLUDIT</span>
 
 	<div class="bl-navbar-right">
 		<?php $L->p('Welcome') ?> <?php echo $Login->username() ?> -
@@ -102,23 +102,17 @@ $(document).ready(function() {
 			</li>
 
 			<li class="uk-nav-header"><?php $L->p('Publish') ?></li>
-			<li <?php echo ($layout['view']=='new-post')?'class="uk-active"':'' ?>>
-				<a href="<?php echo HTML_PATH_ADMIN_ROOT.'new-post' ?>"><?php $L->p('New post') ?></a>
-			</li>
-			<li <?php echo ($layout['view']=='new-page')?'class="uk-active"':'' ?>>
-				<a href="<?php echo HTML_PATH_ADMIN_ROOT.'new-page' ?>"><?php $L->p('New page') ?></a>
+			<li <?php echo ($layout['view']=='new-content')?'class="uk-active"':'' ?>>
+				<a href="<?php echo HTML_PATH_ADMIN_ROOT.'new-content' ?>"><?php $L->p('New content') ?></a>
 			</li>
 
 			<li class="uk-nav-header"><?php $L->p('Manage') ?></li>
-			<li <?php echo ($layout['view']=='manage-posts')?'class="uk-active"':'' ?>>
-				<a href="<?php echo HTML_PATH_ADMIN_ROOT.'manage-posts' ?>"><?php $L->p('Posts') ?></a>
+			<li <?php echo ($layout['view']=='content')?'class="uk-active"':'' ?>>
+				<a href="<?php echo HTML_PATH_ADMIN_ROOT.'content' ?>"><?php $L->p('Content') ?></a>
 			</li>
-			<li <?php echo ($layout['view']=='manage-pages')?'class="uk-active"':'' ?>>
-				<a href="<?php echo HTML_PATH_ADMIN_ROOT.'manage-pages' ?>"><?php $L->p('Pages') ?></a>
-			</li>
-			<!--<li <?php echo ($layout['view']=='categories')?'class="uk-active"':'' ?>>
+			<li <?php echo ($layout['view']=='categories')?'class="uk-active"':'' ?>>
 				<a href="<?php echo HTML_PATH_ADMIN_ROOT.'categories' ?>"><?php $L->p('Categories') ?></a>
-			</li>-->
+			</li>
 			<li <?php echo ($layout['view']=='users')?'class="uk-active"':'' ?>>
 				<a href="<?php echo HTML_PATH_ADMIN_ROOT.'users' ?>"><?php $L->p('Users') ?></a>
 			</li>
@@ -131,7 +125,7 @@ $(document).ready(function() {
 				<a href="<?php echo HTML_PATH_ADMIN_ROOT.'settings-advanced' ?>"><?php $L->p('Advanced') ?></a>
 			</li>
 			<li <?php echo ($layout['view']=='settings-regional')?'class="uk-active"':'' ?>>
-				<a href="<?php echo HTML_PATH_ADMIN_ROOT.'settings-regional' ?>"><?php $L->p('Language and timezone') ?></a>
+				<a href="<?php echo HTML_PATH_ADMIN_ROOT.'settings-regional' ?>"><?php $L->p('Language') ?></a>
 			</li>
 			<li <?php echo ($layout['view']=='plugins')?'class="uk-active"':'' ?>>
 				<a href="<?php echo HTML_PATH_ADMIN_ROOT.'plugins' ?>"><?php $L->p('Plugins') ?></a>
@@ -144,32 +138,26 @@ $(document).ready(function() {
 			</li>
 
 			</ul>
-
 		</div>
 
 		<div id="bl-view" class="uk-width-3-4">
 		<?php
 			if( Sanitize::pathFile(PATH_ADMIN_VIEWS, $layout['view'].'.php') ) {
 				include(PATH_ADMIN_VIEWS.$layout['view'].'.php');
+			} else {
+				echo '<h1 style="width:100%; text-align:center">'.$L->g('Page not found').'</h1>';
+				echo '<h2 style="width:100%; text-align:center">'.$L->g('Have you seen my ball').'</h2>';
 			}
 		?>
 		</div>
 
-		<?php
-			if( AUTO_SCROLL ) {
-		?>
-		<script>
-			// Auto scroll
-			$(document).ready(function () {
-				$('html, body').animate({
-					scrollTop: $('#bl-view').offset().top
-				}, 'slow');
-			});
-		</script>
-		<?php
-			}
-		?>
 </div>
+
+<script>
+$( "#bludit-logo" ).dblclick(function() {
+	alert( "Hey! what are you doing ?" );
+});
+</script>
 
 <!-- Javascript -->
 <?php include(PATH_JS.'functions.php') ?>

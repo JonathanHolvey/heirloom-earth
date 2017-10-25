@@ -2,20 +2,18 @@
 
 class pluginsimpleMDE extends Plugin {
 
-	private $loadWhenController = array(
-		'new-post',
-		'new-page',
-		'edit-post',
-		'edit-page'
+	private $loadOnController = array(
+		'new-content',
+		'edit-content'
 	);
 
 	public function init()
 	{
 		$this->dbFields = array(
 			'tabSize'=>'2',
-			'toolbar'=>'"bold", "italic", "heading", "|", "quote", "unordered-list", "|", "link", "image", "code", "horizontal-rule", "|", "preview", "side-by-side", "fullscreen", "guide"',
-			'autosave'=>0,
-			'spellChecker'=>0
+			'toolbar'=>'"bold", "italic", "heading", "|", "quote", "unordered-list", "|", "link", "image", "code", "horizontal-rule", "|", "preview", "side-by-side", "fullscreen"',
+			'autosave'=>false,
+			'spellChecker'=>true
 		);
 	}
 
@@ -24,25 +22,29 @@ class pluginsimpleMDE extends Plugin {
 		global $Language;
 
 		$html  = '<div>';
-		$html .= '<label>'.$Language->get('Toolbar').'</label>';
+		$html .= '<label>'.$Language->get('toolbar').'</label>';
 		$html .= '<input name="toolbar" id="jstoolbar" type="text" value="'.$this->getDbField('toolbar').'">';
 		$html .= '</div>';
 
 		$html .= '<div>';
-		$html .= '<label>'.$Language->get('Tab size').'</label>';
+		$html .= '<label>'.$Language->get('tab-size').'</label>';
 		$html .= '<input name="tabSize" id="jstabSize" type="text" value="'.$this->getDbField('tabSize').'">';
 		$html .= '</div>';
 
 		$html .= '<div>';
-		$html .= '<input type="hidden" name="autosave" value="0">';
-		$html .= '<input name="autosave" id="jsautosave" type="checkbox" value="1" '.($this->getDbField('autosave')?'checked':'').'>';
-		$html .= '<label class="forCheckbox" for="jsautosave">'.$Language->get('Autosave').'</label>';
+		$html .= '<label>'.$Language->get('autosave').'</label>';
+		$html .= '<select name="autosave">';
+		$html .= '<option value="true" '.($this->getValue('autosave')===true?'selected':'').'>'.$Language->get('enabled').'</option>';
+		$html .= '<option value="false" '.($this->getValue('autosave')===false?'selected':'').'>'.$Language->get('disabled').'</option>';
+		$html .= '</select>';
 		$html .= '</div>';
 
 		$html .= '<div>';
-		$html .= '<input type="hidden" name="spellChecker" value="0">';
-		$html .= '<input name="spellChecker" id="jsspellChecker" type="checkbox" value="1" '.($this->getDbField('spellChecker')?'checked':'').'>';
-		$html .= '<label class="forCheckbox" for="jsspellChecker">'.$Language->get('spell-checker').'</label>';
+		$html .= '<label>'.$Language->get('spell-checker').'</label>';
+		$html .= '<select name="spellChecker">';
+		$html .= '<option value="true" '.($this->getValue('spellChecker')===true?'selected':'').'>'.$Language->get('enabled').'</option>';
+		$html .= '<option value="false" '.($this->getValue('spellChecker')===false?'selected':'').'>'.$Language->get('disabled').'</option>';
+		$html .= '</select>';
 		$html .= '</div>';
 
 		return $html;
@@ -50,21 +52,14 @@ class pluginsimpleMDE extends Plugin {
 
 	public function adminHead()
 	{
-		global $layout;
+		if (in_array($GLOBALS['ADMIN_CONTROLLER'], $this->loadOnController)) {
+			$html = '';
 
-		$html = '';
-
-		// Load CSS and JS only on Controllers in array.
-		if(in_array($layout['controller'], $this->loadWhenController))
-		{
 			// Path plugin.
 			$pluginPath = $this->htmlPath();
 
 			// SimpleMDE css
 			$html .= '<link rel="stylesheet" href="'.$pluginPath.'css/simplemde.min.css">';
-
-			// Font-awesome is a dependency of SimpleMDE
-			$html .= '<link rel="stylesheet" href="'.HTML_PATH_ADMIN_THEME_CSS.'font-awesome.min.css">';
 
 			// SimpleMDE js
 			$html .= '<script src="'.$pluginPath.'js/simplemde.min.js"></script>';
@@ -77,30 +72,22 @@ class pluginsimpleMDE extends Plugin {
 					.CodeMirror, .CodeMirror-scroll { min-height: 400px !important; border-radius: 0 !important; }
 				</style>';
 
+			return $html;
 		}
 
-		return $html;
+		return false;
 	}
 
 	public function adminBodyEnd()
 	{
-		global $layout;
-		global $Language;
-
-		$html = '';
-
-		// Load CSS and JS only on Controllers in array.
-		if(in_array($layout['controller'], $this->loadWhenController))
-		{
+		if (in_array($GLOBALS['ADMIN_CONTROLLER'], $this->loadOnController)) {
 			// Autosave
-			global $_Page, $_Post;
-			$autosaveID = $layout['controller'];
+			global $Page;
+			global $Language;
+			$autosaveID = $GLOBALS['ADMIN_CONTROLLER'];
 			$autosaveEnable = $this->getDbField('autosave')?'true':'false';
-			if(isset($_Page)) {
-				$autosaveID = $_Page->key();
-			}
-			if(isset($_Post)) {
-				$autosaveID = $_Post->key();
+			if (!empty($Page)) {
+				$autosaveID = $Page->key();
 			}
 
 			// Spell Checker
@@ -129,7 +116,7 @@ class pluginsimpleMDE extends Plugin {
 					toolbarTips: true,
 					toolbarGuideIcon: true,
 					autofocus: false,
-					placeholder: "'.$Language->get('Content here Supports Markdown and HTML code').'",
+					placeholder: "'.$Language->get('content-here-supports-markdown-and-html-code').'",
 					lineWrapping: true,
 					autoDownloadFontAwesome: false,
 					indentWithTabs: true,
@@ -140,12 +127,24 @@ class pluginsimpleMDE extends Plugin {
 						uniqueId: "'.$autosaveID.'",
 						delay: 1000,
 					},
-					toolbar: ['.Sanitize::htmlDecode($this->getDbField('toolbar')).']
+					toolbar: ['.Sanitize::htmlDecode($this->getDbField('toolbar')).',
+						"|",
+						{
+						name: "pageBreak",
+						action: function addPageBreak(editor){
+							var cm = editor.codemirror;
+							output = "\n'.PAGE_BREAK.'\n";
+							cm.replaceSelection(output);
+							},
+						className: "fa fa-minus-square-o",
+						title: "'.$Language->get('Pagebreak').'",
+						}]
 			});';
 
 			$html .= '}); </script>';
+			return $html;
 		}
 
-		return $html;
+		return false;
 	}
 }

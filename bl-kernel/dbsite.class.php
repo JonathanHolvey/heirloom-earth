@@ -7,18 +7,18 @@ class dbSite extends dbJSON
 		'slogan'=>		array('inFile'=>false, 'value'=>''),
 		'description'=>		array('inFile'=>false, 'value'=>''),
 		'footer'=>		array('inFile'=>false, 'value'=>'I wanna be a pirate!'),
-		'postsperpage'=>	array('inFile'=>false, 'value'=>''),
+		'itemsPerPage'=>	array('inFile'=>false, 'value'=>6),
 		'language'=>		array('inFile'=>false, 'value'=>'en'),
-		'locale'=>		array('inFile'=>false, 'value'=>'en_US'),
+		'locale'=>		array('inFile'=>false, 'value'=>'en, en_US, en_AU, en_CA, en_GB, en_IE, en_NZ'),
 		'timezone'=>		array('inFile'=>false, 'value'=>'America/Argentina/Buenos_Aires'),
 		'theme'=>		array('inFile'=>false, 'value'=>'pure'),
 		'adminTheme'=>		array('inFile'=>false, 'value'=>'default'),
 		'homepage'=>		array('inFile'=>false, 'value'=>''),
+		'pageNotFound'=>	array('inFile'=>false, 'value'=>''),
 		'uriPage'=>		array('inFile'=>false, 'value'=>'/'),
-		'uriPost'=>		array('inFile'=>false, 'value'=>'/post/'),
 		'uriTag'=>		array('inFile'=>false, 'value'=>'/tag/'),
-		'uriBlog'=>		array('inFile'=>false, 'value'=>'/blog/'),
 		'uriCategory'=>		array('inFile'=>false, 'value'=>'/category/'),
+		'uriBlog'=>		array('inFile'=>false, 'value'=>'/blog/'),
 		'url'=>			array('inFile'=>false, 'value'=>''),
 		'emailFrom'=>		array('inFile'=>false, 'value'=>''),
 		'dateFormat'=>		array('inFile'=>false, 'value'=>'F j, Y'),
@@ -26,14 +26,16 @@ class dbSite extends dbJSON
 		'currentBuild'=>	array('inFile'=>false, 'value'=>0),
 		'twitter'=>		array('inFile'=>false, 'value'=>''),
 		'facebook'=>		array('inFile'=>false, 'value'=>''),
+		'codepen'=>		array('inFile'=>false, 'value'=>''),
 		'googlePlus'=>		array('inFile'=>false, 'value'=>''),
 		'instagram'=>		array('inFile'=>false, 'value'=>''),
-		'github'=>		array('inFile'=>false, 'value'=>'')
+		'github'=>		array('inFile'=>false, 'value'=>''),
+		'orderBy'=>		array('inFile'=>false, 'value'=>'date') // date or position
 	);
 
 	function __construct()
 	{
-		parent::__construct(PATH_DATABASES.'site.php');
+		parent::__construct(DB_SITE);
 
 		// Set timezone
 		$this->setTimezone( $this->timezone() );
@@ -50,31 +52,24 @@ class dbSite extends dbJSON
 
 	public function set($args)
 	{
-		foreach($args as $field=>$value)
-		{
-			if( isset($this->dbFields[$field]) )
-			{
+		foreach ($args as $field=>$value) {
+			if (isset($this->dbFields[$field])) {
 				$this->db[$field] = Sanitize::html($value);
 			}
 		}
 
-		if( $this->save() === false ) {
-			Log::set(__METHOD__.LOG_SEP.'Error occurred when trying to save the database file.');
-			return false;
-		}
-
-		return true;
+		return $this->save();
 	}
 
-	// Returns an array with the filters for the url.
+	// Returns an array with the filters for the url
+	// or returns a string with the filter defined on $filter
 	public function uriFilters($filter='')
 	{
-		$filters['admin'] = '/admin/';
-		$filters['post'] = $this->getField('uriPost');
+		$filters['admin'] = '/'.ADMIN_URI_FILTER;
 		$filters['page'] = $this->getField('uriPage');
 		$filters['tag'] = $this->getField('uriTag');
-		$filters['blog'] = $this->getField('uriBlog');
 		$filters['category'] = $this->getField('uriCategory');
+		$filters['blog'] = $this->getField('uriBlog');
 
 		if(empty($filter)) {
 			return $filters;
@@ -83,34 +78,18 @@ class dbSite extends dbJSON
 		return $filters[$filter];
 	}
 
-	public function urlPost()
+	// Returns the URL of the rss.xml file
+	// You need to have enabled the plugin RSS
+	public function rss()
 	{
-		$filter = $this->getField('uriPost');
-		return $this->url().ltrim($filter, '/');
+		return DOMAIN_BASE.'rss.xml';
 	}
 
-	public function urlPage()
+	// Returns the URL of the sitemap.xml file
+	// You need to have enabled the plugin Sitemap
+	public function sitemap()
 	{
-		$filter = $this->getField('uriPage');
-		return $this->url().ltrim($filter, '/');
-	}
-
-	public function urlTag()
-	{
-		$filter = $this->getField('uriTag');
-		return $this->url().ltrim($filter, '/');
-	}
-
-	public function urlBlog()
-	{
-		$filter = $this->getField('uriBlog');
-		return $this->url().ltrim($filter, '/');
-	}
-
-	public function urlCategory()
-	{
-		$filter = $this->getField('uriCategory');
-		return $this->url().ltrim($filter, '/');
+		return DOMAIN_BASE.'sitemap.xml';
 	}
 
 	public function twitter()
@@ -121,6 +100,11 @@ class dbSite extends dbJSON
 	public function facebook()
 	{
 		return $this->getField('facebook');
+	}
+
+	public function codepen()
+	{
+		return $this->getField('codepen');
 	}
 
 	public function instagram()
@@ -138,19 +122,24 @@ class dbSite extends dbJSON
 		return $this->getField('googlePlus');
 	}
 
-	// Returns the site title.
+	public function orderBy()
+	{
+		return $this->getField('orderBy');
+	}
+
+	// Returns the site title
 	public function title()
 	{
 		return $this->getField('title');
 	}
 
-	// Returns the site slogan.
+	// Returns the site slogan
 	public function slogan()
 	{
 		return $this->getField('slogan');
 	}
 
-	// Returns the site description.
+	// Returns the site description
 	public function description()
 	{
 		return $this->getField('description');
@@ -171,38 +160,37 @@ class dbSite extends dbJSON
 		return $this->getField('timeFormat');
 	}
 
-	// Returns the site theme name.
+	// Returns the site theme name
 	public function theme()
 	{
 		return $this->getField('theme');
 	}
 
-	// Returns the admin theme name.
+	// Returns the admin theme name
 	public function adminTheme()
 	{
 		return $this->getField('adminTheme');
 	}
 
-	// Returns the footer text.
+	// Returns the footer text
 	public function footer()
 	{
 		return $this->getField('footer');
 	}
 
-	// Returns the full domain and base url.
-	// For example, http://www.domain.com/bludit/
+	// Returns the full domain and base url
+	// For example, https://www.domain.com/bludit
 	public function url()
 	{
 		return $this->getField('url');
 	}
 
-	// Returns the protocol and the domain, without the base url.
+	// Returns the protocol and the domain, without the base url
 	// For example, http://www.domain.com
 	public function domain()
 	{
 		// If the URL field is not set, try detect the domain.
-		if(Text::isEmpty( $this->url() ))
-		{
+		if(Text::isEmpty( $this->url() )) {
 			if(!empty($_SERVER['HTTPS'])) {
 				$protocol = 'https://';
 			}
@@ -211,22 +199,16 @@ class dbSite extends dbJSON
 			}
 
 			$domain = trim($_SERVER['HTTP_HOST'], '/');
-
 			return $protocol.$domain;
 		}
 
-		// Parse the domain from the field URL.
+		// Parse the domain from the field url (Settings->Advanced)
 		$parse = parse_url($this->url());
+		$domain = rtrim($parse['host'], '/');
+		$port = !empty($parse['port']) ? ':'.$parse['port'] : '';
+		$scheme = !empty($parse['scheme']) ? $parse['scheme'].'://' : 'http://';
 
-		$domain = trim($parse['host'], '/');
-
-		return $parse['scheme'].'://'.$domain;
-	}
-
-	// Returns the relative home link
-	public function homeLink()
-	{
-		return HTML_PATH_ROOT;
+		return $scheme.$domain.$port;
 	}
 
 	// Returns the timezone.
@@ -241,10 +223,10 @@ class dbSite extends dbJSON
 		return $this->getField('currentBuild');
 	}
 
-	// Returns posts per page.
-	public function postsPerPage()
+	// Returns the amount of pages per page
+	public function itemsPerPage()
 	{
-		return $this->getField('postsperpage');
+		return $this->getField('itemsPerPage');
 	}
 
 	// Returns the current language.
@@ -259,34 +241,42 @@ class dbSite extends dbJSON
 		return $this->getField('locale');
 	}
 
-	// Returns the current language in short format.
-	public function shortLanguage()
-	{
-		$locale = $this->locale();
-		$explode = explode('_', $locale);
-		$short = array_shift($explode);
-
-		return $short;
-	}
-
-	// Returns the current homepage.
+	// Returns the current homepage, FALSE if not defined homepage
 	public function homepage()
 	{
-		return $this->getField('homepage');
+		$homepage = $this->getField('homepage');
+		if( empty($homepage) ) {
+			return false;
+		}
+		return $homepage;
 	}
 
-	// Set the locale.
+	// Returns the page defined for "Page not found", FALSE if not defined
+	public function pageNotFound()
+	{
+		$pageNotFound = $this->getField('pageNotFound');
+		if( empty($pageNotFound) ) {
+			return false;
+		}
+		return $pageNotFound;
+	}
+
+	// Set the locale, returns TRUE is success, FALSE otherwise
 	public function setLocale($locale)
 	{
-		if(setlocale(LC_ALL, $locale.'.UTF-8')!==false) {
-			return true;
+		$localeList = explode(',', $locale);
+		foreach ($localeList as $locale) {
+			$locale = trim($locale);
+			if (setlocale(LC_ALL, $locale.'.UTF-8')!==false) {
+				return true;
+			}
+			elseif (setlocale(LC_ALL, $locale)!==false) {
+				return true;
+			}
 		}
 
-		if(setlocale(LC_ALL, $locale.'.UTF8')!==false) {
-			return true;
-		}
-
-		return setlocale(LC_ALL, $locale);
+		// Not was possible to set a locale, using default locale
+		return false;
 	}
 
 	// Set the timezone.

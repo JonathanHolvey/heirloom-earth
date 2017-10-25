@@ -2,10 +2,11 @@
 	"plugin-data":
 	{
 		"name": "SimpleMDE",
-		"description": "Простой, красивый, и встраиваемый JavaScript редактор markdown автора @WesCossick. Адаптировано Diego Najar для Bludit."
+		"description": "Редактор с простым интерфейсом для создания markup разметки."
 	},
 	"toolbar": "Панель инструментов",
 	"tab-size": "Размер панели",
-	"autosave": "Автосохранение",
-	"spell-checker": "Проверка орфографии"
+	"autosave": "Автосохранения",
+	"spell-checker": "Проверка орфографии",
+	"content-here-supports-markdown-and-html-code": "Содержимое поддерживаем Markdown и HTML коды"
 }
