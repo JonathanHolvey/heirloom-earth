@@ -6,7 +6,7 @@
 </head>
 <body>
 	<main>
-	<?php include(THEME_DIR_PHP . "_header.php") ?>
+		<?php include(THEME_DIR_PHP . "_header.php") ?>
 		<section class="about">
 			<div>
 				<h1><div>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.<div></h1>
@@ -36,14 +36,6 @@
 				<p>Since starting my sustainability journey, the biggest challenge for me has been pairing my love for the planet with my love for beautiful interior decorating. I've had this passion since a very young age; as a child I would spend weekends dragging my furniture around my bedroom.</p>
 				<a class="button dark" href="">Read more</a>
 			</article>
-		</section>
-		<section class="instagram block-grid">
-			<div class="block">
-			<div class="block">
-			<div class="block">
-			<div class="block">
-			<div class="block">
-			<div class="block">
 		</section>
 		<?php include(THEME_DIR_PHP . "_footer.php") ?>
 	</main>
