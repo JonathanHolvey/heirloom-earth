@@ -13,7 +13,7 @@
 	display: none;
 }
 .post-preview {
-	background: $light;
+	background: $grey-light;
 	article:not(:last-child) {
 		margin-bottom: 1em;
 	}
@@ -35,7 +35,7 @@
 	font-size: 150%;
 }
 
-@media $small {
+@media $break-small {
 	.avatar {
 		float: right;
 		border-radius: 0;
@@ -50,7 +50,7 @@
 		width: calc(100% - 11rem);
 	}
 }
-@media $medium {
+@media $break-medium {
 	.about h1 {
 		width: auto;
 	}
@@ -61,7 +61,7 @@
 		margin-right: 1.5em;
 	}
 }
-@media $large {
+@media $break-large {
 	.about p {
 		float: right;
 		clear: right;

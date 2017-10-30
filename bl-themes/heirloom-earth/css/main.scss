@@ -5,15 +5,16 @@
 // Colours
 $black: #000;
 $white: #fff;
-$dark: #424540;
 $green: #77a669;
-$light: lighten($dark, 65);
-$shadow: rgba($dark, 0.3);
+$grey-dark: #424540;
+$grey-medium: lighten($grey-dark, 55);
+$grey-light: lighten($grey-dark, 65);
+$shadow: rgba($grey-dark, 0.3);
 
 // Break points
-$small: all and (min-width: 30em);
-$medium: all and (min-width: 40em);
-$large: all and (min-width: 50em);
+$break-small: all and (min-width: 30em);
+$break-medium: all and (min-width: 40em);
+$break-large: all and (min-width: 50em);
 
 // Font styles
 %title {
