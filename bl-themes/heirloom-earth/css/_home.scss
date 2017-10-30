@@ -30,6 +30,10 @@
 		transform: translate(-50%, -50%);
 	}
 }
+.about h1,
+.post-preview h1 {
+	font-size: 150%;
+}
 
 @media $small {
 	.avatar {
@@ -66,13 +70,16 @@
 	}
 	.about h1 {
 		width: calc(100% - 14.5rem);
-		// margin-top: 3em;
 		min-height: 5.6em;
 		position: relative;
 		div {
 			position: absolute;
 			bottom: 0;
 		}
+	}
+	.about h1,
+	.post-preview h1 {
+		font-size: 180%;
 	}
 	.about .button {
 		float: right;

@@ -17,7 +17,7 @@
 		</section>
 		<section class="post-preview">
 			<article>
-				<div class="post-image"><img src="/bl-content/uploads/thumbnails/1267073610666065667332426572790772264796452n.jpg" alt=""/></div>
+				<div class="post-image"><img src="http://lorempixel.com/800/600/animals" alt=""/></div>
 				<h1>The hierarchy of consumption</h1>
 				<div class="post-info">
 					<span class="post-date">5 May 2017</span>
@@ -27,7 +27,7 @@
 				<a class="button dark" href="">Read more</a>
 			</article>
 			<article>
-				<div class="post-image"><img src="/bl-content/uploads/thumbnails/1267073610666065667332426572790772264796452n.jpg" alt=""/></div>
+				<div class="post-image"><img src="http://lorempixel.com/800/600/animals" alt=""/></div>
 				<h1>The hierarchy of consumption</h1>
 				<div class="post-info">
 					<span class="post-date">5 May 2017</span>
