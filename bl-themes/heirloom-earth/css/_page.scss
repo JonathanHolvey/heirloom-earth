@@ -1,0 +1,47 @@
+// Blog post styles
+article img {
+	max-width: 100%;
+	width: 100%;
+}
+article h1,
+.post-info {
+	text-align: center;
+}
+.post-info {
+	@extend %info;
+	@extend %rule;
+		span {
+		display: inline-block;
+		margin: 0 0.5em;
+	}
+}
+.post-tags {
+	@extend %info;
+	text-align: center;
+	word-spacing: 1em;
+	max-width: 50rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+main > article {
+	margin-top: 1.5rem;
+	max-width: 38em;
+	p > img {
+		max-width: 30em;
+		margin: 0 auto;
+		&:first-child {
+			margin-top: 2rem;
+		}
+	}
+	p > img + em {
+		display: block;
+		max-width: 30em;
+		text-align: center;
+		font-style: italic;
+		font-size: 80%;
+		margin: 1rem auto;
+	}
+	h1:not(.page-title) {
+		@extend %rule;
+	}
+}

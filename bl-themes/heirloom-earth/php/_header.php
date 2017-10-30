@@ -1,4 +1,4 @@
-<header>
+<header class="<?= $Page->coverImage() ? "has-cover" : "" ?>">
 	<img class="logo" src="<?= HTML_PATH_THEME_IMG ?>header-logo.svg" alt="Heirloom Earth"/>
 	<nav>
 		<a class="is-active" href="">Blog</a>

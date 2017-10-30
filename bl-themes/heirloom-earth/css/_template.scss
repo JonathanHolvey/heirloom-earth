@@ -18,11 +18,14 @@ main {
 	margin: 0 auto;
 	box-sizing: border-box;
 	box-shadow: 0 0 0.7rem 0 $shadow;
+	position: relative;
+	padding-bottom: 12em;
 	& > * {
 		clear: both;
 	}
 }
-section > * {
+section > *,
+article {
 	max-width: 43em;
 	margin-left: auto;
 	margin-right: auto;
@@ -45,6 +48,10 @@ header {
 		transform: translate(-50%);
 		opacity: 0.9;
 	}
+	&.has-cover .logo {
+		top: 7em;
+		filter: drop-shadow(0 0 0.3rem $shadow);
+	}
 	nav {
 		position: absolute;
 		bottom: 0;
@@ -63,10 +70,17 @@ header {
 			&.is-active {
 				border: 1px solid $white;
 			}
+			&:hover {
+				color: $white;
+			}
 		}
 	}
 }
+
 footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 	.logo-icon {
 		width: 2.5em;
 		margin: 0.9em auto 1em;

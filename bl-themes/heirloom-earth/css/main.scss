@@ -6,8 +6,9 @@
 $black: #000;
 $white: #fff;
 $green: #77a669;
+$orange: #e5a145;
 $grey-dark: #424540;
-$grey-medium: lighten($grey-dark, 55);
+$grey-medium: lighten($grey-dark, 20);
 $grey-light: lighten($grey-dark, 65);
 $shadow: rgba($grey-dark, 0.3);
 
@@ -18,22 +19,36 @@ $break-large: all and (min-width: 50em);
 
 // Font styles
 %title {
-	font-size: 150%;
+	font-size: 200%;
 }
 %heading {
+	font-size: 150%;
+}
+%subheading {
 	font-size: 120%;
 }
 %body {
 	font-size: 100%;
+	line-height: 1.3;
 }
 %info {
 	font-size: 70%;
 	text-transform: uppercase;
 }
+%rule {
+	border: 0;
+	padding-bottom: 1rem;
+	margin-bottom: 1.2rem;
+	border-bottom: 1px solid $grey-light;
+}
 
 // Reusable styles
 a {
 	text-decoration: none;
+	color: $grey-dark;
+	&:hover {
+		color: $green;
+	}
 }
 .button {
 	display: table;
@@ -52,8 +67,10 @@ a {
 	}
 }
 p,
-img {
-	margin-bottom: 1em;
+img,
+ol,
+ul {
+	margin-bottom: 1rem;
 }
 h1 {
 	@extend %title;
@@ -61,14 +78,62 @@ h1 {
 }
 h2 {
 	@extend %heading;
+	margin-bottom: 0.6rem;
+}
+h3 {
+	@extend %subheading;
 }
 p {
 	@extend %body;
+	a {
+		color: $orange;
+		display: inline-block;
+		border-bottom: 1px solid $orange;
+		margin-bottom: -1px;
+		&:hover {
+			border-color: $green;
+		}
+	}
 }
 img {
 	display: block;
 }
+hr {
+	@extend %rule;
+	padding: 0;
+	margin-top: 1em;
+}
+ul {
+	list-style: disc;
+}
+ol {
+	list-style: decimal;
+}
+ul,
+ol {
+	li {
+		margin-left: 4em;
+		padding-left: 0.5em;
+		margin-bottom: 0.2em;
+	}
+}
+blockquote {
+	padding: 0 10%;
+	font-style: italic;
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+	color: $grey-medium;
+	p {
+		line-height: 1.5;
+	}
+}
+
+@media $break-large {
+	h1 {
+		font-size: 220%;
+	}
+}
 
 @import "template";
-@import "post";
+@import "page";
 @import "home";
