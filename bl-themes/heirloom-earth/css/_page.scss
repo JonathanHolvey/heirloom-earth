@@ -18,10 +18,12 @@ article h1,
 .post-tags {
 	@extend %info;
 	text-align: center;
+	line-height: 1.8;
 	word-spacing: 1em;
 	max-width: 50rem;
 	margin-left: auto;
 	margin-right: auto;
+	margin-bottom: -0.8em;
 }
 main > article {
 	margin-top: 1.5rem;

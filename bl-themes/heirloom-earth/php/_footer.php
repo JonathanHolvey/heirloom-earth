@@ -1,8 +1,10 @@
 <footer>
 	<img class="logo-icon" src="<?= HTML_PATH_THEME_IMG ?>logo-icon.svg" alt=""/>
 	<div class="footer-bar">
-		<a href="">About</a>
-		<a href="">Contact</a>
+		<div class="page-links">
+			<a href="">About</a>
+			<a href="">Contact</a>
+		</div>
 		<div class="social-links">
 			<a class="facebook" href="" title="Facebook"></a>
 			<a class="twitter" href="" title="Twitter"></a>
