@@ -119,6 +119,10 @@ footer {
 	}
 	.page-links {
 		position: relative;
+		a {
+			display: inline-block;
+			margin-left: 0.5em;
+		}
 	}
 }
 .social-links {
@@ -145,6 +149,10 @@ footer {
 @media $break-small {
 	header nav {
 		font-size: 80%;
+	}
+	article {
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
 	}
 }
 @media $break-medium {
@@ -205,5 +213,9 @@ footer {
 	}
 	main {
 		padding-bottom: 11em;
+	}
+	article {
+		padding-left: 2rem;
+		padding-right: 2rem;
 	}
 }
