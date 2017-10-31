@@ -19,7 +19,7 @@ main {
 	box-sizing: border-box;
 	box-shadow: 0 0 0.7rem 0 $shadow;
 	position: relative;
-	padding-bottom: 12em;
+	padding-bottom: 9.5em;
 	& > * {
 		clear: both;
 	}
@@ -83,7 +83,7 @@ footer {
 	width: 100%;
 	.logo-icon {
 		width: 2.5em;
-		margin: 0.9em auto 1em;
+		margin: 0 auto 1em;
 	}
 	.footer-bar {
 		background: $grey-dark;
@@ -192,5 +192,8 @@ footer {
 		.social-links {
 			left: 1.5em;
 		}
+	}
+	main {
+		padding-bottom: 11em;
 	}
 }
