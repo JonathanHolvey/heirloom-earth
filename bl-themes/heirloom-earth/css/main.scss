@@ -85,6 +85,8 @@ h3 {
 }
 p {
 	@extend %body;
+}
+article p {
 	a {
 		color: $orange;
 		display: inline-block;
@@ -112,9 +114,10 @@ ol {
 ul,
 ol {
 	li {
-		margin-left: 4em;
+		margin-left: 10%;
 		padding-left: 0.5em;
 		margin-bottom: 0.2em;
+		font-size: 90%;
 	}
 }
 blockquote {
