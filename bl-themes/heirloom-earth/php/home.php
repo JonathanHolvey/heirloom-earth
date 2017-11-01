@@ -16,26 +16,34 @@
 			</div>
 		</section>
 		<section class="post-preview">
+			<?php
+				foreach (array_slice($pages, 0, 3) as $Page):
+					// Get first paragraph to use as text preview
+					preg_match("/<p>(.{300,500})<\/p>/s", $Page->content(), $matches);
+					$text = $matches[1];
+					// Get image preview from cover or inline image
+					if ($Page->coverImage())
+						$image = $Page->coverImage();
+					elseif (preg_match("/<img.+?src=\"(.+?)\".*?\/>/", $Page->content(), $matches))
+						$image = $matches[1];
+					else
+						$image = false;
+			?>
 			<article>
-				<div class="post-image"><img src="http://lorempixel.com/800/600/animals" alt=""/></div>
-				<h1>The hierarchy of consumption</h1>
-				<div class="post-info">
-					<span class="post-date">5 May 2017</span>
-					<span class="post-tag">sustainable development</span>
+				<?php if ($image): ?>
+					<div class="post-image"><img src="<?= $image ?>" alt=""/></div>
+				<?php endif ?>
+				<div class="post-text">
+					<h1><?= $Page->title() ?></h1>
+					<div class="post-info">
+						<span class="post-date"><?= $Page->date() ?></span>
+						<span class="post-tag"><?= $Page->category() ?></span>
+					</div>
+					<p><?= $text ?></p>
+					<a class="button dark" href="<?= $Page->slug() ?>">Read more</a>
 				</div>
-				<p>Since starting my sustainability journey, the biggest challenge for me has been pairing my love for the planet with my love for beautiful interior decorating. I've had this passion since a very young age; as a child I would spend weekends dragging my furniture around my bedroom.</p>
-				<a class="button dark" href="">Read more</a>
 			</article>
-			<article>
-				<div class="post-image"><img src="http://lorempixel.com/800/600/animals" alt=""/></div>
-				<h1>The hierarchy of consumption</h1>
-				<div class="post-info">
-					<span class="post-date">5 May 2017</span>
-					<span class="post-tag">sustainable development</span>
-				</div>
-				<p>Since starting my sustainability journey, the biggest challenge for me has been pairing my love for the planet with my love for beautiful interior decorating. I've had this passion since a very young age; as a child I would spend weekends dragging my furniture around my bedroom.</p>
-				<a class="button dark" href="">Read more</a>
-			</article>
+			<?php endforeach ?>
 		</section>
 		<?php include(THEME_DIR_PHP . "_footer.php") ?>
 	</main>
