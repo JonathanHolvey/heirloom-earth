@@ -33,15 +33,13 @@
 				<?php if ($image): ?>
 					<div class="post-image" style="background-image: url('<?= $image ?>')"/></div>
 				<?php endif ?>
-				<div class="post-text">
-					<h1><?= $Page->title() ?></h1>
-					<div class="post-info">
-						<span class="post-date"><?= $Page->date() ?></span>
-						<span class="post-tag"><?= $Page->category() ?></span>
-					</div>
-					<p><?= $text ?></p>
-					<a class="button dark" href="<?= $Page->slug() ?>">Read more</a>
+				<h1><?= $Page->title() ?></h1>
+				<div class="post-info">
+					<span class="post-date"><?= $Page->date() ?></span>
+					<span class="post-tag"><?= $Page->category() ?></span>
 				</div>
+				<p><?= $text ?></p>
+				<a class="button dark" href="<?= $Page->slug() ?>">Read more</a>
 			</article>
 			<?php endforeach ?>
 		</section>
