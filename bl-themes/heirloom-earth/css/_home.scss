@@ -14,20 +14,16 @@
 }
 .post-preview {
 	background: $grey-light;
-	article:not(:last-child) {
-		margin-bottom: 1em;
-	}
 	.post-image {
 		height: 12em;
 		overflow: hidden;
 		margin-bottom: 1em;
-		position: relative;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: 50% 50%;
 	}
-	.post-image img {
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -50%);
+	.post-info {
+		border-color: darken($grey-light, 10);
 	}
 }
 .about h1,
@@ -53,12 +49,6 @@
 @media $break-medium {
 	.about h1 {
 		width: auto;
-	}
-	.post-preview .post-image {
-		float: left;
-		width: 12em;
-		height: 12em;
-		margin-right: 1.5em;
 	}
 }
 @media $break-large {
@@ -91,9 +81,5 @@
 	}
 	.avatar {
 		margin-left: 0.5rem;
-	}
-	.post-preview .post-image {
-		width: 13em;
-		height: 13em;
 	}
 }
