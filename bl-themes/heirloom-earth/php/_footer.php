@@ -2,8 +2,8 @@
 	<img class="logo-icon" src="<?= HTML_PATH_THEME_IMG ?>logo-icon.svg" alt=""/>
 	<div class="footer-bar">
 		<div class="page-links">
-			<a href="">About</a>
-			<a href="">Contact</a>
+			<a href="about">About</a>
+			<a href="contact">Contact</a>
 		</div>
 		<div class="social-links">
 			<a class="facebook" href="" title="Facebook"></a>
