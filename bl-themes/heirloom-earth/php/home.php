@@ -17,7 +17,7 @@
 		</section>
 		<section class="post-preview">
 			<?php
-				foreach (array_slice($pages, 0, 3) as $Page)
+				foreach (array_slice($pages, 0, 3) as $listItem)
 					include(THEME_DIR_PHP . "_preview.php");
 			?>
 		</section>

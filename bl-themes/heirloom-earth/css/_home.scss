@@ -1,6 +1,9 @@
 // Single-page styles
 .about {
 	overflow: auto;
+	h1 {
+		font-size: 150%;
+	}
 }
 .avatar {
 	width: 50%;
@@ -11,24 +14,6 @@
 }
 .about .button br {
 	display: none;
-}
-.post-preview {
-	background: $grey-light;
-	.post-image {
-		height: 12em;
-		overflow: hidden;
-		margin-bottom: 1em;
-		background-size: cover;
-		background-repeat: no-repeat;
-		background-position: 50% 50%;
-	}
-	.post-info {
-		border-color: darken($grey-light, 10);
-	}
-}
-.about h1,
-.post-preview h1 {
-	font-size: 150%;
 }
 
 @media $break-small {
@@ -62,14 +47,11 @@
 		width: calc(100% - 14.5rem);
 		min-height: 5.6em;
 		position: relative;
+		font-size: 180%;
 		div {
 			position: absolute;
 			bottom: 0;
 		}
-	}
-	.about h1,
-	.post-preview h1 {
-		font-size: 180%;
 	}
 	.about .button {
 		float: right;

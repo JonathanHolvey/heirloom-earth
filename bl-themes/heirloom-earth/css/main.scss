@@ -41,6 +41,12 @@ $break-large: all and (min-width: 50em);
 	margin-bottom: 1.2rem;
 	border-bottom: 1px solid $grey-light;
 }
+%width {
+	max-width: 43em;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1rem;
+}
 
 // Reusable styles
 a {
