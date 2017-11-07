@@ -9,10 +9,12 @@
 		<?php include(THEME_DIR_PHP . "_header.php") ?>
 		<article>
 			<h1 class="page-title"><?= $Page->title() ?></h1>
-			<div class="post-info">
-				<span class="post-date"><?= $Page->date() ?></span>
-				<a class="post-tag" href="<?= $Site->uriFilters("category") . $page->category() ?>"><?= $Page->category() ?></a>
-			</div>
+			<?php if (!$Url->notFound()): ?>
+				<div class="post-info">
+					<span class="post-date"><?= $Page->date() ?></span>
+					<a class="post-tag" href="<?= $Site->uriFilters("category") . $page->category() ?>"><?= $Page->category() ?></a>
+				</div>
+			<?php endif ?>
 			<?= $Page->content() ?>
 			<?php if ($Page->tags()): ?>
 				<hr/>
