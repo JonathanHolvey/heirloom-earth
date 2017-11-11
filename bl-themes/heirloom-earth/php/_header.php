@@ -8,7 +8,7 @@
 		$menu = "about";
 	elseif ($Url->whereAmI() == "page" and $Page->slug() == "contact")
 		$menu = "contact";
-	elseif ($Url->whereAmI() == "category" or $Url->whereAmI() == "tag")
+	elseif ($Url->whereAmI() == "category" or $Url->whereAmI() == "tag" or $Url->uri() == "/category")
 		$menu = "category";
 	elseif (!$Url->notFound())
 		$menu = "blog";

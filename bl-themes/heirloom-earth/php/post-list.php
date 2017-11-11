@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title><?= $Page->title() ?> - <?= $Site->title() ?></title>
+	<title><?= $title ?> - <?= $Site->title() ?></title>
 	<?php include(THEME_DIR_PHP . "_head.php") ?>
 </head>
 <body>
@@ -16,7 +16,7 @@
 		<article>
 			<div class="page-header">
 				<h1 class="page-title"><?= $title ?></h1>
-				<div class="post-info">
+				<div class="page-info">
 					<span class="post-count">
 						<?= ucfirst($Url->whereAmI()) ?> &ndash;
 						<?= count($pages) ?> post<?= count($pages) > 1 ? "s" : "" ?>
