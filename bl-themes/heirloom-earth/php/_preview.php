@@ -12,7 +12,7 @@
 ?>
 <article>
 	<?php if ($image): ?>
-		<div class="post-image" style="background-image: url('<?= $image ?>')"/></div>
+		<a href="<?= $Site->uriFilters("page") . $listItem->slug() ?>" class="post-image" style="background-image: url('<?= $image ?>')"/></a href>
 	<?php endif ?>
 	<div class="page-header">
 		<h1><a href="<?= $Site->uriFilters("page") . $listItem->slug() ?>"><?= $listItem->title() ?></a></h1>

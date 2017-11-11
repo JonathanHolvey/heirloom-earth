@@ -53,6 +53,7 @@ main > article {
 .category-preview {
 	background: $grey-light;
 	.post-image {
+		display: block;
 		height: 12em;
 		overflow: hidden;
 		margin-bottom: 1em;

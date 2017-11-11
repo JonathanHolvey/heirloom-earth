@@ -38,7 +38,7 @@
 			<?php foreach ($categories as $key => $category): ?>
 				<article>
 					<?php if ($category["image"]): ?>
-						<div class="post-image" style="background-image: url('<?= $category["image"] ?>')"></div>
+						<a href="<?= $Site->uriFilters("category") . $key ?>" class="post-image" style="background-image: url('<?= $category["image"] ?>')"></a>
 					<?php endif ?>
 					<div class="page-header">
 						<h1 class="page-title"><a href="<?= $Site->uriFilters("category") . $key ?>"><?= $category["name"] ?></a></h1>
