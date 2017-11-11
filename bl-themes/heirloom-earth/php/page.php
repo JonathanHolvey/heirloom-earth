@@ -22,18 +22,20 @@
 	<main>
 		<?php include(THEME_DIR_PHP . "_header.php") ?>
 		<article>
-			<div class="post-header">
+			<div class="page-header">
 				<h1 class="page-title"><?= $Page->title() ?></h1>
 				<?php if ($Page->status() != "static" and !$Url->notFound()): ?>
-					<div class="post-info"><?= $Page->date() ?>
-					<a class="post-tag" href="<?= $Site->uriFilters("category") . $page->category() ?>"><?= $Page->category() ?></a></div>
+					<div class="page-info">
+						<span class="post-date"><?= $Page->date() ?></span>
+						<a class="post-category" href="<?= $Site->uriFilters("category") . $page->categoryKey() ?>"><?= $Page->category() ?></a>
+					</div>
 				<?php endif ?>
 			</div>
-			<?= $Page->content() ?>
+			<div class="content"><?= $Page->content() ?></div>
 			<?php if ($Page->tags()): ?>
 				<hr/>
 				<div class="post-tags">
-					<?php foreach (explode(", ", $Page->tags()) as $tag): ?>
+					<?php foreach ($Page->tags(true) as $tag): ?>
 						<a href="<?= $Site->uriFilters("tag") . $tag ?>">#<?= $tag ?></a>
 					<?php endforeach ?>
 				</div>
@@ -42,9 +44,8 @@
 		<?php if ($Page->status() == "published"): ?>
 			<section class="post-preview">
 				<?php
-					foreach ($pages as $listItem) {
+					foreach ($pages as $listItem)
 						include(THEME_DIR_PHP . "_preview.php");
-					}
 				?>
 			</section>
 		<?php endif ?>

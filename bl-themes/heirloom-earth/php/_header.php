@@ -8,10 +8,13 @@
 		$menu = "about";
 	elseif ($Url->whereAmI() == "page" and $Page->slug() == "contact")
 		$menu = "contact";
+	elseif ($Url->whereAmI() == "category" or $Url->whereAmI() == "tag")
+		$menu = "category";
 	elseif (!$Url->notFound())
 		$menu = "blog";
 ?>
-<header class="<?= $cover ? "has-cover" : "" ?>">
+<header class="<?= $cover ? "has-cover" : "" ?>"
+		style="<?= $cover ? "background-image: url('" . $Page->coverImage() . "')" : "" ?>">
 	<img class="logo" src="<?= HTML_PATH_THEME_IMG ?>header-logo.svg" alt="Heirloom Earth"/>
 	<nav>
 		<a class="<?= $menu == "home" ? "is-active" : "" ?>" href="">Home</a>

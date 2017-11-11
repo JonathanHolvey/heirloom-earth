@@ -14,13 +14,13 @@
 	<?php if ($image): ?>
 		<div class="post-image" style="background-image: url('<?= $image ?>')"/></div>
 	<?php endif ?>
-	<div class="post-header">
-		<h1><a href="<?= $Site->uriFilters("listItem") . $listItem->slug() ?>"><?= $listItem->title() ?></a></h1>
-		<div class="post-info">
+	<div class="page-header">
+		<h1><a href="<?= $Site->uriFilters("page") . $listItem->slug() ?>"><?= $listItem->title() ?></a></h1>
+		<div class="page-info">
 			<span class="post-date"><?= $listItem->date() ?></span>
-			<span class="post-tag"><?= $listItem->category() ?></span>
+			<a class="post-category" href="<?= $Site->uriFilters("category") . $listItem->categoryKey() ?>"><?= $listItem->category() ?></a>
 		</div>
 	</div>
-	<p><?= $text ?></p>
+	<div class="content"><p><?= $text ?></p></div>
 	<a class="button dark" href="<?= $Site->uriFilters("page") . $listItem->slug() ?>">Read more</a>
 </article>
