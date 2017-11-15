@@ -1,0 +1,49 @@
+ul {
+	list-style: disc;
+}
+ol {
+	list-style: decimal;
+}
+ul,
+ol {
+	li {
+		margin-left: 10%;
+		padding-left: 0.5em;
+		margin-bottom: 0.2em;
+	}
+}
+blockquote {
+	padding: 0 10%;
+	font-style: italic;
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+	color: $grey-medium;
+	p {
+		line-height: 1.5;
+	}
+}
+article p {
+	a {
+		color: $orange;
+		display: inline-block;
+		border-bottom: 1px dotted $orange;
+		margin-bottom: -1px;
+		&:hover {
+			border-color: $green;
+		}
+	}
+}
+img {
+	display: block;
+	max-width: 30em;
+	width: 100%;
+}
+// Image captions
+p > img + em {
+	display: block;
+	max-width: 30em;
+	text-align: center;
+	font-style: italic;
+	font-size: 80%;
+	margin: 1rem auto;
+}
