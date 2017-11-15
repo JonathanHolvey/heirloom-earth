@@ -5,8 +5,8 @@
 	<?php include(THEME_DIR_PHP . "_head.php") ?>
 </head>
 <body>
+	<?php include(THEME_DIR_PHP . "_header.php") ?>
 	<main>
-		<?php include(THEME_DIR_PHP . "_header.php") ?>
 		<section class="about">
 			<div>
 				<h1><div>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.<div></h1>
@@ -21,7 +21,7 @@
 					include(THEME_DIR_PHP . "_preview.php");
 			?>
 		</section>
-		<?php include(THEME_DIR_PHP . "_footer.php") ?>
 	</main>
+	<?php include(THEME_DIR_PHP . "_footer.php") ?>
 </body>
 </html>

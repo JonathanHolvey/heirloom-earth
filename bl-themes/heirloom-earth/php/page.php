@@ -19,8 +19,8 @@
 	<?php include(THEME_DIR_PHP . "_head.php") ?>
 </head>
 <body>
+	<?php include(THEME_DIR_PHP . "_header.php") ?>
 	<main>
-		<?php include(THEME_DIR_PHP . "_header.php") ?>
 		<article>
 			<div class="page-header">
 				<h1 class="page-title"><?= $Page->title() ?></h1>
@@ -49,8 +49,8 @@
 				?>
 			</section>
 		<?php endif ?>
-		<?php include(THEME_DIR_PHP . "_footer.php") ?>
 	</main>
+	<?php include(THEME_DIR_PHP . "_footer.php") ?>
 	<?php if ($Page->coverImage()): ?>
 		<style>
 			header {

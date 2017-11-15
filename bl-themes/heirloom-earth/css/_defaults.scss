@@ -1,14 +1,21 @@
-html,
-body {
+html {
 	height: 100%;
 }
 body {
+	position: relative;
+	min-width: 19em;
+	max-width: 80em;
+	width: 100%;
+	min-height: 100%;
+	box-sizing: border-box;
+	margin: 0 auto;
+	padding-bottom: 11em;  // Space for fixed footer
+	box-shadow: 0 0 0.7rem 0 $shadow;
+	color: $grey-dark;
 	font-family: "Cooper Hewitt", Arial, sans-serif;
 	font-size: 16px;
 	line-height: 1.2;
 	letter-spacing: 0.02em;
-	color: $grey-dark;
-	min-width: 19em;
 	@media $break-medium {
 		font-size: 110%;
 	}
