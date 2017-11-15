@@ -51,12 +51,5 @@
 		<?php endif ?>
 	</main>
 	<?php include(THEME_DIR_PHP . "_footer.php") ?>
-	<?php if ($Page->coverImage()): ?>
-		<style>
-			header {
-				background-image: url("<?= $page->coverImage() ?>");
-			}
-		</style>
-	<?php endif ?>
 </body>
 </html>
