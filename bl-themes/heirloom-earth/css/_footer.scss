@@ -1,17 +1,17 @@
-footer {
+.site-footer {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
+	a {
+		border: 0;
+	}
 	.logo-icon {
 		position: absolute;
-		bottom: calc(100% + 1em);
+		bottom: calc(100% + 1.7em);
 		left: 50%;
 		transform: translate(-50%, 0);
-		width: 2.5em;
+		width: 2.8em;
 		@media $break-medium {
-			width: 3.5em;
-		}
-		@media $break-large {
 			width: 4em;
 		}
 	}

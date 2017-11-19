@@ -1,5 +1,5 @@
 // Single-page styles
-.about {
+.home-about {
 	overflow: auto;
 	h1 {
 		font-size: 150%;
@@ -12,7 +12,7 @@
 	margin-right: auto;
 	border-radius: 6em;
 }
-.about .button br {
+.home-about .button br {
 	display: none;
 }
 
@@ -23,27 +23,27 @@
 		margin-left: 1rem;
 		margin-bottom: 0;
 	}
-	.about h1 {
+	.home-about h1 {
 		float: left;
 	}
-	.about h1,
-	.about p {
+	.home-about h1,
+	.home-about p {
 		width: calc(100% - 11rem);
 	}
 }
 @media $break-medium {
-	.about h1 {
+	.home-about h1 {
 		width: auto;
 	}
 }
 @media $break-large {
-	.about p {
+	.home-about p {
 		float: right;
 		clear: right;
 		width: calc(100% - 16.1rem);
 		margin-top: 0.5em;
 	}
-	.about h1 {
+	.home-about h1 {
 		width: calc(100% - 14.5rem);
 		min-height: 5.6em;
 		position: relative;
@@ -53,7 +53,7 @@
 			bottom: 0;
 		}
 	}
-	.about .button {
+	.home-about .button {
 		float: right;
 		clear: left;
 		margin: 1em;

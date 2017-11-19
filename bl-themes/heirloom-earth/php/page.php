@@ -22,27 +22,27 @@
 	<?php include(THEME_DIR_PHP . "_header.php") ?>
 	<main>
 		<article>
-			<div class="page-header">
+			<header class="page-header">
 				<h1 class="page-title"><?= $Page->title() ?></h1>
 				<?php if ($Page->status() != "static" and !$Url->notFound()): ?>
 					<div class="page-info">
-						<span class="post-date"><?= $Page->date() ?></span>
+						<date class="post-date"><?= $Page->date() ?></date>
 						<a class="post-category" href="<?= $Site->uriFilters("category") . $page->categoryKey() ?>"><?= $Page->category() ?></a>
 					</div>
 				<?php endif ?>
-			</div>
+			</header>
 			<div class="content"><?= $Page->content() ?></div>
 			<?php if ($Page->tags()): ?>
 				<hr/>
-				<div class="post-tags">
+				<footer class="post-tags">
 					<?php foreach ($Page->tags(true) as $tag): ?>
 						<a href="<?= $Site->uriFilters("tag") . $tag ?>">#<?= $tag ?></a>
 					<?php endforeach ?>
-				</div>
+				</footer>
 			<?php endif ?>
 		</article>
 		<?php if ($Page->status() == "published"): ?>
-			<section class="post-preview">
+			<section class="post-preview inset-content">
 				<?php
 					foreach ($pages as $listItem)
 						include(THEME_DIR_PHP . "_preview.php");

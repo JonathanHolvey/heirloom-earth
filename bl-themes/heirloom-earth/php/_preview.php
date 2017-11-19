@@ -11,13 +11,13 @@
 		$image = false;
 ?>
 <article>
-	<?php if ($image): ?>
-		<a href="<?= $Site->uriFilters("page") . $listItem->slug() ?>" class="post-image" style="background-image: url('<?= $image ?>')"/></a href>
-	<?php endif ?>
 	<div class="page-header">
+		<?php if ($image): ?>
+			<a class="post-image" href="<?= $Site->uriFilters("page") . $listItem->slug() ?>" style="background-image: url('<?= $image ?>')"/></a href>
+		<?php endif ?>
 		<h1><a href="<?= $Site->uriFilters("page") . $listItem->slug() ?>"><?= $listItem->title() ?></a></h1>
 		<div class="page-info">
-			<span class="post-date"><?= $listItem->date() ?></span>
+			<time class="post-date"><?= $listItem->date() ?></time>
 			<a class="post-category" href="<?= $Site->uriFilters("category") . $listItem->categoryKey() ?>"><?= $listItem->category() ?></a>
 		</div>
 	</div>

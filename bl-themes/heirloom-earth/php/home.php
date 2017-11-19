@@ -7,7 +7,7 @@
 <body>
 	<?php include(THEME_DIR_PHP . "_header.php") ?>
 	<main>
-		<section class="about">
+		<section class="home-about">
 			<div>
 				<h1><div>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.<div></h1>
 				<img class="avatar" src="<?= HTML_PATH_THEME_IMG ?>avatar.jpg" alt=""/>
@@ -15,7 +15,7 @@
 				<a class="button light" href="">Find me on<br/> Facebook</a>
 			</div>
 		</section>
-		<section class="post-preview">
+ 		<section class="post-preview inset-content">
 			<?php
 				foreach (array_slice($pages, 0, 3) as $listItem)
 					include(THEME_DIR_PHP . "_preview.php");
