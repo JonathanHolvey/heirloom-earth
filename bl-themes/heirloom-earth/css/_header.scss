@@ -1,0 +1,60 @@
+.site-header {
+	position: relative;
+	height: 20em;
+	background: url("../img/hero-bali.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	&::before {
+		content: "";
+		display: block;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(rgba($black, 0.3), rgba($black, 0));
+	}
+	.logo {
+		position: absolute;
+		height: 4.5em;
+		top: 5em;
+		left: 50%;
+		transform: translate(-50%);
+		opacity: 0.9;
+	}
+	nav {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		padding: 1em 0;
+		background: rgba($black, 0.25);
+		text-transform: uppercase;
+		text-align: center;
+		font-size: 70%;
+		a {
+			display: inline-block;
+			color: $white;
+			opacity: 0.8;
+			padding: 0.3em 0.6em 0.2em;
+			&.is-active {
+				border: 1px solid $white;
+				margin-left: 0.2em;
+				margin-right: 0.2em;
+			}
+			&:hover {
+				color: $white;
+			}
+		}
+		@media $break-small {
+			font-size: 80%;
+		}
+	}
+	&.has-cover {
+		.logo {
+			top: 7em;
+			filter: drop-shadow(0 0 0.3rem $black);
+		}
+		nav {
+			background: rgba($black, 0.3);
+		}
+	}
+}

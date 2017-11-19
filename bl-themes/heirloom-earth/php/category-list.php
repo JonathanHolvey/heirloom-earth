@@ -24,23 +24,23 @@
 	<?php include(THEME_DIR_PHP . "_head.php") ?>
 </head>
 <body>
+	<?php include(THEME_DIR_PHP . "_header.php") ?>
 	<main>
-		<?php include(THEME_DIR_PHP . "_header.php") ?>
 		<article>
-			<div class="page-header">
+			<header class="page-header">
 				<h1 class="page-title">Blog categories</h1>
 				<div class="page-info">
 					<span class="category-count">All categories &ndash; Total <?= count($categories) ?></span>
 				</div>
-			</div>
+			</header>
 		</article>
-		<section class="category-preview">
+		<section class="category-preview inset-content">
 			<?php foreach ($categories as $key => $category): ?>
 				<article>
-					<?php if ($category["image"]): ?>
-						<a href="<?= $Site->uriFilters("category") . $key ?>" class="post-image" style="background-image: url('<?= $category["image"] ?>')"></a>
-					<?php endif ?>
 					<div class="page-header">
+						<?php if ($category["image"]): ?>
+							<a class="post-image" href="<?= $Site->uriFilters("category") . $key ?>" style="background-image: url('<?= $category["image"] ?>')"></a>
+						<?php endif ?>
 						<h1 class="page-title"><a href="<?= $Site->uriFilters("category") . $key ?>"><?= $category["name"] ?></a></h1>
 						<div class="page-info">
 							<span class="post-count">Category &ndash; <?= $category["count"] ?> post<?= $category["count"] > 1 ? "s" : "" ?></span>
@@ -57,7 +57,7 @@
 				</article>
 			<?php endforeach ?>
 		</section>
-		<?php include(THEME_DIR_PHP . "_footer.php") ?>
 	</main>
+	<?php include(THEME_DIR_PHP . "_footer.php") ?>
 </body>
 </html>

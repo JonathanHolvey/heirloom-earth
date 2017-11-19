@@ -1,4 +1,4 @@
-<footer>
+<footer class="site-footer">
 	<img class="logo-icon" src="<?= HTML_PATH_THEME_IMG ?>logo-icon.svg" alt=""/>
 	<div class="footer-bar">
 		<div class="page-links">

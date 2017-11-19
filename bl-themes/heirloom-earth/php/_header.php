@@ -13,7 +13,7 @@
 	elseif (!$Url->notFound())
 		$menu = "blog";
 ?>
-<header class="<?= $cover ? "has-cover" : "" ?>"
+<header class="site-header<?= $cover ? " has-cover" : "" ?>"
 		style="<?= $cover ? "background-image: url('" . $Page->coverImage() . "')" : "" ?>">
 	<img class="logo" src="<?= HTML_PATH_THEME_IMG ?>header-logo.svg" alt="Heirloom Earth"/>
 	<nav>
