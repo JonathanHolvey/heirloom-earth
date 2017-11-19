@@ -55,7 +55,7 @@ hr {
 }
 .page-info {
 	@extend %info;
-	span {
+	> * {
 		display: inline-block;
 		margin: 0 0.5em;
 	}
@@ -64,10 +64,13 @@ hr {
 	@extend %info;
 	text-align: center;
 	line-height: 1.8;
-	word-spacing: 1em;
 	max-width: 50rem;
 	margin-left: auto;
 	margin-right: auto;
+	> * {
+		display: inline-block;
+		margin: 0 0.5em;
+	}
 }
 .post-preview,
 .category-preview {
