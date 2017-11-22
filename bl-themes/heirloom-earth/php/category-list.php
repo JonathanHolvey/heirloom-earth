@@ -6,11 +6,11 @@
 			$categories[$key] = $category;
 			$categories[$key]["count"] = $dbCategories->countPagesByCategory($key);
 			$categories[$key]["image"] = null;
-			// Find category image from post cover images
+			// Find category image from post images
 			foreach ($categories[$key]["list"] as $postKey) {
 				$post = buildPage($postKey);
-				if (!empty($post->coverImage())) {
-					$categories[$key]["image"] = $post->coverImage();
+				if (previewImage($post) !== false) {
+					$categories[$key]["image"] = previewImage($post);
 					break;
 				}
 			}

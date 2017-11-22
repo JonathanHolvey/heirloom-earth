@@ -3,6 +3,7 @@
 <head>
 	<title><?= $Site->title() ?></title>
 	<?php include(THEME_DIR_PHP . "_head.php") ?>
+	<meta name="description" content="<?= $Site->description() ?>"/>
 </head>
 <body>
 	<?php include(THEME_DIR_PHP . "_header.php") ?>
