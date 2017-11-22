@@ -3,7 +3,7 @@
 	<div class="footer-bar">
 		<div class="page-links">
 			<a href="about">About</a>
-			<a href="contact">Contact</a>
+			<a href="mailto:<?= contactEmail() ?>">Contact</a>
 		</div>
 		<div class="social-links">
 			<?php if ($Site->facebook()): ?>
@@ -17,7 +17,7 @@
 			<?php endif ?>
 		</div>
 		<div class="site-info">
-			<p>Copyright Rikki-Lea James 2017 - All rights reserved</p>
+			<p><?= $Site->footer() ?></p>
 			<p>Website by <a href="http://rocketchilli.com">Rocket Chilli</a>, powered by <a href="http://bludit.com">Bludit CMS</a></p>
 		</div>
 	</div>

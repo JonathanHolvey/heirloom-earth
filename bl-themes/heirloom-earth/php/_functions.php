@@ -17,3 +17,8 @@ function previewImage($page, $coverOnly=false) {
 	else
 		return null;
 }
+
+function contactEmail() {
+	global $Site;
+	return preg_replace("/[^\/]+\/+/", "contact@", $Site->domain());
+}

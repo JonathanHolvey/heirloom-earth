@@ -21,6 +21,6 @@
 		<a class="<?= $menu == "blog" ? "is-active" : "" ?>" href="<?= $Site->uriFilters("page") . $latest->slug() ?>">Blog</a>
 		<a class="<?= $menu == "category" ? "is-active" : "" ?>" href="category">Categories</a>
 		<a class="<?= $menu == "about" ? "is-active" : "" ?>" href="about">About</a>
-		<a class="<?= $menu == "contact" ? "is-active" : "" ?>" href="contact">Contact</a>
+		<a class="<?= $menu == "contact" ? "is-active" : "" ?>" href="mailto:<?= contactEmail() ?>">Contact</a>
 	</nav>
 </header>
