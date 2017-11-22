@@ -6,9 +6,15 @@
 			<a href="contact">Contact</a>
 		</div>
 		<div class="social-links">
-			<a class="facebook" href="" title="Facebook"></a>
-			<a class="twitter" href="" title="Twitter"></a>
-			<a class="instagram" href="" title="Instagram"></a>
+			<?php if ($Site->facebook()): ?>
+				<a class="icon facebook" href="<?= $Site->facebook() ?>" title="Facebook"></a>
+			<?php endif ?>
+			<?php if ($Site->twitter()): ?>
+				<a class="icon twitter" href="<?= $Site->twitter() ?>" title="Twitter"></a>
+			<?php endif ?>
+			<?php if ($Site->instagram()): ?>
+				<a class="icon instagram" href="<?= $Site->instagram() ?>" title="Instagram"></a>
+			<?php endif ?>
 		</div>
 		<div class="site-info">
 			<p>Copyright Rikki-Lea James 2017 - All rights reserved</p>
