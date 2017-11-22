@@ -9,7 +9,7 @@ ol {
 	li {
 		margin-left: 10%;
 		padding-left: 0.5em;
-		margin-bottom: 0.2em;
+		margin-bottom: 0.3em;
 	}
 }
 blockquote {
@@ -31,6 +31,12 @@ p a {
 		border-color: $green;
 	}
 }
+em {
+	font-style: italic;
+}
+strong {
+	font-weight: bold;
+}
 img {
 	display: block;
 	max-width: 30em;
@@ -45,4 +51,5 @@ p > img + em {
 	font-style: italic;
 	font-size: 80%;
 	margin: 1rem auto;
+	color: $grey-medium;
 }
