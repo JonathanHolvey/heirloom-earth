@@ -1,6 +1,8 @@
 <?php
-	if ($Url->whereAmI() == "category")
-		$title = $Page->category();
+	if ($Url->whereAmI() == "category") {
+		$category = $dbCategories->db[$Url->explodeSlug()[0]];
+		$title = $category["name"];
+	}
 	elseif ($Url->whereAmI() == "tag")
 		$title = "#" . strtolower($Url->explodeSlug()[0]);
 ?>
@@ -23,13 +25,8 @@
 					</span>
 				</div>
 			</header>
-			<?php if ($Url->whereAmI() == "category"): ?>
-				<div class="content"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
+			<?php if ($Url->whereAmI() == "category" and array_key_exists("description", $category)): ?>
+				<div class="content"><p><?= $category["description"] ?></p></div>
 			<?php endif ?>
 		</article>
 		<section class="post-preview inset-content">

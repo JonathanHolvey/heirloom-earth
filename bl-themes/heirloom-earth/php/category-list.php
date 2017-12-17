@@ -46,14 +46,11 @@
 							<span class="post-count">Category &ndash; <?= $category["count"] ?> post<?= $category["count"] > 1 ? "s" : "" ?></span>
 						</div>
 					</div>
-					<div class="content">
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					</div>
+					<?php if (array_key_exists("description", $category)): ?>
+						<div class="content">
+							<p><?= $category["description"] ?></p>
+						</div>
+					<?php endif ?>
 				</article>
 			<?php endforeach ?>
 		</section>
