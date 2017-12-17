@@ -1,1 +1,4 @@
 bl-content*
+bl-themes
+!bl-themes/heirloom-earth
+!bl-themes/log
