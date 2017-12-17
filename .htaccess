@@ -5,6 +5,14 @@ AddDefaultCharset UTF-8
 # Enable rewrite rules
 RewriteEngine on
 
+# Forward old URLs
+RewriteRule ^posts$ / [R=301,NC,L]
+RewriteRule ^posts/(.+) /$1 [R=301,NC,L]
+RewriteRule ^categories$ /category [R=301,NC,L]
+RewriteRule ^categories/.+ /category/sustainable-living [R=301,NC,L]
+RewriteRule ^tags/(.+) /tag/$1 [R=301,NC,L]
+RewriteRule ^contact / [R=301,NC,L]
+
 # Deny direct access to .txt files
 RewriteRule ^bl-content/(.*)\.txt$ - [R=404,L]
 
