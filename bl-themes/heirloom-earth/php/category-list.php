@@ -46,7 +46,7 @@
 							<span class="post-count">Category &ndash; <?= $category["count"] ?> post<?= $category["count"] > 1 ? "s" : "" ?></span>
 						</div>
 					</div>
-					<?php if (array_key_exists("description", $category)): ?>
+					<?php if (isset($category["description"])): ?>
 						<div class="content">
 							<p><?= $category["description"] ?></p>
 						</div>
