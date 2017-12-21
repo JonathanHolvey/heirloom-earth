@@ -5,7 +5,7 @@
 		font-size: 150%;
 	}
 }
-.avatar {
+.home-about img {
 	width: 50%;
 	max-width: 10em;
 	margin-left: auto;
@@ -17,7 +17,7 @@
 }
 
 @media $break-small {
-	.avatar {
+	.home-about img {
 		float: right;
 		border-radius: 0;
 		margin-left: 1rem;
@@ -26,10 +26,6 @@
 	.home-about h1 {
 		float: left;
 	}
-	.home-about h1,
-	.home-about p {
-		width: calc(100% - 11rem);
-	}
 }
 @media $break-medium {
 	.home-about h1 {
@@ -37,31 +33,34 @@
 	}
 }
 @media $break-large {
+	.home-about {
+		position: relative;
+		margin-top: 11em;
+		overflow: visible;
+	}
 	.home-about p {
-		float: right;
-		clear: right;
 		width: calc(100% - 16.1rem);
 		margin-top: 0.5em;
+		margin-left: 16.1rem;
 	}
 	.home-about h1 {
-		width: calc(100% - 14.5rem);
-		min-height: 5.6em;
-		position: relative;
+		width: calc(100% - 17.5rem);
 		font-size: 180%;
-		div {
-			position: absolute;
-			bottom: 0;
-		}
+		position: absolute;
+		bottom: calc(100% - 1.2rem);
 	}
 	.home-about .button {
-		float: right;
-		clear: left;
+		float: left;
 		margin: 1em;
+		margin-top: -6.5rem;
 		br {
 			display: block;
 		}
 	}
-	.avatar {
-		margin-left: 0.5rem;
+	.home-about img {
+		position: absolute;
+		right: 1.5rem;
+		bottom: 100%;
+		margin: 0;
 	}
 }

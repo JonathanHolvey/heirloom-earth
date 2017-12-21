@@ -13,6 +13,8 @@ RewriteRule ^categories/.+ /category/sustainable-living [R=301,NC,L]
 RewriteRule ^tags/(.+) /tag/$1 [R=301,NC,L]
 RewriteRule ^contact / [R=301,NC,L]
 
+RewriteRule ^home$ / [R=301,NC,L]
+
 # Deny direct access to .txt files
 RewriteRule ^bl-content/(.*)\.txt$ - [R=404,L]
 

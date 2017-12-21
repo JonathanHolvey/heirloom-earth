@@ -1,5 +1,5 @@
 <?php 
-	$cover = ($Url->whereAmI() == "page" and $Page->coverImage());
+	$cover = (in_array($Url->whereAmI(), ["page", "home"]) and $Page->coverImage());
 	$latest = buildPage(array_keys($dbPages->getList(1, 1, true))[0]);
 	// Set variable to control active nav menu link
 	if ($Url->whereAmI() == "home")
