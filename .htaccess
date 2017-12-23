@@ -5,6 +5,14 @@ AddDefaultCharset UTF-8
 # Enable rewrite rules
 RewriteEngine on
 
+# Remove www subdomain
+RewriteCond %{HTTP_HOST} ^www\.(.+) [NC]
+RewriteRule ^ http://%1%{REQUEST_URI} [L,R=301]
+# Force HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP_HOST} ^(staging\.)?heirloom-earth [NC]
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 # Forward old URLs
 RewriteRule ^posts$ / [R=301,NC,L]
 RewriteRule ^posts/(.+) /$1 [R=301,NC,L]
