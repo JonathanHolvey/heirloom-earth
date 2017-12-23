@@ -1,5 +1,11 @@
-<?php 
-	$cover = (in_array($Url->whereAmI(), ["page", "home"]) and $Page->coverImage());
+<?php
+	// Set cover image
+	$coverImage = null;
+	if ($homepage and $homepage->coverImage())
+		$coverImage = $homepage->coverImage();
+	if ($Url->whereAmI() == "page" and $Page->coverImage())
+		$coverImage = $Page->coverImage();
+	// Get URL of latest post
 	$latest = buildPage(array_keys($dbPages->getList(1, 1, true))[0]);
 	// Set variable to control active nav menu link
 	if ($Url->whereAmI() == "home")
@@ -13,8 +19,8 @@
 	elseif (!$Url->notFound())
 		$menu = "blog";
 ?>
-<header class="site-header<?= $cover ? " has-cover" : "" ?>"
-		style="<?= $cover ? "background-image: url('" . $Page->coverImage() . "')" : "" ?>">
+<header class="site-header<?= $coverImage ? " custom-cover" : "" ?>"
+		style="<?= $coverImage ? "background-image: url('" . $coverImage . "')" : "" ?>">
 	<img class="logo" src="<?= HTML_PATH_THEME_IMG ?>header-logo.svg" alt="Heirloom Earth"/>
 	<nav>
 		<a class="<?= $menu == "home" ? "is-active" : "" ?>" href="">Home</a>
