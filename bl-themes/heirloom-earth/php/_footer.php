@@ -22,3 +22,4 @@
 		</div>
 	</div>
 </footer>
+<?php Theme::plugins("siteBodyBegin") ?>

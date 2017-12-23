@@ -16,13 +16,13 @@
 <html>
 <head>
 	<title><?= $Page->title() ?> - <?= $Site->title() ?></title>
-	<?php include(THEME_DIR_PHP . "_head.php") ?>
 	<meta name="keywords" content="<?= $Page->category() ?> ,<?= $Page->tags() ?>"/>
 	<meta name="description" content="<?= previewText($page) ?>"/>
 	<meta property="og:title" content="<?= $Page->title() ?> - <?= $Site->title() ?>"/>
 	<meta property="og:descripiton" content="<?= previewText($Page) ?>"/>
 	<meta property="og:image" content="<?= previewImage($Page) ?>"/>
 	<meta name="twitter:card" content="summary_large_image"/>
+	<?php include(THEME_DIR_PHP . "_head.php") ?>
 </head>
 <body>
 	<?php include(THEME_DIR_PHP . "_header.php") ?>

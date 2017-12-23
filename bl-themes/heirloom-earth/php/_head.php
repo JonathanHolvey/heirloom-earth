@@ -3,3 +3,4 @@
 <link rel="stylesheet" type="text/css" href="<?= HTML_PATH_THEME_CSS ?>main.scss"/>
 <link rel="shortcut icon" href="<?= HTML_PATH_THEME_IMG ?>icon.ico"/>
 <base href="<?= HTML_PATH_ROOT ?>"/>
+<?php Theme::plugins("siteHead") ?>

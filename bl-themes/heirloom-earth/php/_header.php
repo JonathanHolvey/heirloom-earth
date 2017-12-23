@@ -19,6 +19,7 @@
 	elseif (!$Url->notFound())
 		$menu = "blog";
 ?>
+<?php Theme::plugins("siteBodyBegin") ?>
 <header class="site-header<?= $coverImage ? " custom-cover" : "" ?>"
 		style="<?= $coverImage ? "background-image: url('" . $coverImage . "')" : "" ?>">
 	<img class="logo" src="<?= HTML_PATH_THEME_IMG ?>header-logo.svg" alt="Heirloom Earth"/>
