@@ -19,7 +19,7 @@ RewriteRule ^posts/(.+) /$1 [R=301,NC,L]
 RewriteRule ^categories$ /category [R=301,NC,L]
 RewriteRule ^categories/.+ /category/sustainable-living [R=301,NC,L]
 RewriteRule ^tags/(.+) /tag/$1 [R=301,NC,L]
-RewriteRule ^contact / [R=301,NC,L]
+RewriteRule ^contact / [R,NC,L]
 
 RewriteRule ^home$ / [R=301,NC,L]
 
