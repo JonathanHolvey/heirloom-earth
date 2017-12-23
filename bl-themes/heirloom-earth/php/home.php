@@ -11,7 +11,7 @@
 		<?php if ($homepage): ?>
 			<section class="home-about">
 				<?= $homepage->content() ?>
-				<a class="button light" href="">Find me on<br/> Facebook</a>
+				<a class="button light" href="<?= $Site->facebook() ?>">Find me on<br/> Facebook</a>
 			</section>
 		<?php endif ?>
  		<section class="post-preview inset-content">
