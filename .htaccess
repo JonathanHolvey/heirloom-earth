@@ -15,9 +15,10 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Forward old URLs
 RewriteRule ^posts$ / [R=301,NC,L]
+RewriteRule ^posts/about-me$ /about [R=301,NC,L]
 RewriteRule ^posts/(.+) /$1 [R=301,NC,L]
-RewriteRule ^categories$ /category [R=301,NC,L]
-RewriteRule ^categories/.+ /category/sustainable-living [R=301,NC,L]
+RewriteRule ^categories /category [R=301,NC,L]
+RewriteRule ^categories/(.+) /category/$1 [R=301,NC,L]
 RewriteRule ^tags/(.+) /tag/$1 [R=301,NC,L]
 RewriteRule ^contact / [R,NC,L]
 
