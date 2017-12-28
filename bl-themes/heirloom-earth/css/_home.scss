@@ -50,9 +50,9 @@
 		bottom: calc(100% - 1.2rem);
 	}
 	.home-about .button {
-		float: left;
+		position: absolute;
+		top: calc(50% - 2.5em);
 		margin: 1em;
-		margin-top: -6.5rem;
 		br {
 			display: block;
 		}
