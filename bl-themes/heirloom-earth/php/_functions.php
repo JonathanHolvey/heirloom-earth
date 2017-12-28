@@ -10,13 +10,17 @@ function previewText($page, $strip=false, $min=200, $max=500) {
 }
 
 // Get an image from a post's cover or content images
-function previewImage($page, $coverOnly=false) {
+function previewImage($page, $thumb=false, $coverOnly=false) {
 	if ($page->coverImage())
-		return $page->coverImage();
+		$image = $page->coverImage();
 	elseif (!$coverOnly and preg_match("/<img.+?src=\"(.+?)\".*?\/>/", $page->content(), $matches))
-		return $matches[1];
+		$image = $matches[1];
 	else
 		return null;
+	if ($thumb)
+		return str_replace("bl-content/uploads/", "bl-content/uploads/thumbnails/", $image);
+	else
+		return $image;
 }
 
 function contactEmail() {
