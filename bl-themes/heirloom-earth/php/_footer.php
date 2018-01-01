@@ -1,9 +1,9 @@
 <footer class="site-footer">
 	<img class="logo-icon" src="<?= HTML_PATH_THEME_IMG ?>logo-icon.svg" alt=""/>
 	<div class="footer-bar">
-		<div class="page-links">
-			<a href="about">About</a>
-			<a href="mailto:<?= contactEmail() ?>">Contact</a>
+		<div class="site-info">
+			<p><?= $Site->footer() ?></p>
+			<p>Website by <a href="http://rocketchilli.com">Rocket Chilli</a>, powered by <a href="http://bludit.com">Bludit CMS</a></p>
 		</div>
 		<div class="social-links">
 			<?php if ($Site->facebook()): ?>
@@ -16,9 +16,9 @@
 				<a class="icon instagram" href="<?= $Site->instagram() ?>" title="Instagram"></a>
 			<?php endif ?>
 		</div>
-		<div class="site-info">
-			<p><?= $Site->footer() ?></p>
-			<p>Website by <a href="http://rocketchilli.com">Rocket Chilli</a>, powered by <a href="http://bludit.com">Bludit CMS</a></p>
+		<div class="page-links">
+			<a href="about">About</a>
+			<a href="mailto:<?= contactEmail() ?>">Contact</a>
 		</div>
 	</div>
 </footer>
