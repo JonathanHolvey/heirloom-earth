@@ -1,0 +1,115 @@
+a {
+	text-decoration: none;
+	color: $grey-dark;
+	&:hover {
+		color: $green;
+	}
+}
+.button {
+	display: table;
+	text-transform: uppercase;
+	text-align: center;
+	padding: 0.5em 1.2em;
+	margin: 0 auto;
+	min-width: 8em;
+	&.light {
+		color: $green;
+		border: 1px solid $green;
+	}
+	&.dark {
+		color: $white;
+		background: $green;
+	}
+}
+hr {
+	@extend %rule;
+	padding: 0;
+	margin-top: 1em;
+}
+.icon {
+	$icon-size: 1.2em;
+	display: inline-block;
+	width: $icon-size;
+	height: $icon-size;
+	margin-right: 0.3em;
+	background-size: $icon-size $icon-size;
+	background-repeat: no-repeat;
+	&.instagram {
+		@include icon-instagram($grey-light);
+	}
+	&.facebook {
+		@include icon-facebook($grey-light);
+	}
+	&.twitter {
+		@include icon-twitter($grey-light);
+	}
+}
+.page-header {
+	@extend %rule;
+	text-align: center;
+	h1:last-child {
+		margin-bottom: 0;
+	}
+}
+.page-info {
+	@extend %info;
+	> * {
+		display: inline-block;
+		margin: 0 0.5em;
+	}
+}
+.post-tags {
+	@extend %info;
+	text-align: center;
+	line-height: 1.8;
+	max-width: 50rem;
+	margin-left: auto;
+	margin-right: auto;
+	> * {
+		display: inline-block;
+		margin: 0 0.5em;
+	}
+}
+.post-preview,
+.category-preview {
+	.post-image {
+		display: block;
+		height: 12em;
+		overflow: hidden;
+		margin-bottom: 1em;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: 50% 50%;
+	}
+	.page-header {
+		border-color: darken($grey-light, 10);
+	}
+	h1 {
+		font-size: 150%;
+	@media $break-large {
+			font-size: 180%;
+		}
+	}
+}
+main {
+	margin-top: 1rem;
+}
+main > *,
+.inset-content > * {
+	max-width: 45em;
+	width: 100%;
+	margin: 0 auto;
+	padding: 1.5rem;
+	box-sizing: border-box;
+}
+main .inset-content {
+	max-width: 100%;
+	padding: 0;
+	background: $grey-light;
+}
+.inset-content > * {
+	padding-bottom: 0.5rem;
+	&:last-child {
+		padding-bottom: 1.5rem;
+	}
+}

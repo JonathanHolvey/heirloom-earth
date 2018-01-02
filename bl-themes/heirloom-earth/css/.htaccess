@@ -1,0 +1,3 @@
+RewriteEngine On
+# Serve SASS files from SASSPHP compiler
+RewriteRule ([^/]+\.scss) ./scss.php?p=$1 [NC,L]
