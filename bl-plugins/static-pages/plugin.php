@@ -42,7 +42,7 @@ class pluginStaticPages extends Plugin {
 		global $Site;
 		global $dbPages;
 
-		$pages = $dbPages->getStaticDB();
+		$pages = $dbPages->getStaticDB(true);
 
 		// HTML for sidebar
 		$html  = '<div class="plugin plugin-pages">';
@@ -51,7 +51,7 @@ class pluginStaticPages extends Plugin {
 		$html .= '<ul>';
 
 		// Show Home page link
-		if( $this->getValue('homeLink') ) {
+		if ($this->getValue('homeLink')) {
 			$html .= '<li>';
 			$html .= '<a href="'.$Site->url().'">';
 			$html .= $Language->get('Home page');
@@ -60,8 +60,7 @@ class pluginStaticPages extends Plugin {
 		}
 
 		// Get keys of pages
-		$keys = array_keys($pages);
-		foreach($keys as $pageKey) {
+		foreach ($pages as $pageKey) {
 			// Create the page object from the page key
 			$page = buildPage($pageKey);
 			$html .= '<li>';

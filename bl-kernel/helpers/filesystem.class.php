@@ -12,22 +12,32 @@ class Filesystem {
 		}
 
 		if($sortByDate) {
-			usort($directories, create_function('$a,$b', 'return filemtime($b) - filemtime($a);'));
+			usort($directories,
+			      function($a, $b) {
+				      return filemtime($b) - filemtime($a);
+			      }
+			);
 		}
 
 		return $directories;
 	}
 
+	// Returns an array with the list of files with the absolute path
+	// $sortByDate = TRUE, the first file is the newer file
 	public static function listFiles($path, $regex='*', $extension='*', $sortByDate=false)
 	{
 		$files = glob($path.$regex.'.'.$extension);
 
-		if(empty($files)) {
+		if (empty($files)) {
 			return array();
 		}
 
-		if($sortByDate) {
-			usort($files, create_function('$a,$b', 'return filemtime($b) - filemtime($a);'));
+		if ($sortByDate) {
+			usort($files,
+				function($a, $b) {
+					return filemtime($b) - filemtime($a);
+				}
+			);
 		}
 
 		return $files;
@@ -64,26 +74,43 @@ class Filesystem {
 		return file_exists($path);
 	}
 
+	// Copy recursive a directory to another
+	// If the destination directory not exists is created
+	// $source = /home/diego/example or /home/diego/example/
+	// $destination = /home/diego/newplace or /home/diego/newplace/
 	public static function copyRecursive($source, $destination)
 	{
+		$source 	= rtrim($source, DS);
+		$destination 	= rtrim($destination, DS);
+
+		// Check $source directory if exists
 		if (!self::directoryExists($source)) {
 			return false;
 		}
 
-		$destination = rtrim($destination, '/');
+		// Check $destionation directory if exists
+		if (!self::directoryExists($destination)) {
+			// Create the $destination directory
+			if (!mkdir($destination, 0755, true)) {
+				return false;
+			}
+		}
 
-		foreach($iterator = new RecursiveIteratorIterator(
+		foreach ($iterator = new RecursiveIteratorIterator(
 				new RecursiveDirectoryIterator($source, RecursiveDirectoryIterator::SKIP_DOTS),
 				RecursiveIteratorIterator::SELF_FIRST) as $item) {
-					if($item->isDir()) {
+					if ($item->isDir()) {
 						@mkdir($destination.DS.$iterator->getSubPathName());
 					} else {
 						copy($item, $destination.DS.$iterator->getSubPathName());
 					}
 		}
+
 		return true;
 	}
 
+	// Delete a file or directory recursive
+	// The directory is delete
 	public static function deleteRecursive($source)
 	{
 		if (!self::directoryExists($source)) {
@@ -103,9 +130,16 @@ class Filesystem {
 		return rmdir($source);
 	}
 
+	// Compress a file or directory
+	// $source = /home/diego/example
+	// $destionation = /tmp/example.zip
 	public static function zip($source, $destination)
 	{
-		if (!extension_loaded('zip') || !file_exists($source)) {
+		if (!extension_loaded('zip')) {
+			return false;
+		}
+
+		if (!file_exists($source)) {
 			return false;
 		}
 
@@ -134,4 +168,25 @@ class Filesystem {
 		return $zip->close();
 	}
 
+	// Uncompress a zip file
+	// $source = /home/diego/example.zip
+	// $destionation = /home/diego/content
+	public static function unzip($source, $destination)
+	{
+		if (!extension_loaded('zip')) {
+			return false;
+		}
+
+		if (!file_exists($source)) {
+			return false;
+		}
+
+		$zip = new ZipArchive();
+		if (!$zip->open($source)) {
+			return false;
+		}
+
+		$zip->extractTo($destination);
+		return $zip->close();
+	}
 }

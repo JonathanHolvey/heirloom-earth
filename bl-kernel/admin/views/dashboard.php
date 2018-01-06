@@ -66,7 +66,7 @@
 		<ul class="uk-list uk-list-line">
 		<?php
 			// Print New version if the plugin Version is installed
-			if (pluginEnabled('Version')) {
+			if (pluginEnabled('pluginVersion')) {
 				if ($plugins['all']['pluginVersion']->newVersion()) {
 					echo '<li>';
 					echo '<b>'.$L->g('New version available').'</b>';
@@ -98,24 +98,15 @@
 
 	<div class="uk-width-1-3">
 
-		<div class="uk-panel">
-		<h4 class="panel-title"><?php $L->p('Scheduled content') ?></h4>
-		<ul class="uk-list">
-		<?php
-			$scheduledPages = $dbPages->getScheduledDB();
-			if( empty($scheduledPages) ) {
-				echo '<li>'.$Language->g('There are no scheduled content').'</li>';
-			}
-			else {
-				$keys = array_keys($scheduledPages);
-				foreach($keys as $key) {
-					$page = buildPage($key);
-					echo '<li><span class="label-time">'.$page->dateRaw(SCHEDULED_DATE_FORMAT).'</span><a href="'.HTML_PATH_ADMIN_ROOT.'edit-content/'.$page->key().'">'.($page->title()?$page->title():'['.$Language->g('Empty title').'] ').'</a></li>';
-				}
-			}
+		<?php if (pluginEnabled('pluginSimpleStats')) {
+			$SimpleStats = getPlugin('pluginSimpleStats');
+			echo '<div class="uk-panel">';
+			echo '<h4 class="panel-title">'.$SimpleStats->getValue('label').'</h4>';
+			echo $SimpleStats->dashboard();
+			echo '</div>';
+		}
 		?>
-		</ul>
-		</div>
+
 
 		<div class="uk-panel">
 		<h4 class="panel-title"><?php $L->p('Statistics') ?></h4>
@@ -123,11 +114,11 @@
 			<tbody>
 			<tr>
 			<td><?php $Language->p('Published') ?></td>
-			<td><?php echo count($dbPages->getPublishedDB()) ?></td>
+			<td><?php echo count($dbPages->getPublishedDB(false)) ?></td>
 			</tr>
 			<tr>
 			<td><?php $Language->p('Static') ?></td>
-			<td><?php echo count($dbPages->getStaticDB()) ?></td>
+			<td><?php echo count($dbPages->getStaticDB(false)) ?></td>
 			</tr>
 			<td><?php $Language->p('Users') ?></td>
 			<td><?php echo $dbUsers->count() ?></td>
@@ -141,16 +132,31 @@
 	<div class="uk-width-1-3">
 
 		<div class="uk-panel">
+		<h4 class="panel-title"><?php $L->p('Scheduled content') ?></h4>
+		<ul class="uk-list">
+		<?php
+			$scheduledPages = $dbPages->getScheduledDB(true);
+			if (empty($scheduledPages)) {
+				echo '<li>'.$Language->g('There are no scheduled content').'</li>';
+			} else {
+				foreach ($scheduledPages as $key) {
+					$page = buildPage($key);
+					echo '<li><span class="label-time">'.$page->dateRaw(SCHEDULED_DATE_FORMAT).'</span><a href="'.HTML_PATH_ADMIN_ROOT.'edit-content/'.$page->key().'">'.($page->title()?$page->title():'['.$Language->g('Empty title').'] ').'</a></li>';
+				}
+			}
+		?>
+		</ul>
+		</div>
+
+		<div class="uk-panel">
 		<h4 class="panel-title"><?php $L->p('Draft content') ?></h4>
 		<ul class="uk-list">
 		<?php
-			$draftPages = $dbPages->getDraftDB();
-			if( empty($draftPages) ) {
+			$draftPages = $dbPages->getDraftDB(true);
+			if (empty($draftPages)) {
 				echo '<li>'.$Language->g('There are no draft content').'</li>';
-			}
-			else {
-				$keys = array_keys($draftPages);
-				foreach($keys as $key) {
+			} else {
+				foreach ($draftPages as $key) {
 					$page = buildPage($key);
 					echo '<li><a href="'.HTML_PATH_ADMIN_ROOT.'edit-content/'.$page->key().'">'.($page->title()?$page->title():'['.$Language->g('Empty title').'] ').'</a></li>';
 				}
