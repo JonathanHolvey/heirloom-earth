@@ -1,3 +1,3 @@
 <?php
-$latest = buildPage($dbPages->getList(1, 1, true)[0]);
+$latest = buildPage(array_values($dbPages->getList(1, 1))[0]);
 header("Location: /" . $latest->slug());

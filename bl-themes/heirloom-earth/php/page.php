@@ -3,13 +3,13 @@
 	// Get previous and next page objects to display as previews
 	if ($Page->status() == "published") {
 		$pageIndex = 1;
-		while (array_keys($dbPages->getList($pageIndex, 1, true))[0] != $Page->key())
+		while (array_values($dbPages->getList($pageIndex, 1))[0] != $Page->key())
 			$pageIndex ++;
 		$previous = $next = null;
-		if ($pageIndex > 1 and count($dbPages->getList($pageIndex - 1, 1, true)) > 0)
-			$pages[] = buildPage(array_keys($dbPages->getList($pageIndex - 1, 1, true))[0]);
-		if (count($dbPages->getList($pageIndex + 1, 1, true)) > 0)
-			$pages[] = buildPage(array_keys($dbPages->getList($pageIndex + 1, 1, true))[0]);
+		if ($pageIndex > 1 and count($dbPages->getList($pageIndex - 1, 1)) > 0)
+			$pages[] = buildPage(array_values($dbPages->getList($pageIndex - 1, 1))[0]);
+		if (count($dbPages->getList($pageIndex + 1, 1)) > 0)
+			$pages[] = buildPage(array_values($dbPages->getList($pageIndex + 1, 1))[0]);
 	}
 ?>
 <!DOCTYPE html>
