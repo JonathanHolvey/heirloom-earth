@@ -1,10 +1,10 @@
 <?php defined('BLUDIT') or die('Bludit CMS.');
 
 // Bludit version
-define('BLUDIT_VERSION',	'2.0.2');
-define('BLUDIT_CODENAME',	'Morty');
-define('BLUDIT_RELEASE_DATE',	'2017-11-02');
-define('BLUDIT_BUILD',		'20171102');
+define('BLUDIT_VERSION',	'2.1.1');
+define('BLUDIT_CODENAME',	'Rick');
+define('BLUDIT_RELEASE_DATE',	'20178-01-02');
+define('BLUDIT_BUILD',		'20180102');
 
 // Debug mode
 // Change to FALSE, for prevent warning or errors on browser
@@ -59,103 +59,13 @@ define('DB_SYSLOG', PATH_DATABASES.'syslog.php');
 define('DB_USERS', PATH_DATABASES.'users.php');
 define('DB_SECURITY', PATH_DATABASES.'security.php');
 
-// Log separator
-define('LOG_SEP', ' | ');
-
 // JSON pretty print
 if(!defined('JSON_PRETTY_PRINT')) {
 	define('JSON_PRETTY_PRINT', 128);
 }
 
-// Protecting against Symlink attacks
-define('CHECK_SYMBOLIC_LINKS', TRUE);
-
-// Alert status ok
-define('ALERT_STATUS_OK', 0);
-
-// Alert status fail
-define('ALERT_STATUS_FAIL', 1);
-
-// Amount of thumbnails shown on Bludit Quick images
-define('THUMBNAILS_AMOUNT', 6);
-
-// Thubmnails size
-define('THUMBNAILS_WIDTH', 400);
-define('THUMBNAILS_HEIGHT', 400);
-define('THUMBNAILS_QUALITY', 100); // 100%
-
-// Profile image size
-define('PROFILE_IMG_WIDTH', 400);
-define('PROFILE_IMG_HEIGHT', 400);
-define('PROFILE_IMG_QUALITY', 100); // 100%
-
-// Password length
-define('PASSWORD_LENGTH', 6);
-
-// Password salt length
-define('SALT_LENGTH', 8);
-
-// Page brake string
-define('PAGE_BREAK', '<!-- pagebreak -->');
-
-// Parent key for the array $pagesByParents
-define('PARENT', 'BLUDIT3849abb4cb7abd24c2d8dac17b216f17');
-
-// Items per page for admin area
-define('ITEMS_PER_PAGE_ADMIN', 10);
-
-// Cli mode, status for new pages
-define('CLI_STATUS', 'published');
-
-// Cli mode, username for new pages
-define('CLI_USERNAME', 'admin');
-
-// Filename
-define('FILENAME', 'index.txt');
-
-// Database date format
-define('DB_DATE_FORMAT', 'Y-m-d H:i:s');
-
-// Database date format
-define('BACKUP_DATE_FORMAT', 'Y-m-d-H-i-s');
-
-// Sitemap date format
-define('SITEMAP_DATE_FORMAT', 'Y-m-d');
-
-// Date format for Dashboard schedule posts
-define('SCHEDULED_DATE_FORMAT', 'd M - h:i a');
-
-// Notifications date format
-define('NOTIFICATIONS_DATE_FORMAT', 'F j, Y, g:i a');
-
-// Amount of items to show on notification panel
-define('NOTIFICATIONS_AMOUNT', 10);
-
-// Token time to live for login via email. The offset is defined by http://php.net/manual/en/datetime.modify.php
-define('TOKEN_EMAIL_TTL', '+15 minutes');
-
-// Charset, default UTF-8.
-define('CHARSET', 'UTF-8');
-
-// EXTREME FRIENDLY URL, TRUE for dissmiss internet standard. Experimental!
-define('EXTREME_FRIENDLY_URL', FALSE);
-
-// Permissions for new directories
-define('DIR_PERMISSIONS', 0755);
-
-// Admin URI filter to access to the admin panel
-define('ADMIN_URI_FILTER', 'admin');
-
-// Default language file, in this case is English
-define('DEFAULT_LANGUAGE_FILE', 'en.json');
-
-// Session timeout server side, gc_maxlifetime
-// 3600 = 1hour
-define('SESSION_GC_MAXLIFETIME', 3600);
-
-// Session lifetime of the cookie in seconds which is sent to the browser
-// The value 0 means until the browser is closed
-define('SESSION_COOKIE_LIFE_TIME', 0);
+// User environment variables
+include(PATH_KERNEL.'boot'.DS.'variables.php');
 
 // Set internal character encoding
 mb_internal_encoding(CHARSET);
@@ -177,6 +87,8 @@ include(PATH_KERNEL.'dbsite.class.php');
 include(PATH_KERNEL.'dbcategories.class.php');
 include(PATH_KERNEL.'dbsyslog.class.php');
 include(PATH_KERNEL.'page.class.php');
+include(PATH_KERNEL.'category.class.php');
+include(PATH_KERNEL.'tag.class.php');
 include(PATH_KERNEL.'user.class.php');
 include(PATH_KERNEL.'url.class.php');
 include(PATH_KERNEL.'login.class.php');
@@ -202,6 +114,7 @@ include(PATH_HELPERS.'paginator.class.php');
 include(PATH_HELPERS.'image.class.php');
 include(PATH_HELPERS.'tcp.class.php');
 include(PATH_HELPERS.'dom.class.php');
+include(PATH_HELPERS.'cookie.class.php');
 
 if (file_exists(PATH_KERNEL.'bludit.pro.php')) {
 	include(PATH_KERNEL.'bludit.pro.php');
@@ -263,6 +176,7 @@ define('HTML_PATH_ADMIN_THEME_CSS',	HTML_PATH_ADMIN_THEME.'css/');
 define('HTML_PATH_ADMIN_THEME_IMG',	HTML_PATH_ADMIN_THEME.'img/');
 define('HTML_PATH_CORE_JS',		HTML_PATH_ROOT.'bl-kernel/js/');
 define('HTML_PATH_CORE_CSS',		HTML_PATH_ROOT.'bl-kernel/css/');
+define('HTML_PATH_CONTENT',		HTML_PATH_ROOT.'bl-content/');
 define('HTML_PATH_UPLOADS',		HTML_PATH_ROOT.'bl-content/uploads/');
 define('HTML_PATH_UPLOADS_PROFILES',	HTML_PATH_UPLOADS.'profiles/');
 define('HTML_PATH_UPLOADS_THUMBNAILS',	HTML_PATH_UPLOADS.'thumbnails/');
@@ -312,6 +226,8 @@ define('DOMAIN_THEME_IMG',		DOMAIN.HTML_PATH_THEME_IMG);
 define('DOMAIN_UPLOADS',		DOMAIN.HTML_PATH_UPLOADS);
 define('DOMAIN_UPLOADS_PROFILES',	DOMAIN.HTML_PATH_UPLOADS_PROFILES);
 define('DOMAIN_UPLOADS_THUMBNAILS',	DOMAIN.HTML_PATH_UPLOADS_THUMBNAILS);
+define('DOMAIN_PLUGINS',		DOMAIN.HTML_PATH_PLUGINS);
+define('DOMAIN_CONTENT',		DOMAIN.HTML_PATH_CONTENT);
 
 define('DOMAIN_ADMIN',			DOMAIN_BASE.ADMIN_URI_FILTER);
 

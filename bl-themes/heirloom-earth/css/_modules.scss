@@ -113,3 +113,48 @@ main .inset-content {
 		padding-bottom: 1.5rem;
 	}
 }
+// For IE
+.image-grid {
+	clear: both;
+	overflow: auto;
+	img {
+		width: 49.5%;
+		margin-bottom: 1%;
+	}
+	img:nth-child(odd) {
+		float: left;
+		margin-right: 1%;
+	}
+	img:nth-child(even) {
+		clear: right;
+		margin-left: 1%;
+	}
+}
+// For modern browsers
+@supports (object-fit: cover) {
+	.image-grid {
+		max-height: 30em;
+		padding-bottom: 100%;
+		position: relative;
+		@media screen and (min-width: 33em) {
+			padding-bottom: 30em;
+		}
+		img {
+			position: absolute;
+			margin: 0;
+			width: 49.5%;
+			height: 49.5%;
+			object-fit: cover;
+		}
+		img:nth-child(2) {
+			right: 0;
+		}
+		img:nth-child(3) {
+			bottom: 0;
+		}
+		img:nth-child(4) {
+			bottom: 0;
+			right: 0;
+		}
+	}
+}

@@ -303,6 +303,7 @@ class Page {
 		$tmp['contentRaw'] 	= $this->contentRaw(); // No Markdown parsed
 		$tmp['description'] 	= $this->description();
 		$tmp['date'] 		= $this->dateRaw();
+		$tmp['dateUTC']		= Date::convertToUTC($this->dateRaw(), DB_DATE_FORMAT, DB_DATE_FORMAT);
 		$tmp['permalink'] 	= $this->permalink(true);
 
 		if($returnsArray) {
@@ -405,7 +406,7 @@ class Page {
 		$explode = explode('/', $this->getValue('key'));
 
 		// Check if the page have a parent.
-		if(!empty($explode[1])) {
+		if (!empty($explode[1])) {
 			return $explode[1];
 		}
 
@@ -416,18 +417,24 @@ class Page {
 	public function parentKey()
 	{
 		$explode = explode('/', $this->getValue('key'));
-		if(isset($explode[1])) {
+		if (isset($explode[1])) {
 			return $explode[0];
 		}
 
 		return false;
 	}
 
+	// Returns TURE if the page has a parent, FALSE otherwise
+	public function hasParent()
+	{
+		return $this->parentKey()!==false;
+	}
+
 	// Returns the parent method output, if the page doesn't have a parent returns FALSE
 	public function parentMethod($method)
 	{
 		$parentKey = $this->parentKey();
-		if( $parentKey ) {
+		if ($parentKey) {
 			$page = buildPage($parentKey);
 			return $page->{$method}();
 		}
@@ -440,13 +447,23 @@ class Page {
 	{
 		$tmp = array();
 		$paths = Filesystem::listDirectories(PATH_PAGES.$this->getValue('key').DS);
-		foreach($paths as $path) {
+		foreach ($paths as $path) {
 			array_push($tmp, basename($path));
 		}
 
 		return $tmp;
 	}
+	public function subpages()
+	{
+		return $this->children();
+	}
 
+	// Returns TRUE if the page has subpages/children, FALSE otherwise
+	public function hasSubpages()
+	{
+		$subpages = $this->subpages();
+		return !empty($subpages);
+	}
 
 
 	// Returns relative time (e.g. "1 minute ago")

@@ -2,6 +2,25 @@
 
 class Date {
 
+	// Returns string with the date translated
+	// Example: $date = 'Mon, 27th March' > 'Lun, 27th Marzo'
+	public static function translate($date)
+	{
+		global $Language;
+
+		// If English default language don't translate
+		if ($Language->currentLanguage()=='en') {
+			return $date;
+		}
+
+		// Get the array of dates from the language file
+		$dates = $Language->getDates();
+		foreach ($dates as $english=>$anotherLang) {
+			$date = preg_replace('/\b'.$english.'\b/u', $anotherLang, $date);
+		}
+		return $date;
+	}
+
 	// Return current Unix timestamp, GMT+0
 	public static function unixTime()
 	{
@@ -12,14 +31,18 @@ class Date {
 	public static function current($format)
 	{
 		$Date = new DateTime();
-		return $Date->format($format);
+		$output = $Date->format($format);
+
+		return self::translate($output);
 	}
 
 	public static function currentOffset($format, $offset)
 	{
 		$Date = new DateTime();
 		$Date->modify($offset);
-		return $Date->format($format);
+		$output = $Date->format($format);
+
+		return self::translate($output);
 	}
 
 	// Format a local time/date according to locale settings.
@@ -28,11 +51,21 @@ class Date {
 		// Returns a new DateTime instance or FALSE on failure.
 		$Date = DateTime::createFromFormat($currentFormat, $date);
 
-		if($Date!==false) {
-			return $Date->format($outputFormat);
+		if ($Date!==false) {
+			$output = $Date->format($outputFormat);
+			return self::translate($output);
 		}
 
 		return false;
+	}
+
+	public static function convertToUTC($date, $currentFormat, $outputFormat)
+	{
+		$Date = DateTime::createFromFormat($currentFormat, $date);
+		$Date->setTimezone(new DateTimeZone('UTC'));
+		$output = $Date->format($outputFormat);
+
+		return self::translate($output);
 	}
 
 	public static function timeago($time)
