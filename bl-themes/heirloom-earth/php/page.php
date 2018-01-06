@@ -41,7 +41,7 @@
 					</div>
 				<?php endif ?>
 			</header>
-			<div class="content" itemprop="text"><?= $Page->content() ?></div>
+			<div class="content" itemprop="text"><?= formatContent($Page) ?></div>
 			<?php if ($Page->tags()): ?>
 				<hr/>
 				<footer class="post-tags" itemprop="keywords" content="<?= $Page->tags() ?>">
