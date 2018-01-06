@@ -41,14 +41,16 @@ em {
 strong {
 	font-weight: bold;
 }
-img {
+img,
+.image-grid {
 	display: block;
 	max-width: 30em;
 	margin: 0 auto;
 	width: 100%;
 }
 // Image captions
-p > img + em {
+p > img + em,
+.image-grid + em {
 	display: block;
 	max-width: 30em;
 	text-align: center;

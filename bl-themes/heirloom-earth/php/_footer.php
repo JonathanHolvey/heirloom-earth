@@ -19,6 +19,9 @@
 		<div class="page-links">
 			<a href="about">About</a>
 			<a href="mailto:<?= contactEmail() ?>">Contact</a>
+			<?php if ($plugins["all"]["pluginRSS"]->installed()): ?>
+				<a href="rss.xml">RSS</a>
+			<?php endif ?>
 		</div>
 	</div>
 </footer>

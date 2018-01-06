@@ -23,6 +23,15 @@ function previewImage($page, $thumb=false, $coverOnly=false) {
 		return $image;
 }
 
+// Apply additional formatting to generated HTML
+function formatContent($page) {
+	$content = $page->content();
+	// Group four consecutive images into a div to be styled in a grid
+	$content = preg_replace("/(<img.+?>\s*<img.+?>\s*<img.+?>\s*<img.+?>)/",
+							"<div class=\"image-grid\">$1</div>", $content);
+	return $content;
+}
+
 function contactEmail() {
 	global $Site;
 	return preg_replace("/[^\/]+\/+/", "contact@", $Site->domain());

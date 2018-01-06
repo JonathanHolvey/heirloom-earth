@@ -4,6 +4,8 @@ $homepage = buildPage("home");
 
 if ($Url->whereAmI() == "home")
 	include_once(THEME_DIR_PHP . "home.php");
+elseif ($Url->uri() == "/blog")
+	include_once(THEME_DIR_PHP . "latest.php");
 elseif ($Url->uri() == "/category") {
 	http_response_code(200);
 	include_once(THEME_DIR_PHP . "category-list.php");

@@ -2,9 +2,9 @@
     "author": "Jonathan Holvey",
     "email": "jon@rocketchilli.com",
     "website": "http://rocketchilli.com",
-    "version": "2.0.0",
+    "version": "2.1.1",
     "releaseDate": "2017-12-17",
     "license": "GNU v3",
-    "compatible": "2.0",
+    "compatible": "2.1",
     "notes": ""
 }

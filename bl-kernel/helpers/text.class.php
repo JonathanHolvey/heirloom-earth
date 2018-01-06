@@ -151,6 +151,7 @@ class Text {
 	}
 
 	// Replace all occurrences of the search string with the replacement string.
+	// replace("%body%", "black", "<body text='%body%'>");
 	public static function replace($search, $replace, $string)
 	{
 		return str_replace($search,$replace,$string);
@@ -234,7 +235,9 @@ class Text {
 	public static function pre2htmlentities($string)
 	{
 		return preg_replace_callback('/<pre.*?><code(.*?)>(.*?)<\/code><\/pre>/imsu',
-			create_function('$input', 'return "<pre><code $input[1]>".htmlentities($input[2])."</code></pre>";'),
+		        function ($input) {
+                                return "<pre><code $input[1]>".htmlentities($input[2])."</code></pre>";
+                        },
 			$string);
 	}
 
