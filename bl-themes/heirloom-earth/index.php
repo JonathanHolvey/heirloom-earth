@@ -1,4 +1,7 @@
 <?php
+if (!is_dir(THEME_DIR . "/cache"))
+	mkdir(THEME_DIR . "/cache");
+
 include(THEME_DIR_PHP . "_functions.php");
 $homepage = buildPage("home");
 

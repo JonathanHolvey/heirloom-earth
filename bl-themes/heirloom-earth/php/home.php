@@ -16,11 +16,15 @@
 		<?php endif ?>
  		<section class="post-preview inset-content">
 			<?php
-				foreach (array_slice($pages, 0, 3) as $listItem)
+				foreach (array_slice($pages, 0, 2) as $listItem)
 					include(THEME_DIR_PHP . "_preview.php");
 			?>
 		</section>
+		<section class="instagram-grid">
+			<div id="instafeed"></div>
+		</section>
 	</main>
 	<?php include(THEME_DIR_PHP . "_footer.php") ?>
+	<?php include(THEME_DIR_PHP . "_instagram.php") ?>
 </body>
 </html>
