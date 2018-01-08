@@ -11,7 +11,8 @@
 		get: "user",
 		userId: "self",
 		accessToken: "<?= $accessToken ?>",
-		resolution: "low_resolution"
+		resolution: "low_resolution",
+		template: "<div class=\"grid-item\"><img class=\"grid-image\" src=\"{{image}}\" alt=\"\"/></div>"
 	});
 	feed.run();
 </script>
