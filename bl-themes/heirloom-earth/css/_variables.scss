@@ -2,6 +2,7 @@
 $black: #000;
 $white: #fff;
 $green: #77a669;
+$green-dark: #6e917e;
 $orange: #e5a145;
 $grey-dark: #424540;
 $grey-medium: lighten($grey-dark, 20);
@@ -14,4 +15,4 @@ $break-medium: screen and (min-width: 40em);
 $break-large: screen and (min-width: 50em);
 // Very large break points for Istagram grid
 $break-vlarge: screen and (min-width: 65em);
-$break-vvlarge: screen and (min-width: 80em);
+$break-vvlarge: screen and (min-width: 85em);
