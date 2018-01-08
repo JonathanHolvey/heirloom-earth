@@ -12,6 +12,7 @@
 		userId: "self",
 		accessToken: "<?= $accessToken ?>",
 		resolution: "low_resolution",
+		limit: 11,
 		template: "<div class=\"grid-item\"><img class=\"grid-image\" src=\"{{image}}\" alt=\"\"/><div class=\"grid-overlay\"><p class=\"image-caption\">{{caption}}</p><div class=\"image-stats\"><span class=\"image-likes\" data-count=\"{{likes}}\">{{likes}}</span> <span class=\"image-comments\" data-count=\"{{comments}}\">{{comments}}</span></div></div></div>"
 	});
 	feed.run();
