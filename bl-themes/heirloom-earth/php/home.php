@@ -24,7 +24,7 @@
 			<div class="grid-item grid-title">
 				<div class="title-text">Heirloom Earth on</div>
 				<img class="instagram-wordmark" src="<?= HTML_PATH_THEME_IMG . "instagram-wordmark.svg" ?>" alt="Instagram"/>
-				<a class="button light" href="">Follow me</a>
+				<a class="button light" href="<?= $Site->instagram() ?>">Follow me</a>
 			</div>
 			<div id="instafeed"></div>
 		</section>
