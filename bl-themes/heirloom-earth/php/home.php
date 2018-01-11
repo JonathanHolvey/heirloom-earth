@@ -1,3 +1,4 @@
+<?php $instagram = array_key_exists("instagram-token", $themeConfig) ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,16 +21,18 @@
 					include(THEME_DIR_PHP . "_preview.php");
 			?>
 		</section>
-		<section class="instagram-grid">
-			<div class="grid-item grid-title">
-				<div class="title-text">Heirloom Earth on</div>
-				<img class="instagram-wordmark" src="<?= HTML_PATH_THEME_IMG . "instagram-wordmark.svg" ?>" alt="Instagram"/>
-				<a class="button light" href="<?= $Site->instagram() ?>">Follow me</a>
-			</div>
-			<div id="instafeed"></div>
-		</section>
+		<?php if ($instagram): ?>
+			<section class="instagram-grid">
+				<div class="grid-item grid-title">
+					<div class="title-text">Heirloom Earth on</div>
+					<img class="instagram-wordmark" src="<?= HTML_PATH_THEME_IMG . "instagram-wordmark.svg" ?>" alt="Instagram"/>
+					<a class="button light" href="<?= $Site->instagram() ?>">Follow me</a>
+				</div>
+				<div id="instafeed"></div>
+			</section>
+		<?php endif ?>
 	</main>
 	<?php include(THEME_DIR_PHP . "_footer.php") ?>
-	<?php include(THEME_DIR_PHP . "_instagram.php") ?>
+	<?php if ($instagram) include(THEME_DIR_PHP . "_instagram.php") ?>
 </body>
 </html>
