@@ -1,4 +1,8 @@
 <?php
+$themeConfig = [];
+if (is_file(THEME_DIR . "config.json"))
+	$themeConfig = json_decode(file_get_contents(THEME_DIR . "config.json"), true);
+
 include(THEME_DIR_PHP . "_functions.php");
 $homepage = buildPage("home");
 

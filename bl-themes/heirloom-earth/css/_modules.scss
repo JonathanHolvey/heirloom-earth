@@ -104,7 +104,7 @@ main > *,
 }
 main .inset-content {
 	max-width: 100%;
-	padding: 0;
+	padding: 1rem 0;
 	background: $grey-light;
 }
 .inset-content > * {
@@ -158,3 +158,5 @@ main .inset-content {
 		}
 	}
 }
+
+@import "instagram";
