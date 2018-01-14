@@ -94,7 +94,7 @@
 		overflow: hidden;
 		font-size: 90%;
 		@media $break-large {
-			font-size: 70%;
+			font-size: 80%;
 		}
 	}
 	.image-caption,
@@ -103,13 +103,19 @@
 	}
 	.image-stats {
 		@extend %info;
-		font-size: 60%;
+		font-size: 75%;
 		margin-top: 7%;
+		@media $break-medium {
+			font-size: 65%;
+		}
 	}
 	.image-likes,
 	.image-comments {
 		display: inline-block;
-		margin: 0 0.8em;
+		margin: 0 0.6em;
+		@media $break-small {
+			margin: 0 0.8em;
+		}
 	}
 	.image-likes::after {
 		content: " likes";
