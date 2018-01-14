@@ -6,7 +6,9 @@
 		<h1><a href="<?= $Site->uriFilters("page") . $listItem->slug() ?>"><?= $listItem->title() ?></a></h1>
 		<div class="page-info">
 			<time class="post-date" datetime="<?= $Page->dateRaw() ?>"><?= $listItem->date() ?></time>
-			<a class="post-category" href="<?= $Site->uriFilters("category") . $listItem->categoryKey() ?>"><?= $listItem->category() ?></a>
+			<?php if ($listItem->category()): ?>
+				<a class="post-category" href="<?= $Site->uriFilters("category") . $listItem->categoryKey() ?>"><?= $listItem->category() ?></a>
+			<?php endif ?>
 		</div>
 	</div>
 	<div class="content"><p><?= previewText($listItem) ?></p></div>

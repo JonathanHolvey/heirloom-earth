@@ -104,7 +104,7 @@ main > *,
 }
 main .inset-content {
 	max-width: 100%;
-	padding: 0;
+	padding: 1rem 0;
 	background: $grey-light;
 }
 .inset-content > * {
@@ -145,6 +145,10 @@ main .inset-content {
 			width: 49.5%;
 			height: 49.5%;
 			object-fit: cover;
+			&:active {
+				width: 100%;
+				height: 100%;
+			}
 		}
 		img:nth-child(2) {
 			right: 0;
@@ -158,3 +162,5 @@ main .inset-content {
 		}
 	}
 }
+
+@import "instagram";

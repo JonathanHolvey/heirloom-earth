@@ -1,0 +1,136 @@
+.instagram-grid {
+	padding: 0;
+	max-width: 100%;
+	overflow: auto;
+	background: $grey-light;
+	.instafeed {
+		width: 100%;
+	}
+	.grid-item {
+		display: none;
+		position: relative;
+		height: 0;
+		width: calc(100% / 2);
+		padding-bottom: calc(100% / 2);
+		float: left;
+		overflow: hidden;
+		&:nth-child(-n+3) {
+			display: block;
+		}
+		@media $break-small {
+			width: calc(100% / 3);
+			padding-bottom: calc(100% / 3);
+			&:nth-child(-n+5) {
+				display: block;
+			}
+		}
+		@media $break-large {
+			width: calc(100% / 4);
+			padding-bottom: calc(100% / 4);
+			&:nth-child(-n+7) {
+				display: block;
+			}
+		}
+		@media $break-vlarge {
+			width: calc(100% / 5);
+			padding-bottom: calc(100% / 5);
+			&:nth-child(-n+9) {
+				display: block;
+			}
+		}
+		@media $break-vvlarge {
+			width: calc(100% / 6);
+			padding-bottom: calc(100% / 6);
+			&:nth-child(-n+11) {
+				display: block;
+			}
+		}
+	}
+	.grid-title {
+		text-align: center;
+		background: $white;
+		.title-text {
+			@extend %info;
+			margin-top: 20%;
+			margin-bottom: 5%;
+		}
+		.instagram-wordmark {
+			display: inline;
+			width: 80%;
+			margin-bottom: 3%;
+		}
+		.button {
+			min-width: 0;
+			padding-left: 1em;
+			padding-right: 1em;
+		}
+	}
+	.grid-image {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.grid-overlay {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 100%;
+		opacity: 0;
+		background: rgba($green-dark, 0.75);
+		color: $white;
+		transition: top 0.4s, opacity 0.3s;
+		transition-timing-function: ease-out;
+	}
+	.grid-item:hover .grid-overlay,
+	.grid-item:focus .grid-overlay,
+	.grid-item:focus-within .grid-overlay {
+		top: 0%;
+		opacity: 1;
+	}
+	.image-caption {
+		display: block;
+		color: $white;
+		margin: 20% 10% 0;
+		max-height: 50%;
+		overflow: hidden;
+		font-size: 90%;
+		@media $break-large {
+			font-size: 80%;
+		}
+	}
+	.image-caption,
+	.image-stats {
+		text-align: center;
+	}
+	.image-stats {
+		@extend %info;
+		position: absolute;
+		bottom: 15%;
+		width: 100%;
+		font-size: 75%;
+		@media $break-medium {
+			font-size: 65%;
+		}
+	}
+	.image-likes,
+	.image-comments {
+		display: inline-block;
+		margin: 0 0.6em;
+		@media $break-small {
+			margin: 0 0.8em;
+		}
+	}
+	.image-likes::after {
+		content: " likes";
+	}
+	.image-likes[data-count="1"]::after {
+		content: " like";
+	}
+	.image-comments::after {
+		content: " comments";
+	}
+	.image-comments[data-count="1"]::after {
+		content: " comment";
+	}
+}

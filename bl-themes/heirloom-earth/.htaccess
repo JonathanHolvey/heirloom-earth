@@ -1,0 +1,3 @@
+RewriteEngine On
+# Deny access to config file
+RewriteRule config.json - [R=404,NC,L]
