@@ -103,8 +103,10 @@
 	}
 	.image-stats {
 		@extend %info;
+		position: absolute;
+		bottom: 15%;
+		width: 100%;
 		font-size: 75%;
-		margin-top: 7%;
 		@media $break-medium {
 			font-size: 65%;
 		}

@@ -33,6 +33,13 @@
 		<?php endif ?>
 	</main>
 	<?php include(THEME_DIR_PHP . "_footer.php") ?>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script src="<?= HTML_PATH_THEME ?>vendor/jquery.dotdotdot-3.1.0.min.js"></script>
+	<script>
+		function clampLines() {
+			$(".grid-item .image-caption").dotdotdot();
+		}
+	</script>
 	<?php if ($instagram) include(THEME_DIR_PHP . "_instagram.php") ?>
 </body>
 </html>
