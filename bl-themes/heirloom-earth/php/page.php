@@ -37,7 +37,9 @@
 				<?php if ($Page->status() != "static" and !$Url->notFound()): ?>
 					<div class="page-info">
 						<time class="post-date" itemprop="datePublished" datetime="<?= $Page->dateRaw() ?>"><?= $Page->date() ?></time>
-						<a class="post-category" href="<?= $Site->uriFilters("category") . $page->categoryKey() ?>"><?= $Page->category() ?></a>
+						<?php if ($Page->category()): ?>
+							<a class="post-category" href="<?= $Site->uriFilters("category") . $page->categoryKey() ?>"><?= $Page->category() ?></a>
+						<?php endif ?>
 					</div>
 				<?php endif ?>
 			</header>

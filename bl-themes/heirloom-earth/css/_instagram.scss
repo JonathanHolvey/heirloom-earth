@@ -82,7 +82,9 @@
 		transition: top 0.4s, opacity 0.3s;
 		transition-timing-function: ease-out;
 	}
-	.grid-item:hover .grid-overlay {
+	.grid-item:hover .grid-overlay,
+	.grid-item:focus .grid-overlay,
+	.grid-item:focus-within .grid-overlay {
 		top: 0%;
 		opacity: 1;
 	}
