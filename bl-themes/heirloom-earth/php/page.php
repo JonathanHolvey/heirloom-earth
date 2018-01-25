@@ -11,6 +11,8 @@
 		if (count($dbPages->getList($pageIndex + 1, 1)) > 0)
 			$pages[] = buildPage(array_values($dbPages->getList($pageIndex + 1, 1))[0]);
 	}
+
+	$user = $dbUsers->getUser($page->username());
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,7 +32,12 @@
 	<main>
 		<article itemscope itemtype="http://schema.org/BlogPosting">
 			<?php if (previewImage($Page)): ?>
-				<meta itemprop="thumbnailUrl" content="<?= previewImage($Page) ?>"/>
+				<meta itemprop="thumbnailUrl" content="<?= previewImage($Page, true) ?>"/>
+				<meta itemprop="image" content="<?= previewImage($Page, false) ?>"/>
+				<meta itemprop="author" content="<?= $user->firstName() . " " . $user->lastName() ?>"/>
+				<meta itemprop="publisher" content="<?= $Site->title() ?>"/>
+				<meta itemprop="dateModified" content="<?= $page->dateModified() ?>"/>
+				<meta itemprop="mainEntityOfPage" content="<?= $canonical ?>"/>
 			<?php endif ?>
 			<header class="page-header">
 				<h1 class="page-title" itemprop="headline"><?= $Page->title() ?></h1>
