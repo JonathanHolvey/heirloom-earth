@@ -11,6 +11,8 @@
 		if (count($dbPages->getList($pageIndex + 1, 1)) > 0)
 			$pages[] = buildPage(array_values($dbPages->getList($pageIndex + 1, 1))[0]);
 	}
+
+	$user = $dbUsers->getUser($page->username());
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,7 +21,7 @@
 	<meta name="keywords" content="<?= $Page->category() ?> ,<?= $Page->tags() ?>"/>
 	<meta name="description" content="<?= previewText($page) ?>"/>
 	<meta property="og:title" content="<?= $Page->title() ?>"/>
-	<meta property="og:url" content="<?= $Site->url() . $Url->uri() ?> - <?= $Site->title() ?>"/>
+	<meta property="og:url" content="<?= $Site->url() . $Url->uri() ?>"/>
 	<meta property="og:descripiton" content="<?= previewText($Page) ?>"/>
 	<meta property="og:image" content="<?= previewImage($Page, true) ?>"/>
 	<meta name="twitter:card" content="summary_large_image"/>
@@ -30,8 +32,19 @@
 	<main>
 		<article itemscope itemtype="http://schema.org/BlogPosting">
 			<?php if (previewImage($Page)): ?>
-				<meta itemprop="thumbnailUrl" content="<?= previewImage($Page) ?>"/>
+				<meta itemprop="thumbnailUrl" content="<?= previewImage($Page, true) ?>"/>
+				<meta itemprop="image" content="<?= previewImage($Page, false) ?>"/>
 			<?php endif ?>
+			<meta itemprop="dateModified" content="<?= $page->dateModified() ?>"/>
+			<meta itemprop="mainEntityOfPage" content="<?= $canonical ?>"/>
+			<div itemprop="author" itemscope itemtype="http://schema.org/Person">
+				<meta itemprop="name" content="<?= $user->firstName() . " " . $user->lastName() ?>"/>
+			</div>
+			<div itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+				<meta itemprop="name" content="<?= $Site->title() ?>"/>
+				<meta itemprop="url" content="<?= $Site->url() ?>"/>
+				<meta itemprop="sameAs" content="<?= $Site->facebook() ?>"/>
+			</div>
 			<header class="page-header">
 				<h1 class="page-title" itemprop="headline"><?= $Page->title() ?></h1>
 				<?php if ($Page->status() != "static" and !$Url->notFound()): ?>

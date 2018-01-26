@@ -9,3 +9,5 @@ if (is_file(THEME_DIR . "config.json"))
 
 $themeInfo = json_decode(file_get_contents(THEME_DIR . "metadata.json"), true);
 define("THEME_VERSION", $themeInfo["version"]);
+
+$canonical = rtrim($Site->url() . $Url->uri(), "/");
