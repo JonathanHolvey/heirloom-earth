@@ -35,16 +35,18 @@
 				<meta itemprop="thumbnailUrl" content="<?= previewImage($Page, true) ?>"/>
 				<meta itemprop="image" content="<?= previewImage($Page, false) ?>"/>
 			<?php endif ?>
-			<meta itemprop="dateModified" content="<?= $page->dateModified() ?>"/>
-			<meta itemprop="mainEntityOfPage" content="<?= $canonical ?>"/>
-			<div itemprop="author" itemscope itemtype="http://schema.org/Person">
-				<meta itemprop="name" content="<?= $user->firstName() . " " . $user->lastName() ?>"/>
-			</div>
-			<div itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-				<meta itemprop="name" content="<?= $Site->title() ?>"/>
-				<meta itemprop="url" content="<?= $Site->url() ?>"/>
-				<meta itemprop="sameAs" content="<?= $Site->facebook() ?>"/>
-			</div>
+			<?php if (!$Url->notFound()): ?>
+				<meta itemprop="dateModified" content="<?= $page->dateModified() ?>"/>
+				<meta itemprop="mainEntityOfPage" content="<?= $canonical ?>"/>
+				<div itemprop="author" itemscope itemtype="http://schema.org/Person">
+					<meta itemprop="name" content="<?= $user->firstName() . " " . $user->lastName() ?>"/>
+				</div>
+				<div itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+					<meta itemprop="name" content="<?= $Site->title() ?>"/>
+					<meta itemprop="url" content="<?= $Site->url() ?>"/>
+					<meta itemprop="sameAs" content="<?= $Site->facebook() ?>"/>
+				</div>
+			<?php endif ?>
 			<header class="page-header">
 				<h1 class="page-title" itemprop="headline"><?= $Page->title() ?></h1>
 				<?php if ($Page->status() != "static" and !$Url->notFound()): ?>
