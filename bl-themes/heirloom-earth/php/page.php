@@ -22,7 +22,7 @@
 	<meta name="description" content="<?= previewText($page) ?>"/>
 	<meta property="og:title" content="<?= $Page->title() ?>"/>
 	<meta property="og:url" content="<?= $Site->url() . $Url->uri() ?>"/>
-	<meta property="og:descripiton" content="<?= previewText($Page) ?>"/>
+	<meta property="og:description" content="<?= previewText($Page) ?>"/>
 	<meta property="og:image" content="<?= previewImage($Page, true) ?>"/>
 	<meta name="twitter:card" content="summary_large_image"/>
 	<?php include(THEME_DIR_PHP . "_head.php") ?>
