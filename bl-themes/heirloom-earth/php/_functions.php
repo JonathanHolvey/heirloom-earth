@@ -1,12 +1,13 @@
 <?php
-// Get the first paragraph of a post's content text
+// Get the first paragraph of a post's content text or the post description
 function previewText($page, $strip=false, $min=200, $max=500) {
-	if (!preg_match("/<p>(.{{$min},{$max}})<\/p>/s", $page->content(), $matches))
-		return null;
-	else
+	if (preg_match("/<p>(.{{$min},{$max}})<\/p>/s", $page->content(), $matches)) {
 		$allow = "<strong><em>";
-		$text = strip_tags($matches[1], $strip ? null : $allow);
+		$text = trim(strip_tags($matches[1], $strip ? null : $allow));
 		return $text;
+	}
+	else
+		return $page->description();
 }
 
 // Get an image from a post's cover or content images
