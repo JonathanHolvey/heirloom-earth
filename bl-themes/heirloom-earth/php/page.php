@@ -20,6 +20,7 @@
 	<title><?= $Page->title() ?> - <?= $Site->title() ?></title>
 	<meta name="keywords" content="<?= $Page->category() ?> ,<?= $Page->tags() ?>"/>
 	<meta name="description" content="<?= previewText($page) ?>"/>
+	<meta property="og:type" content="article"/>
 	<meta property="og:title" content="<?= $Page->title() ?>"/>
 	<meta property="og:url" content="<?= $Site->url() . $Url->uri() ?>"/>
 	<meta property="og:description" content="<?= previewText($Page) ?>"/>
