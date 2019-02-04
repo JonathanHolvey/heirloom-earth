@@ -1,8 +1,9 @@
 a {
 	text-decoration: none;
-	color: $grey-dark;
+	color: inherit;
+	transition: color $transition-medium;
 	&:hover {
-		color: $green;
+		color: $green-dark;
 	}
 }
 .button {
@@ -11,14 +12,24 @@ a {
 	text-align: center;
 	padding: 0.5em 1.2em;
 	margin: 0 auto;
-	min-width: 8em;
+	min-width: 6em;
+	border-radius: 4px;
+	transition: background $transition-medium, color $transition-medium, border $transition-medium;
 	&.light {
-		color: $green;
-		border: 1px solid $green;
+		color: $grey-medium;
+		border: 1px solid $grey-medium;
+		&:hover {
+			border-color: $green-dark;
+			color: $green-dark;
+			background: lighten($green-dark, 45);
+		}
 	}
 	&.dark {
 		color: $white;
-		background: $green;
+		background: $grey-medium;
+		&:hover {
+			background: $green-dark;
+		}
 	}
 }
 hr {
