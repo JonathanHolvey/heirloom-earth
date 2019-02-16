@@ -20,7 +20,7 @@
 <?php Theme::plugins("siteBodyBegin") ?>
 <header class="site-header<?= $coverImage ? " custom-cover" : "" ?>"
 		style="<?= $coverImage ? "background-image: url('" . $coverImage . "')" : "" ?>">
-	<img class="logo" src="<?= HTML_PATH_THEME_IMG ?>header-logo.svg" alt="Heirloom Earth"/>
+	<img class="logo" src="<?= HTML_PATH_THEME_IMG ?>header-logo.svg?v2" alt="Heirloom Earth"/>
 	<nav>
 		<a class="<?= $menu == "home" ? "is-active" : "" ?>" href="">Home</a>
 		<a class="<?= $menu == "blog" ? "is-active" : "" ?>" href="blog">Blog</a>
