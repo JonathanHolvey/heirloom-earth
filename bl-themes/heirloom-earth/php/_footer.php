@@ -1,5 +1,5 @@
 <footer class="site-footer">
-	<img class="logo-icon" src="<?= HTML_PATH_THEME_IMG ?>logo-icon.svg" alt=""/>
+	<img class="logo-icon" src="<?= HTML_PATH_THEME_IMG ?>logo-icon.svg?v2" alt=""/>
 	<div class="footer-bar">
 		<div class="site-info">
 			<p><?= preg_replace('/20\d{2}/', date('Y'), $Site->footer()) ?></p>
