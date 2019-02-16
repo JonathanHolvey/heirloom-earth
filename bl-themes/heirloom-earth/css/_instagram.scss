@@ -14,15 +14,12 @@
 		padding-bottom: calc(100% / 2);
 		float: left;
 		overflow: hidden;
-		&:nth-child(-n+3) {
+		&:nth-child(-n+5) {
 			display: block;
 		}
 		@media $break-small {
 			width: calc(100% / 3);
 			padding-bottom: calc(100% / 3);
-			&:nth-child(-n+5) {
-				display: block;
-			}
 		}
 		@media $break-large {
 			width: calc(100% / 4);
