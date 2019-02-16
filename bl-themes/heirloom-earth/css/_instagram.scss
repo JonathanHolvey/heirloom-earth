@@ -14,15 +14,12 @@
 		padding-bottom: calc(100% / 2);
 		float: left;
 		overflow: hidden;
-		&:nth-child(-n+3) {
+		&:nth-child(-n+5) {
 			display: block;
 		}
 		@media $break-small {
 			width: calc(100% / 3);
 			padding-bottom: calc(100% / 3);
-			&:nth-child(-n+5) {
-				display: block;
-			}
 		}
 		@media $break-large {
 			width: calc(100% / 4);
@@ -77,7 +74,7 @@
 		height: 100%;
 		top: 100%;
 		opacity: 0;
-		background: rgba($green-dark, 0.75);
+		background: rgba($grey-medium, 0.5);
 		color: $white;
 		transition: top 0.4s, opacity 0.3s;
 		transition-timing-function: ease-out;

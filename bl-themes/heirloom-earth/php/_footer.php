@@ -2,7 +2,7 @@
 	<img class="logo-icon" src="<?= HTML_PATH_THEME_IMG ?>logo-icon.svg" alt=""/>
 	<div class="footer-bar">
 		<div class="site-info">
-			<p><?= $Site->footer() ?></p>
+			<p><?= preg_replace('/20\d{2}/', date('Y'), $Site->footer()) ?></p>
 			<p>Website by <a href="http://rocketchilli.com">Rocket Chilli</a>, powered by <a href="http://bludit.com">Bludit CMS</a></p>
 		</div>
 		<div class="social-links">

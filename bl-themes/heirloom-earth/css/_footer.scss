@@ -7,7 +7,7 @@
 	}
 	.logo-icon {
 		position: absolute;
-		bottom: calc(100% + 1.7em);
+		bottom: calc(100% + 1.4em);
 		left: 50%;
 		transform: translate(-50%, 0);
 		width: 2.8em;
@@ -16,9 +16,9 @@
 		}
 	}
 	.footer-bar {
-		background: $grey-dark;
+		background: darken($grey-medium, 8);
 		padding: 1.5rem;
-		padding-top: 2.8rem;
+		padding-top: 3rem;
 		padding-bottom: 0.8rem;
 		position: relative;
 		.site-info,
@@ -33,11 +33,10 @@
 		font-size: 60%;
 		text-align: center;
 		p {
-			margin-bottom: 0.3em;
+			margin-bottom: 0;
 		}
 		p:last-child {
-			margin-bottom: 0;
-			opacity: 0.5;
+			opacity: 0.6;
 		}
 		@media $break-large {
 			font-size: 70%;

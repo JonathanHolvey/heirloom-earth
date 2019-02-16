@@ -1,19 +1,23 @@
 // Font styles
 %title {
 	font-size: 200%;
+	font-weight: 300;
 	@media $break-large {
 		font-size: 220%;
 	}
 }
 %heading {
 	font-size: 150%;
+	font-weight: 300;
 }
 %subheading {
-	font-size: 120%;
+	font-size: 130%;
+	font-weight: 300;
 }
 %body {
-	font-size: 100%;
-	line-height: 1.3;
+	font-family: Merriweather, serif;
+	font-size: 85%;
+	line-height: 1.7;
 }
 %info {
 	font-size: 80%;
@@ -44,25 +48,18 @@ body {
 	min-height: 100%;
 	box-sizing: border-box;
 	margin: 0 auto;
-	padding-bottom: 11em;  // Space for fixed footer
+	padding-bottom: 10.5em;  // Space for fixed footer
 	box-shadow: 0 0 0.7rem 0 $shadow;
 	color: $grey-dark;
-	font-family: "Cooper Hewitt", Arial, sans-serif;
+	font-family: "Fira Sans", Arial, sans-serif;
 	font-size: 16px;
 	line-height: 1.2;
-	letter-spacing: 0.02em;
 	@media $break-medium {
 		font-size: 110%;
 	}
 	@media $break-large {
 		font-size: 130%;
 	}
-}
-p,
-img,
-ol,
-ul {
-	margin-bottom: 1rem;
 }
 h1 {
 	@extend %title;
@@ -75,6 +72,6 @@ h2 {
 h3 {
 	@extend %subheading;
 }
-p {
+main p {
 	@extend %body;
 }

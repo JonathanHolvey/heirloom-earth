@@ -1,61 +1,69 @@
-ul {
-	list-style: disc;
-}
-ol {
-	list-style: decimal;
-}
-ul,
-ol {
-	li {
-		margin-left: 10%;
-		padding-left: 0.5em;
-		margin-bottom: 0.3em;
+.content {
+	p,
+	ol,
+	ul {
+		margin-bottom: 1.5rem;
 	}
-}
-blockquote {
-	padding: 0.7em 1em;
-	padding-bottom: 0.1em;
-	margin-top: 1.5em;
-	margin-bottom: 1.5em;
-	margin-left: 5%;
-	margin-right: 5%;
-	border-radius: 0.3em;
-	color: $grey-medium;
-	background: $grey-light;
-	p {
-		line-height: 1.5;
+	ul {
+		list-style: disc;
 	}
-}
-p a {
-	color: $orange;
-	display: inline-block;
-	border-bottom: 1px dotted $orange;
-	margin-bottom: -1px;
-	&:hover {
-		border-color: $green;
+	ol {
+		list-style: decimal;
 	}
-}
-em {
-	font-style: italic;
-}
-strong {
-	font-weight: bold;
-}
-img,
-.image-grid {
-	display: block;
-	max-width: 30em;
-	margin: 0 auto;
-	width: 100%;
-}
-// Image captions
-p > img + em,
-.image-grid + em {
-	display: block;
-	max-width: 30em;
-	text-align: center;
-	font-style: italic;
-	font-size: 80%;
-	margin: 1rem auto;
-	color: $grey-medium;
+	ul,
+	ol {
+		li {
+			margin-left: 10%;
+			padding-left: 0.5em;
+			margin-bottom: 0.3em;
+		}
+	}
+	blockquote {
+		padding: 0.7em 1em;
+		padding-bottom: 0.1em;
+		margin-top: 1.5em;
+		margin-bottom: 1.5em;
+		margin-left: 5%;
+		margin-right: 5%;
+		border-radius: 0.3em;
+		color: $grey-medium;
+		background: $grey-light;
+		p {
+			line-height: 1.5;
+		}
+	}
+	p a {
+		color: $green-dark;
+		display: inline-block;
+		border-bottom: 1px dotted $green-dark;
+		margin-bottom: -1px;
+		&:hover {
+			border-color: $green;
+			color: $green;
+		}
+	}
+	em {
+		font-style: italic;
+	}
+	strong {
+		font-weight: bold;
+	}
+	img,
+	.image-grid {
+		display: block;
+		max-width: 30em;
+		margin: 2rem auto;
+		width: 100%;
+	}
+	// Image captions
+	p > img + em,
+	.image-grid + em {
+		display: block;
+		max-width: 30em;
+		text-align: center;
+		font-style: italic;
+		font-size: 80%;
+		margin: -1rem auto 1rem;
+		color: $grey-medium;
+	}
 }
