@@ -41,8 +41,10 @@
 				margin-left: 0.2em;
 				margin-right: 0.2em;
 			}
-			&:hover {
-				color: $white;
+			&:not(.is-active):hover {
+				border: 1px solid rgba($white, 0.3);
+				margin-left: -1px;
+				margin-right: -1px;
 			}
 		}
 		@media $break-small {
