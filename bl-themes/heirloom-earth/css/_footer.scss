@@ -18,7 +18,7 @@
 	.footer-bar {
 		background: $grey-dark;
 		padding: 1.5rem;
-		padding-top: 2.8rem;
+		padding-top: 3rem;
 		padding-bottom: 0.8rem;
 		position: relative;
 		.site-info,
@@ -33,10 +33,9 @@
 		font-size: 60%;
 		text-align: center;
 		p {
-			margin-bottom: 0.3em;
+			margin-bottom: 0;
 		}
 		p:last-child {
-			margin-bottom: 0;
 			opacity: 0.5;
 		}
 		@media $break-large {
