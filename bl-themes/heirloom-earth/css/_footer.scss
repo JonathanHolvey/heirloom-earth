@@ -16,7 +16,7 @@
 		}
 	}
 	.footer-bar {
-		background: $grey-dark;
+		background: darken($grey-medium, 8);
 		padding: 1.5rem;
 		padding-top: 3rem;
 		padding-bottom: 0.8rem;
@@ -36,7 +36,7 @@
 			margin-bottom: 0;
 		}
 		p:last-child {
-			opacity: 0.5;
+			opacity: 0.6;
 		}
 		@media $break-large {
 			font-size: 70%;

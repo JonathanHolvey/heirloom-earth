@@ -21,7 +21,7 @@ a {
 		&:hover {
 			border-color: $green-dark;
 			color: $green-dark;
-			background: lighten($green-dark, 45);
+			background: lighten($grey-medium, 45);
 		}
 	}
 	&.dark {

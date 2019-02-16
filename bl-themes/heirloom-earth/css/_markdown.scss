@@ -27,12 +27,13 @@ blockquote {
 	}
 }
 p a {
-	color: $orange;
+	color: $green-dark;
 	display: inline-block;
-	border-bottom: 1px dotted $orange;
+	border-bottom: 1px dotted $green-dark;
 	margin-bottom: -1px;
 	&:hover {
-		border-color: $green-dark;
+		border-color: $green;
+		color: $green;
 	}
 }
 em {
