@@ -6,11 +6,16 @@
 	}
 }
 .home-about img {
+	display: block;
 	width: 50%;
 	max-width: 10em;
 	margin-left: auto;
 	margin-right: auto;
+	margin-bottom: 1em;
 	border-radius: 6em;
+}
+.home-about .button {
+	margin-top: 1em;
 }
 .home-about .button br {
 	display: none;
@@ -21,7 +26,6 @@
 		float: right;
 		border-radius: 0;
 		margin-left: 1rem;
-		margin-bottom: 0;
 	}
 	.home-about h1 {
 		float: left;
