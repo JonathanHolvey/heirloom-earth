@@ -10,9 +10,9 @@
 		bottom: calc(100% + 1.4em);
 		left: 50%;
 		transform: translate(-50%, 0);
-		width: 2.8em;
+		height: 2.8em;
 		@media $break-medium {
-			width: 4em;
+			height: 4em;
 		}
 	}
 	.footer-bar {
