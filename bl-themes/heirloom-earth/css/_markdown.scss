@@ -2,6 +2,7 @@
 	p,
 	ol,
 	ul {
+		@extend %body;
 		margin-bottom: 1.5rem;
 	}
 	ul {
@@ -13,8 +14,8 @@
 	ul,
 	ol {
 		li {
-			margin-left: 10%;
-			padding-left: 0.5em;
+			margin-left: 8%;
+			padding-left: 0.3em;
 			margin-bottom: 0.3em;
 		}
 	}
@@ -32,7 +33,7 @@
 			line-height: 1.5;
 		}
 	}
-	p a {
+	a {
 		color: $green-dark;
 		display: inline-block;
 		border-bottom: 1px dotted $green-dark;
