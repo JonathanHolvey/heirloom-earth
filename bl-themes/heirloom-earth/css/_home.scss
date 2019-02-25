@@ -4,6 +4,9 @@
 	h1 {
 		font-size: 150%;
 	}
+	p {
+		@extend %body;
+	}
 }
 .home-about img {
 	display: block;
