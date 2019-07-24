@@ -1,1 +1,2 @@
-bl-content*
+docker/local/content
+docker/local/plugins
