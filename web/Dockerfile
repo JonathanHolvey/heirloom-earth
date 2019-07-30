@@ -25,3 +25,7 @@ RUN mkdir -p ./theme \
 
 # Copy source
 COPY ./ /opt/app/
+
+# Patch Bludit
+RUN cd /opt/app/patches \
+    && patch /var/www/html/bl-kernel/boot/variables.php ./symlinks.patch
