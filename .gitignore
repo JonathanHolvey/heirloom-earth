@@ -1,2 +1,1 @@
-docker/local/content
-docker/local/plugins
+docker/local/*

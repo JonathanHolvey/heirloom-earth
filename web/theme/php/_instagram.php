@@ -1,5 +1,5 @@
 <?php
-	$accessToken = $themeConfig["instagram-token"];
+	$accessToken = getenv("INSTAGRAM_TOKEN");
 	$scriptPath = HTML_PATH_THEME . "vendor/instafeed-1.4.1.min.js"
 ?>
 

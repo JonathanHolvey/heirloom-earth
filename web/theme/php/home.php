@@ -1,4 +1,4 @@
-<?php $instagram = array_key_exists("instagram-token", $themeConfig) ?>
+<?php $instagram = !!getenv('INSTAGRAM_TOKEN'); ?>
 <!DOCTYPE html>
 <html>
 <head>

@@ -12,3 +12,4 @@ services:
       - ./docker/local/plugins:/var/www/html/bl-plugins
     environment:
       VIRTUAL_HOST: local.heirloom-earth.com
+    env_file: ./docker/local/.env
