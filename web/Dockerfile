@@ -21,7 +21,7 @@ RUN curl -L -o bludit.zip https://github.com/bludit/bludit/archive/2.3.4.zip \
 WORKDIR /opt/app
 RUN mkdir -p ./theme \
     && ln -sf /opt/app/theme /var/www/html/bl-themes/heirloom-earth \
-    && chown -R www-data:www-data /var/www/html
+    && chown -RL www-data:www-data /var/www/html
 
 # Copy source
 COPY ./ /opt/app/
