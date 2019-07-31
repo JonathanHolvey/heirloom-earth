@@ -1,0 +1,19 @@
+commit 5510ea94de6edcbf822b4a9fec3356acf2575844
+Author: Jonathan Holvey <jonathan.holvey@outlook.com>
+Date:   Mon Jul 29 20:59:46 2019 +1000
+
+    Allow symlinks
+
+diff --git a/bl-kernel/boot/variables.php b/bl-kernel/boot/variables.php
+index ea2b0e49..c4c5f159 100644
+--- a/bl-kernel/boot/variables.php
++++ b/bl-kernel/boot/variables.php
+@@ -12,7 +12,7 @@ define('LOG_TYPE_WARN', '[WARN]');
+ define('LOG_TYPE_ERROR', '[ERROR]');
+ 
+ // Protecting against Symlink attacks
+-define('CHECK_SYMBOLIC_LINKS', TRUE);
++define('CHECK_SYMBOLIC_LINKS', FALSE);
+ 
+ // Alert status ok
+ define('ALERT_STATUS_OK', 0);
