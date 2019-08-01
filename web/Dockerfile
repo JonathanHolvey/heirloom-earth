@@ -1,7 +1,8 @@
 FROM php:7-apache
 
-RUN apt-get update && apt-get install -y \
-    patch unzip \
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && apt-get update && apt-get install -y \
+    patch unzip nodejs \
     libzip-dev libpng-dev libfreetype6-dev libjpeg62-turbo-dev
 
 # Enable PHP and Apache modules
