@@ -97,7 +97,7 @@ hr {
 	}
 	h1 {
 		font-size: 150%;
-	@media $break-large {
+	@media #{$break-large} {
 			font-size: 180%;
 		}
 	}
@@ -147,7 +147,7 @@ main .inset-content {
 		max-height: 30em;
 		padding-bottom: 100%;
 		position: relative;
-		@media screen and (min-width: 33em) {
+		@media #{$break-small} {
 			padding-bottom: 30em;
 		}
 		img {

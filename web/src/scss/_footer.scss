@@ -11,7 +11,7 @@
 		left: 50%;
 		transform: translate(-50%, 0);
 		height: 2.8em;
-		@media $break-medium {
+		@media #{$break-medium} {
 			height: 4em;
 		}
 	}
@@ -25,7 +25,7 @@
 		a {
 			color: $grey-light;
 		}
-		@media $break-medium {
+		@media #{$break-medium} {
 			padding: 1.5rem;
 		}
 	}
@@ -38,7 +38,7 @@
 		p:last-child {
 			opacity: 0.6;
 		}
-		@media $break-large {
+		@media #{$break-large} {
 			font-size: 70%;
 		}
 	}
@@ -46,7 +46,7 @@
 	.page-links {
 		position: absolute;
 		top: 0.8rem;
-		@media $break-medium {
+		@media #{$break-medium} {
 			top: calc(50% + 0.1em);
 			transform: translate(0, -50%);
 		}

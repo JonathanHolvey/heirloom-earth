@@ -48,7 +48,7 @@
 				margin-right: -1px;
 			}
 		}
-		@media $break-small {
+		@media #{$break-small} {
 			font-size: 80%;
 		}
 	}

@@ -24,7 +24,7 @@
 	display: none;
 }
 
-@media $break-small {
+@media #{$break-small} {
 	.home-about img {
 		float: right;
 		border-radius: 0;
@@ -34,12 +34,12 @@
 		float: left;
 	}
 }
-@media $break-medium {
+@media #{$break-medium} {
 	.home-about h1 {
 		width: auto;
 	}
 }
-@media $break-large {
+@media #{$break-large} {
 	.home-about {
 		position: relative;
 		margin-top: 12em;
