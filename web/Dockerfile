@@ -19,8 +19,8 @@ RUN curl -L -o bludit.zip https://github.com/bludit/bludit/archive/2.3.4.zip \
     && rm -f bludit.zip
 
 WORKDIR /opt/app
-COPY ./package*.json theme/
-RUN cd theme && npm install --prod
+COPY ./package*.json ./
+RUN npm install --prod
 
 # Create symlink for public server root
 RUN mkdir -p ./theme \
