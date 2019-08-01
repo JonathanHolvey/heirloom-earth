@@ -18,8 +18,11 @@ RUN curl -L -o bludit.zip https://github.com/bludit/bludit/archive/2.3.4.zip \
     && unzip -q bludit.zip && rm -rf /var/www/html && mv bludit-* /var/www/html \
     && rm -f bludit.zip
 
-# Create symlink for public server root
 WORKDIR /opt/app
+COPY ./package*.json theme/
+RUN cd theme && npm install --prod
+
+# Create symlink for public server root
 RUN mkdir -p ./theme \
     && ln -sf /opt/app/theme /var/www/html/bl-themes/heirloom-earth \
     && chown -RL www-data:www-data /var/www/html
@@ -27,6 +30,7 @@ RUN mkdir -p ./theme \
 # Copy source
 COPY ./ /opt/app/
 
-# Patch Bludit
-RUN cd /opt/app/patches \
+# Build assets and patch Bludit
+RUN npm run build \
+    && cd /opt/app/patches \
     && patch /var/www/html/bl-kernel/boot/variables.php ./symlinks.patch
