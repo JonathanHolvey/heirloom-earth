@@ -1,9 +1,7 @@
 <?php
 	$accessToken = getenv("INSTAGRAM_TOKEN");
-	$scriptPath = HTML_PATH_THEME . "vendor/instafeed-1.4.1.min.js"
 ?>
 
-<script src="<?= $scriptPath ?>"></script>
 <script>
 	var feed = new Instafeed({
 		get: "user",
