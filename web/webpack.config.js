@@ -1,5 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
+const Dotenv = require('dotenv-webpack')
 const path = require('path')
 
 module.exports = (env, argv) => {
@@ -39,6 +40,7 @@ module.exports = (env, argv) => {
     plugins: [
       new MiniCssExtractPlugin({ filename: 'css/[name].css' }),
       new LiveReloadPlugin(),
+      new Dotenv(),
     ],
   }
 }

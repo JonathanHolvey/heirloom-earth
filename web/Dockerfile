@@ -30,6 +30,9 @@ RUN mkdir -p ./theme \
 # Copy source
 COPY ./ /opt/app/
 
+# Add selected environment variables to client JavaScript
+RUN echo INSTAGRAM_TOKEN=$INSTAGRAM_TOKEN > ./.env
+
 # Build assets and patch Bludit
 RUN npm run build \
     && cd /opt/app/patches \
