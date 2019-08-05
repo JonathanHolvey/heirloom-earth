@@ -22,6 +22,7 @@
 			?>
 		</section>
 		<?php if ($instagram): ?>
+			<script>var INSTAGRAM_TOKEN = '<?= getenv('INSTAGRAM_TOKEN') ?>';</script>
 			<section class="instagram-grid">
 				<div class="grid-item grid-title">
 					<div class="title-text">Heirloom Earth on</div>
