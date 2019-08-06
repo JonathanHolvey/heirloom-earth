@@ -1,6 +1,7 @@
 {
   "name": "heirloomearth-web",
-  "version": "0.0.0",
+  "version": "3.0.0",
+  "repository": "https://github.com/rocketchilli/heirloom-earth.com",
   "description": "",
   "scripts": {
     "build": "webpack --mode production",
