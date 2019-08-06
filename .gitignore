@@ -1,1 +1,2 @@
-bl-content*
+docker/local/*
+node_modules

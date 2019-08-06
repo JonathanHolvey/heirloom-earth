@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: ./web
+    container_name: heirloomearth-web
+    network_mode: bridge
+    volumes:
+      - ./web:/opt/app
+      - ./docker/local/content:/var/www/html/bl-content
+    environment:
+      VIRTUAL_HOST: local.heirloom-earth.com
+    env_file: ./docker/local/.env

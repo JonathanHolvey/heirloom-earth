@@ -1,0 +1,177 @@
+a {
+	text-decoration: none;
+	color: inherit;
+	transition: color $transition-medium;
+	&:hover {
+		color: $green-dark;
+	}
+}
+.button {
+	display: table;
+	text-transform: uppercase;
+	text-align: center;
+	padding: 0.5em 1.2em .4em;
+	margin: 0 auto;
+	min-width: 6em;
+	border-radius: 4px;
+	transition: background $transition-medium, color $transition-medium, border $transition-medium;
+	&.light {
+		color: $grey-medium;
+		border: 1px solid $grey-medium;
+		&:hover {
+			border-color: $green-dark;
+			color: $green-dark;
+			background: lighten($grey-medium, 45);
+		}
+	}
+	&.dark {
+		color: $white;
+		background: $grey-medium;
+		&:hover {
+			background: $green-dark;
+		}
+	}
+}
+hr {
+	@extend %rule;
+	padding: 0;
+	margin-top: 1em;
+}
+.icon {
+	$icon-size: 1.2em;
+	display: inline-block;
+	width: $icon-size;
+	height: $icon-size;
+	margin-right: 0.3em;
+	background-size: $icon-size $icon-size;
+	background-repeat: no-repeat;
+	&.instagram {
+		@include icon-instagram($grey-light);
+	}
+	&.facebook {
+		@include icon-facebook($grey-light);
+	}
+	&.twitter {
+		@include icon-twitter($grey-light);
+	}
+}
+.page-header {
+	@extend %rule;
+	text-align: center;
+	h1:last-child {
+		margin-bottom: 0;
+	}
+}
+.page-info {
+	@extend %info;
+	> * {
+		display: inline-block;
+		margin: 0 0.5em;
+	}
+}
+.post-tags {
+	@extend %info;
+	text-align: center;
+	line-height: 1.8;
+	max-width: 50rem;
+	margin-left: auto;
+	margin-right: auto;
+	> * {
+		display: inline-block;
+		margin: 0 0.5em;
+	}
+}
+.post-preview,
+.category-preview {
+	.post-image {
+		display: block;
+		height: 12em;
+		overflow: hidden;
+		margin-bottom: 1em;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: 50% 50%;
+	}
+	.page-header {
+		border-color: darken($grey-light, 10);
+	}
+	h1 {
+		font-size: 150%;
+	@media #{$break-large} {
+			font-size: 180%;
+		}
+	}
+}
+main {
+	margin-top: 1rem;
+}
+main > *,
+.inset-content > * {
+	max-width: 45em;
+	width: 100%;
+	margin: 0 auto;
+	padding: 1.5rem;
+	box-sizing: border-box;
+}
+main .inset-content {
+	max-width: 100%;
+	padding: 1rem 0;
+	background: $grey-light;
+}
+.inset-content > * {
+	padding-bottom: 0.5rem;
+	&:last-child {
+		padding-bottom: 1.5rem;
+	}
+}
+// For IE
+.image-grid {
+	clear: both;
+	overflow: auto;
+	img {
+		width: 49.5%;
+		margin-bottom: 1%;
+	}
+	img:nth-child(odd) {
+		float: left;
+		margin-right: 1%;
+	}
+	img:nth-child(even) {
+		clear: right;
+		margin-left: 1%;
+	}
+}
+// For modern browsers
+@supports (object-fit: cover) {
+	.image-grid {
+		max-height: 30em;
+		padding-bottom: 100%;
+		position: relative;
+		@media #{$break-small} {
+			padding-bottom: 30em;
+		}
+		img {
+			position: absolute;
+			margin: 0;
+			width: 49.5%;
+			height: 49.5%;
+			object-fit: cover;
+			&:active {
+				width: 100%;
+				height: 100%;
+			}
+		}
+		img:nth-child(2) {
+			right: 0;
+		}
+		img:nth-child(3) {
+			bottom: 0;
+		}
+		img:nth-child(4) {
+			bottom: 0;
+			right: 0;
+		}
+	}
+}
+
+@import "instagram";
